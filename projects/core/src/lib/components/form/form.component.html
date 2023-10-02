@@ -1,0 +1,139 @@
+<form
+    *ngIf="validateForm"
+    [ngClass]="{'sub-form': isSub}"
+    nz-form
+    [formGroup]="validateForm"
+    [nzLayout]="_layout"
+    (ngSubmit)="submitForm()">
+    <div nz-row [nzGutter]="20">
+        <ng-container *ngFor="let item of _items; trackBy: trackByName">
+            <div *ngIf="!item.isHide" nz-col [nzSpan]="item.span || _itemSpan" [class]="item.name">
+                <nz-form-item>
+                    <nz-form-label *ngIf="!item?.hideLabel" [nzSpan]="_labelSpan" [nzRequired]="item.required"
+                        >{{ item.label || (item.name | label)}}</nz-form-label
+                    >
+                    <nz-form-control
+                        [nzSpan]="_controlSpan"
+                        nzHasFeedback
+                        nzValidatingTip="item.nzValidatingTipe"
+                        [nzErrorTip]="item.nzErrorTip">
+                        <ng-container [ngSwitch]="item.type">
+                            <ng-container
+                                *ngSwitchCase="'input'"
+                                [ngTemplateOutlet]="input"
+                                [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+                            <ng-container
+                                *ngSwitchCase="'textarea'"
+                                [ngTemplateOutlet]="textarea"
+                                [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+                            <ng-container
+                                *ngSwitchCase="'number'"
+                                [ngTemplateOutlet]="number"
+                                [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+                            <ng-container
+                                *ngSwitchCase="'select'"
+                                [ngTemplateOutlet]="select"
+                                [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+                            <ng-container
+                                *ngSwitchCase="'radioGroup'"
+                                [ngTemplateOutlet]="radioGroup"
+                                [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+                            <ng-container
+                                *ngSwitchCase="'subForm'"
+                                [ngTemplateOutlet]="subForm"
+                                [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+                            <ng-container
+                                *ngSwitchCase="'custom'"
+                                [ngTemplateOutlet]="custom"
+                                [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+                            <ng-container *ngSwitchDefault [ngTemplateOutlet]="defaultControl"></ng-container>
+                        </ng-container>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </ng-container>
+        <div  *ngIf="showSubmit" nz-col [nzSpan]="_itemSpan">
+            <nz-form-item>
+                <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 16, offset: 8 }">
+                  <button nz-button nzType="primary">Submit</button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+
+    <ng-template #input let-item>
+        <nz-input-group [nzAddOnBefore]="item.prefix" [nzAddOnAfter]="item.suffix">
+            <input
+                type="text"
+                nz-input
+                [placeholder]="'Please Input ' + (item.label || (item.name | label))"
+                [formControlName]="item.name" />
+        </nz-input-group>
+    </ng-template>
+
+    <ng-template #textarea let-item>
+        <textarea
+            nz-input
+            [formControlName]="item.name"
+            style="width: 100%"
+            [placeholder]="'Please Input ' + (item.label || (item.name | label))"
+            [nzAutosize]="item.size || { minRows: 2, maxRows: 6 }">
+        </textarea>
+    </ng-template>
+
+    <ng-template #number let-item>
+        <nz-input-number-group [nzAddOnBefore]="item.prefix" [nzAddOnAfter]="item.suffix">
+            <nz-input-number
+                style="width: 100%"
+                [formControlName]="item.name"
+                [nzMin]="item.min || 1"
+                [nzMax]="item.max || 999999"
+                [nzPrecision]="item.precision || 2"
+                [nzStep]="item.step || 1"></nz-input-number>
+        </nz-input-number-group>
+    </ng-template>
+
+    <ng-template #select let-item>
+        <nz-select
+            style="width: 100%"
+            [formControlName]="item.name"
+            [nzPlaceHolder]="'Please Select ' + (item.label || (item.name | label))">
+            <nz-option
+                *ngFor="let option of item.options; trackBy: trackByOption"
+                [nzLabel]="option?.label || option"
+                [nzValue]="option?.value || option"></nz-option>
+        </nz-select>
+    </ng-template>
+
+    <ng-template #radioGroup let-item>
+        <nz-radio-group [formControlName]="item.name">
+            <label
+                *ngFor="let option of item.options; trackBy: trackByOption"
+                nz-radio
+                [nzValue]="option?.value || option"
+                >{{option?.label || option}}</label
+            >
+        </nz-radio-group>
+    </ng-template>
+
+    <ng-template #subForm let-item>
+        <wn-form
+            [formControlName]="item.name"
+            [items]="item.children"
+            [isSub]="true"
+            [itemSpan]="item.itemSpan || 24"></wn-form>
+    </ng-template>
+
+    <ng-template #custom let-item>
+        <ng-container
+            [ngComponentOutlet]="item?.componentInstance"
+            [ngComponentOutletInjector]="item?.injector"></ng-container>
+    </ng-template>
+
+    <ng-template #defaultControl let-item>
+        <ng-container *nzStringTemplateOutlet="item?.content; context: { $implicit: item }">
+            {{ item?.content }}
+        </ng-container>
+    </ng-template>
+
+</form>
