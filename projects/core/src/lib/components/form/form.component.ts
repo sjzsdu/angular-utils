@@ -5,7 +5,7 @@ import { NzFormLayoutType } from 'ng-zorro-antd/form';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { trackFunc } from 'projects/core/src/utils/ng';
 import { Subject, takeUntil } from 'rxjs';
-import { debounceExecute, delayExecute } from 'utils/decarator';
+import { debounceExecute, delayExecute } from 'projects/core/src/utils/decarator';
 import { BaseAccessorComponent } from './base-accessor';
 import { FORM_COMMANDS, FORM_DATA, FORM_EMITTER, FORM_PARAMS } from './constant';
 import { AnyObject, ComponentCommand, ControlRules, CustomComponentCache, FormController, FormDisabled, FormHide, ReactiveFormItem, ReactiveFormParams } from './types';
