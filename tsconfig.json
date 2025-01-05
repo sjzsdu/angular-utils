@@ -21,7 +21,15 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "wn-utils": [
+        "./dist/wn-utils"
+      ],
+      "wn-zorro": [
+        "./dist/wn-zorro"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
