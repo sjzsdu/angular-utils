@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "storybook:zorro": "ng run wn-zorro:storybook",
-    "build-storybook:zorro": "ng run wn-zorro:build-storybook"
+    "build-storybook:zorro": "ng run wn-zorro:build-storybook",
+    "build:wn-utils": "ng build wn-utils",
+    "build:wn-zorro": "ng build wn-zorro"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +35,7 @@
     "@storybook/addon-docs": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-links": "^8.4.7",
     "@storybook/addon-onboarding": "^8.4.7",
     "@storybook/angular": "^8.4.7",
     "@storybook/blocks": "^8.4.7",

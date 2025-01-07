@@ -6,10 +6,243 @@
     "interceptors": [],
     "classes": [],
     "directives": [],
-    "components": [],
+    "components": [
+        {
+            "name": "BlurOnClickStoryComponent",
+            "id": "component-BlurOnClickStoryComponent-975bded4ef56c1c618423f7d6d561d16b313a5a76c154cc2f581fb99b876d2a0c4e0a9b6c3d5e06224bb6b8b3f40049c9eaac5e8ed986cc482ed855608e74849",
+            "file": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "story-blur-on-click",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<div style=\"padding: 20px;\">\n  <button appBlurOnClick style=\"padding: 10px 20px;\">\n    Click to Blur\n  </button>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { BlurOnClickDirective } from '../directives/blur-on-click.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-blur-on-click',\n  template: `\n    <div style=\"padding: 20px;\">\n      <button appBlurOnClick style=\"padding: 10px 20px;\">\n        Click to Blur\n      </button>\n    </div>\n  `\n})\nclass BlurOnClickStoryComponent {}\n\nconst meta: Meta<BlurOnClickStoryComponent> = {\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs']\n};\n\nexport default meta;\ntype Story = StoryObj<BlurOnClickStoryComponent>;\n\nexport const Primary: Story = {\n  args: {}\n};\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": []
+        },
+        {
+            "name": "ClickOutsideStoryComponent",
+            "id": "component-ClickOutsideStoryComponent-a723c0e20146477a32676cfad966d0a07ec500fefc1552e04e47f32f5b81ac31ca62a53569a7bc6cb74ffbefca3572acd6708bb5b139d8715b2a0c1e0db76116",
+            "file": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "story-click-outside",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<div style=\"padding: 20px;\">\n  <div appClickOutside (clickOutside)=\"onClickOutside($event)\"\n       style=\"border: 1px solid #ccc; padding: 20px;\">\n    <p>Click inside this box - nothing happens</p>\n    <button class=\"excluded\">Excluded Button</button>\n  </div>\n  <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "clickedElement",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement | null",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onClickOutside",
+                    "args": [
+                        {
+                            "name": "element",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 21,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "element",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ClickOutsideDirective } from '../directives/click-outside.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-click-outside',\n  template: `\n    <div style=\"padding: 20px;\">\n      <div appClickOutside (clickOutside)=\"onClickOutside($event)\"\n           style=\"border: 1px solid #ccc; padding: 20px;\">\n        <p>Click inside this box - nothing happens</p>\n        <button class=\"excluded\">Excluded Button</button>\n      </div>\n      <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n    </div>\n  `\n})\nclass ClickOutsideStoryComponent {\n  clickedElement: HTMLElement | null = null;\n\n  onClickOutside(element: HTMLElement) {\n    this.clickedElement = element;\n  }\n}\n\nconst meta: Meta<ClickOutsideStoryComponent> = {\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs']\n};\n\nexport default meta;\ntype Story = StoryObj<ClickOutsideStoryComponent>;\n\nexport const Primary: Story = {\n  args: {}\n};\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": []
+        },
+        {
+            "name": "ScrollToStoryComponent",
+            "id": "component-ScrollToStoryComponent-946d1a15be50bf7b5df68a80bfd0dcd5ce3df00cd2535a4c7553e04c7b5a0c9a4cb7228fd878d3ce9debb99ada0af6e4c8dcb43cb0425662558a9065ee95c8d9",
+            "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "story-scroll-to",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<div style=\"height: 100vh; display: flex; flex-direction: column;\">\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\" >Scroll to Target 1</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n  <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n    <div style=\"height: 500px;\">\n      <p>Scrollable content area</p>\n\n      <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">\n        Target 1\n      </div>\n\n      <div style=\"height: 300px;\" appScrollTo #scrollToDirective=\"appScrollTo\"></div>\n\n      <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">\n        Target 2\n      </div>\n      <div style=\"height: 800px;\"></div>\n      <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">\n        Target 3\n      </div>\n    </div>\n  </div>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "scrollToDirective",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ScrollToDirective",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 37,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'scrollToDirective'"
+                        }
+                    ],
+                    "modifierKind": [
+                        170
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "scrollTo",
+                    "args": [
+                        {
+                            "name": "target",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 39,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "target",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [
+                {
+                    "name": "ScrollToDirective",
+                    "type": "directive"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ScrollToDirective } from '../directives/scrollto.directive';\nimport { Component, ViewChild } from '@angular/core';\n\n@Component({\n  selector: 'story-scroll-to',\n  imports: [ScrollToDirective],\n  template: `\n    <div style=\"height: 100vh; display: flex; flex-direction: column;\">\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\" >Scroll to Target 1</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n      <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n        <div style=\"height: 500px;\">\n          <p>Scrollable content area</p>\n\n          <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">\n            Target 1\n          </div>\n\n          <div style=\"height: 300px;\" appScrollTo #scrollToDirective=\"appScrollTo\"></div>\n\n          <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">\n            Target 2\n          </div>\n          <div style=\"height: 800px;\"></div>\n          <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">\n            Target 3\n          </div>\n        </div>\n      </div>\n    </div>\n  `\n})\nclass ScrollToStoryComponent {\n  @ViewChild('scrollToDirective') scrollToDirective!: ScrollToDirective;\n\n  scrollTo(target?: string) {\n    this.scrollToDirective.scrollToTarget(target);\n  }\n}\n\nconst meta: Meta<ScrollToStoryComponent> = {\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs']\n};\n\nexport default meta;\ntype Story = StoryObj<ScrollToStoryComponent>;\n\nexport const Primary: Story = {\n  args: {}\n};\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": []
+        }
+    ],
     "modules": [],
     "miscellaneous": {
         "variables": [
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<BlurOnClickStoryComponent>",
+                "defaultValue": "{\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs']\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ClickOutsideStoryComponent>",
+                "defaultValue": "{\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs']\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ScrollToStoryComponent>",
+                "defaultValue": "{\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs']\n}"
+            },
             {
                 "name": "preview",
                 "ctype": "miscellaneous",
@@ -19,12 +252,142 @@
                 "deprecationMessage": "",
                 "type": "Preview",
                 "defaultValue": "{\n  parameters: {\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {}\n}"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {}\n}"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {}\n}"
             }
         ],
         "functions": [],
-        "typealiases": [],
+        "typealiases": [
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<BlurOnClickStoryComponent>",
+                "file": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ClickOutsideStoryComponent>",
+                "file": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ScrollToStoryComponent>",
+                "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            }
+        ],
         "enumerations": [],
         "groupedVariables": {
+            "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<BlurOnClickStoryComponent>",
+                    "defaultValue": "{\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs']\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {}\n}"
+                }
+            ],
+            "projects/wn-zorro/src/lib/stories/click-outside.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<ClickOutsideStoryComponent>",
+                    "defaultValue": "{\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs']\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {}\n}"
+                }
+            ],
+            "projects/wn-zorro/src/lib/stories/scrollto.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<ScrollToStoryComponent>",
+                    "defaultValue": "{\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs']\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {}\n}"
+                }
+            ],
             "projects/wn-zorro/.storybook/preview.ts": [
                 {
                     "name": "preview",
@@ -40,7 +403,47 @@
         },
         "groupedFunctions": {},
         "groupedEnumerations": {},
-        "groupedTypeAliases": {}
+        "groupedTypeAliases": {
+            "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<BlurOnClickStoryComponent>",
+                    "file": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/lib/stories/click-outside.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ClickOutsideStoryComponent>",
+                    "file": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/lib/stories/scrollto.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ScrollToStoryComponent>",
+                    "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ]
+        }
     },
     "routes": [],
     "coverage": {
@@ -53,6 +456,123 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "preview",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "BlurOnClickStoryComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ClickOutsideStoryComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ScrollToStoryComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

@@ -1,0 +1,36 @@
+name: Publish Packages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build wn-utils
+        run: npm run build wn-utils
+
+      - name: Build wn-zorro
+        run: npm run build wn-zorro
+
+      - name: Publish wn-utils
+        run: npm publish projects/wn-utils
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish wn-zorro
+        run: npm publish projects/wn-zorro
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
