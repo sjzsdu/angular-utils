@@ -9,6 +9,7 @@
     "test": "ng test",
     "storybook:zorro": "ng run wn-zorro:storybook",
     "build-storybook:zorro": "ng run wn-zorro:build-storybook",
+    "build:all": "npm run build:wn-utils && npm run build:wn-zorro",
     "build:wn-utils": "ng build wn-utils",
     "build:wn-zorro": "ng build wn-zorro"
   },
@@ -22,6 +23,9 @@
     "@angular/platform-browser": "^18.1.0",
     "@angular/platform-browser-dynamic": "^18.1.0",
     "@angular/router": "^18.1.0",
+    "@ant-design/icons-angular": "^19.0.0",
+    "@ctrl/tinycolor": "^4.1.0",
+    "ng-zorro-antd": "18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -41,6 +45,7 @@
     "@storybook/blocks": "^8.4.7",
     "@storybook/test": "^8.4.7",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^22.10.5",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

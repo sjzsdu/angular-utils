@@ -22,12 +22,16 @@
       "ES2022",
       "dom"
     ],
+    "types": [
+      "node"
+    ],
+    "baseUrl": "./",
     "paths": {
       "wn-utils": [
-        "./dist/wn-utils"
+        "projects/wn-utils/src/index"
       ],
-      "wn-zorro": [
-        "./dist/wn-zorro"
+      "wn-zorro/*": [
+        "projects/wn-zorro/src/*"
       ]
     }
   },

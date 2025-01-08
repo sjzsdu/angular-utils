@@ -29,6 +29,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
               }
             ],
             "styles": [
@@ -135,7 +140,7 @@
       "projectType": "library",
       "root": "projects/wn-zorro",
       "sourceRoot": "projects/wn-zorro/src",
-      "prefix": "lib",
+      "prefix": "wn",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
