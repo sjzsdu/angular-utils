@@ -85,3 +85,34 @@ export function base64Encode(str: string): string {
 export function base64Decode(str: string): string {
   return Buffer.from(str, 'base64').toString('utf8');
 }
+
+/**
+ * Copies text to the clipboard
+ * @param text The text to be copied to the clipboard
+ */
+export function copyToClipboard(text: string) {
+  const textEle = document.createElement('textarea');
+  textEle.style.position = 'absolute';
+  textEle.style.left = '-9999px';
+  textEle.style.top = '-9999px';
+  document.body.appendChild(textEle);
+  textEle.value = text;
+  textEle.select();
+  document.execCommand('copy');
+  document.body.removeChild(textEle);
+}
+
+/**
+ * Copies text to the clipboard using the most appropriate method
+ * @param text The text to be copied to the clipboard
+ */
+export function copy(text: string) {
+  const win = window as any;
+  if (win.copy) {
+    win.copy(text);
+  } else if (win.navigator?.clipboard?.writeText) {
+    win.navigator?.clipboard?.writeText(text);
+  } else {
+    copyToClipboard(text);
+  }
+}

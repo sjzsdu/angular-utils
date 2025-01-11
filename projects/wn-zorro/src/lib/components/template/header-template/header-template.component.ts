@@ -1,15 +1,14 @@
 import { ChangeDetectorRef, Component, QueryList, TemplateRef, ViewChildren } from '@angular/core';
 import { TemplateService } from '../template.service';
-import { ModalHeaderOptions } from '@tidy3dApp/constants/photon-forge';
 import { ModalHeader } from '../types';
 
 @Component({
-  selector: 'app-header-template',
+  selector: 'wn-header-template',
   templateUrl: './header-template.component.html',
   styleUrls: ['./header-template.component.less'],
 })
 export class HeaderTemplateComponent {
-  headerVars: ModalHeader[] = ModalHeaderOptions;
+  headerVars: ModalHeader[] = [];
   @ViewChildren('header') headers?: QueryList<TemplateRef<any>>;
   constructor(
     private template: TemplateService,

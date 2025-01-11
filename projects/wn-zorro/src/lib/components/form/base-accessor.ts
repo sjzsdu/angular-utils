@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 @Component({
   template: '',

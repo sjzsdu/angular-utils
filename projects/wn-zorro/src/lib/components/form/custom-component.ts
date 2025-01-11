@@ -1,4 +1,4 @@
-import { EventEmitter, Injector, inject } from '@angular/core';
+import { EventEmitter, inject } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { FORM_COMMANDS, FORM_DATA, FORM_EMITTER, FORM_PARAMS } from './const';
 import { Subject } from 'rxjs';

@@ -116,7 +116,7 @@
       "projectType": "library",
       "root": "projects/wn-utils",
       "sourceRoot": "projects/wn-utils/src",
-      "prefix": "lib",
+      "prefix": "wn",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
