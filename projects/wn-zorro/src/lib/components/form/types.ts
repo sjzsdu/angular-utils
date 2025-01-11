@@ -1,8 +1,9 @@
-import { Injector, TemplateRef, Type } from '@angular/core';
+import { EventEmitter, Injector, TemplateRef, Type } from '@angular/core';
 import { AsyncValidatorFn } from '@angular/forms';
 import { ValidatorFn } from '@angular/forms';
 import { NzFormControlComponent, NzFormLayoutType } from 'ng-zorro-antd/form';
 import { NzSelectOptionInterface } from 'ng-zorro-antd/select';
+import { Subject } from 'rxjs';
 
 export type ValidateStore = Record<string, ValidatorFn | ((...rest: any) => ValidatorFn)>;
 export type AsyncValidateStore = Record<string, AsyncValidatorFn>;
@@ -75,4 +76,14 @@ export interface FormModalData {
     control?: FormController;
     isSub?: boolean;
     name?: string;
+}
+
+export interface ComponentCommand {
+  type: string;
+  data?: any;
+}
+
+export interface CustomComponentCache {
+  commands: Subject<ComponentCommand>;
+  emitter: EventEmitter<any>;
 }

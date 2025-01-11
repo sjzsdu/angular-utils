@@ -1,0 +1,16 @@
+.modal-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 30px;
+    ::ng-deep {
+        .ant-btn:focus .anticon,
+        .ant-btn:active .anticon,
+        .ant-btn:focus .anticon > * {
+            color: inherit;
+        }
+    }
+    .drag-icon {
+        transform: rotate(90deg);
+    }
+}
