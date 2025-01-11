@@ -1,11 +1,4 @@
-import {
-  hexToRgb,
-  rgbToHex,
-  hslToRgb,
-  rgbToHsl,
-  hexToHsl,
-  hslToHex
-} from './color';
+import { hexToRgb, rgbToHex, hslToRgb, rgbToHsl, hexToHsl, hslToHex } from './color';
 
 describe('Color Utilities', () => {
   describe('hexToRgb', () => {

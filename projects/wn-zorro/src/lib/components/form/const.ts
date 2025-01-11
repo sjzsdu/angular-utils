@@ -1,4 +1,4 @@
-import { InjectionToken } from "@angular/core";
+import { InjectionToken } from '@angular/core';
 
 export const FORM_EMITTER = new InjectionToken('form_emmitter');
 export const FORM_COMMANDS = new InjectionToken('form_commands');

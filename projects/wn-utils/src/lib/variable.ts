@@ -107,13 +107,7 @@ export function isNil(value: unknown): value is null | undefined {
  * @returns True if value is a primitive
  */
 export function isPrimitive(value: unknown): boolean {
-  return (
-    isString(value) ||
-    isNumber(value) ||
-    isBoolean(value) ||
-    isNull(value) ||
-    isUndefined(value)
-  );
+  return isString(value) || isNumber(value) || isBoolean(value) || isNull(value) || isUndefined(value);
 }
 
 /**
@@ -122,10 +116,7 @@ export function isPrimitive(value: unknown): boolean {
  * @param constructor - The constructor function to check against
  * @returns True if value is instance of constructor
  */
-export function isInstanceOf<T>(
-  value: unknown,
-  constructor: new (...args: any[]) => T
-): value is T {
+export function isInstanceOf<T>(value: unknown, constructor: new (...args: any[]) => T): value is T {
   return value instanceof constructor;
 }
 
@@ -144,7 +135,6 @@ export function isPromise(value: unknown): value is Promise<unknown> {
   );
 }
 
-
 export function isAsyncFunction(fn: Function): boolean {
-  return isFunction(fn) && fn instanceof (async function() {}).constructor;
+  return isFunction(fn) && fn instanceof async function () {}.constructor;
 }

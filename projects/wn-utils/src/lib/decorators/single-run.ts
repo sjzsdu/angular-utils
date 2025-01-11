@@ -1,4 +1,4 @@
-import { isAsyncFunction } from "../variable";
+import { isAsyncFunction } from '../variable';
 
 /**
  * A decorator that ensures a method is only executed once.
@@ -10,17 +10,13 @@ import { isAsyncFunction } from "../variable";
  * @returns The modified descriptor with the method wrapped to ensure single execution.
  */
 export function singletonRun() {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
     const lockProperty = Symbol('isLocked');
 
     if (isAsyncFunction(originalMethod)) {
       console.log('You should use single run in a async function!');
-      return descriptor
+      return descriptor;
     }
 
     descriptor.value = async function (this: any, ...args: unknown[]) {
@@ -31,7 +27,6 @@ export function singletonRun() {
       this[lockProperty] = true;
 
       try {
-
         const result = await originalMethod.apply(this, args);
         return result;
       } catch (error) {

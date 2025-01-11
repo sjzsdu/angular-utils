@@ -13,7 +13,7 @@ const config: StorybookConfig = {
     name: '@storybook/angular',
     options: {},
   },
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     console.log(config);
 
     return config;

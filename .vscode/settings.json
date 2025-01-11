@@ -2,5 +2,10 @@
     "marscode.codeCompletionPro": {
         "enableCodeCompletionPro": true
     },
-    "marscode.enableInlineCommand": true
+    "marscode.enableInlineCommand": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "eslint.enable": true,
+    "eslint.run": "onSave",
+    "prettier.eslintIntegration": true
 }

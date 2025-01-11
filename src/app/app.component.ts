@@ -10,7 +10,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
   standalone: true,
   imports: [CommonModule, RouterOutlet, NzIconModule, NzLayoutModule, NzMenuModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  styleUrls: ['./app.component.less'],
 })
 export class AppComponent {
   isCollapsed = false;

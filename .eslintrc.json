@@ -1,0 +1,54 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:@angular-eslint/recommended",
+    "plugin:@angular-eslint/template/process-inline-templates",
+    "prettier"
+  ],
+  "ignorePatterns": ["projects/**/*", "src/index.html"],
+  "plugins": ["@angular-eslint", "prettier"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jasmine": true // 添加 Jasmine 环境
+  },
+  "globals": {
+    "console": "readonly" // 允许使用 console
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "@angular-eslint/no-empty-lifecycle-method": "off",
+    "@angular-eslint/component-selector": [
+      "error",
+      {
+        "type": "element",
+        "prefix": "app",
+        "style": "kebab-case"
+      }
+    ],
+    "@angular-eslint/directive-selector": [
+      "error",
+      {
+        "type": "attribute",
+        "prefix": "app",
+        "style": "camelCase"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@angular-eslint/component-class-suffix": "error",
+        "@angular-eslint/component-selector": "error"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "parser": "@angular-eslint/template-parser",
+      "plugins": ["@angular-eslint/template"],
+      "extends": ["plugin:@angular-eslint/template/recommended"]
+    }
+  ]
+}

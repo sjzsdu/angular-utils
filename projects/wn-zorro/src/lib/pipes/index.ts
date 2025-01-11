@@ -1,2 +1,2 @@
-export * from './label.pipe'
-export * from './pipes.module'
+export * from './label.pipe';
+export * from './pipes.module';

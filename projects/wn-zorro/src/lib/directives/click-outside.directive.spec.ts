@@ -10,7 +10,7 @@ import { By } from '@angular/platform-browser';
       <div class="excluded">Excluded</div>
     </div>
     <div class="outside">Outside</div>
-  `
+  `,
 })
 class TestComponent {
   excludeClass = 'excluded';
@@ -29,7 +29,7 @@ describe('ClickOutsideDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TestComponent],
-      imports: [ClickOutsideDirective]
+      imports: [ClickOutsideDirective],
     });
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;

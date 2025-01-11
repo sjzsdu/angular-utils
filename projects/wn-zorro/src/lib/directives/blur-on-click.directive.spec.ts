@@ -4,7 +4,7 @@ import { Component, ElementRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 @Component({
-  template: `<div appBlurOnClick>Test</div>`
+  template: `<div appBlurOnClick>Test</div>`,
 })
 class TestComponent {}
 
@@ -15,7 +15,7 @@ describe('BlurOnClickDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TestComponent],
-      imports: [BlurOnClickDirective]
+      imports: [BlurOnClickDirective],
     });
     fixture = TestBed.createComponent(TestComponent);
     divElement = fixture.debugElement.query(By.css('div')).nativeElement;

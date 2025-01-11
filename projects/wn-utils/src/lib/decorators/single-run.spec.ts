@@ -8,7 +8,7 @@ describe('singletonRun Decorator', () => {
     @singletonRun()
     async testMethod() {
       this.calls++;
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       return this.calls;
     }
   }

@@ -1,40 +1,40 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 @Component({
-    template: '',
+  template: '',
 })
 export abstract class BaseAccessorComponent<T> implements ControlValueAccessor {
-    public innerValue?: T;
+  public innerValue?: T;
 
-    onChange: (value: T) => void = () => {};
-    onTouched: (value: T) => void = () => {};
-    [key: string]: any;
-    @Output() ngModelChange = new EventEmitter<T>();
+  onChange: (value: T) => void = () => {};
+  onTouched: (value: T) => void = () => {};
+  [key: string]: any;
+  @Output() ngModelChange = new EventEmitter<T>();
 
-    constructor() {}
+  constructor() {}
 
-    writeValue(value: T): void {
-        this.innerValue = value;
+  writeValue(value: T): void {
+    this.innerValue = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  protected change(value: T): void {
+    if (this.onChange) {
+      this.onChange(value);
     }
+    this.ngModelChange.emit(value);
+  }
 
-    registerOnChange(fn: any): void {
-        this.onChange = fn;
+  protected touched(value: T): void {
+    if (this.onTouched) {
+      this.onTouched(value);
     }
-
-    registerOnTouched(fn: any): void {
-        this.onTouched = fn;
-    }
-
-    protected change(value: T): void {
-        if (this.onChange) {
-            this.onChange(value);
-        }
-        this.ngModelChange.emit(value);
-    }
-
-    protected touched(value: T): void {
-        if (this.onTouched) {
-            this.onTouched(value);
-        }
-    }
+  }
 }
