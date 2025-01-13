@@ -17,6 +17,7 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 const defaultShowUploadList = { showRemoveIcon: true, showDownloadIcon: false };
 
 @Component({
+  standalone: false,
   selector: 'wn-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.less'],

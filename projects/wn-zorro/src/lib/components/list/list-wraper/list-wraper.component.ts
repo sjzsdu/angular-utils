@@ -18,6 +18,7 @@ import { newInjector } from '../../../helper';
 
 export type ContentType<T> = ComponentType<T> | TemplateRef<T> | string;
 @Component({
+  standalone: false,
   selector: 'wn-list-wraper',
   templateUrl: './list-wraper.component.html',
   styleUrls: ['./list-wraper.component.less'],

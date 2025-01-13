@@ -47,6 +47,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { FORM_COMMANDS, FORM_DATA, FORM_EMITTER, FORM_PARAMS } from './const';
 
 @Component({
+  standalone: false,
   selector: 'wn-form',
   templateUrl: './form.component.html',
   styleUrl: './form.component.less',

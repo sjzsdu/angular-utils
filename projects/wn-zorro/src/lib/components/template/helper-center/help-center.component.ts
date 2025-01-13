@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'wn-help-center',
   templateUrl: './help-center.component.html',
   styleUrls: ['./help-center.component.less'],

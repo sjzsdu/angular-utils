@@ -3,6 +3,7 @@ import { TemplateService } from '../template.service';
 import { ModalHeader } from '../types';
 
 @Component({
+  standalone: false,
   selector: 'wn-header-template',
   templateUrl: './header-template.component.html',
   styleUrls: ['./header-template.component.less'],

@@ -25,6 +25,7 @@ export interface ArrayItemForm {
 }
 
 @Component({
+  standalone: false,
   selector: 'wn-array-form',
   templateUrl: './array-form.component.html',
   styleUrls: ['./array-form.component.less'],

@@ -14,6 +14,7 @@ export interface tabData {
 }
 
 @Component({
+  standalone: false,
   selector: 'wn-tab-form',
   templateUrl: './tab-form.component.html',
   styleUrl: './tab-form.component.less',

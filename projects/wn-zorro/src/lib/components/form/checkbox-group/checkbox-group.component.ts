@@ -8,6 +8,7 @@ export type CheckBoxOption = NzSelectOptionInterface | string;
 export type CheckBoxValue = number | string;
 
 @Component({
+  standalone: false,
   selector: 'wn-checkbox-group',
   templateUrl: './checkbox-group.component.html',
   styleUrls: ['./checkbox-group.component.less'],

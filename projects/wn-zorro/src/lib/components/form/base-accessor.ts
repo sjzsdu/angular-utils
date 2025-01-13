@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-@Component({
-  template: '',
-})
+@Component({ standalone: false, template: '' })
 export abstract class BaseAccessorComponent<T> implements ControlValueAccessor {
   public innerValue?: T;
 

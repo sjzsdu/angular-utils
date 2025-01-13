@@ -5,6 +5,7 @@ import { python } from '@codemirror/lang-python';
 import { MirrorBaseComponent } from '../mirror-base';
 
 @Component({
+  standalone: false,
   selector: 'wn-code-mirror-editor',
   templateUrl: './code-mirror-editor.component.html',
   styleUrl: './code-mirror-editor.component.less',

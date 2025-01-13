@@ -37,6 +37,7 @@ export function getColor(colors: string[]) {
  * Allows users to select a color from a predefined list of colors
  */
 @Component({
+  standalone: false,
   selector: 'wn-color-select',
   templateUrl: './color-select.component.html',
   styleUrls: ['./color-select.component.less'],

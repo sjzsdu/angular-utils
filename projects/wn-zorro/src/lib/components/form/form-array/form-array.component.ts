@@ -16,6 +16,7 @@ import { FormComponent } from '../form.component';
 import { debounceExecute } from 'wn-utils';
 
 @Component({
+  standalone: false,
   selector: 'wn-form-array',
   templateUrl: './form-array.component.html',
   styleUrl: './form-array.component.less',

@@ -10,6 +10,7 @@ export interface SelectOption {
 }
 
 @Component({
+  standalone: false,
   selector: 'wn-sorted-select',
   templateUrl: './sorted-select.component.html',
   styleUrl: './sorted-select.component.less',

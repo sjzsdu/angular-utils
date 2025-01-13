@@ -7,6 +7,7 @@ import { MirrorBaseComponent } from '../mirror-base';
 import { MarkdownService } from './markdown.service';
 
 @Component({
+  standalone: false,
   selector: 'wn-markdown-editor',
   templateUrl: './markdown-editor.component.html',
   styleUrls: ['./markdown-editor.component.less'],

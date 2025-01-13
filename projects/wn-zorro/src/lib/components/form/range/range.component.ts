@@ -32,6 +32,7 @@ const defaultConfig = {
 };
 
 @Component({
+  standalone: false,
   selector: 'wn-range',
   templateUrl: './range.component.html',
   styleUrls: ['./range.component.less'],

@@ -30,6 +30,7 @@ const defaultConfig = {
 };
 
 @Component({
+  standalone: false,
   selector: 'wn-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.less'],

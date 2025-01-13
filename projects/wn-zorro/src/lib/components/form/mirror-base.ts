@@ -18,9 +18,7 @@ import { basicSetup, EditorView } from 'codemirror';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { BaseAccessorComponent } from './base-accessor';
 
-@Component({
-  template: '',
-})
+@Component({ standalone: false, template: '' })
 export abstract class MirrorBaseComponent
   extends BaseAccessorComponent<string>
   implements AfterViewInit, OnDestroy, OnInit
