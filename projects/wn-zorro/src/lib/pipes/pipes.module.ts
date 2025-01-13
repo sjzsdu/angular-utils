@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { LabelPipe } from './label.pipe';
 
-const pipes = [LabelPipe];
 @NgModule({
-  declarations: pipes,
+  declarations: [LabelPipe],
   imports: [],
-  exports: pipes,
+  exports: [LabelPipe],
 })
 export class PipesModule {}

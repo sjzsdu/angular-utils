@@ -42,6 +42,7 @@ const labelFuncs: Record<string, Function> = {
 
 @Pipe({
   name: 'label',
+  standalone: false,
 })
 export class LabelPipe implements PipeTransform {
   transform(value: string, ...args: string[]): string {
