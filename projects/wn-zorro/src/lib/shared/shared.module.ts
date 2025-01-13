@@ -65,6 +65,8 @@ const sharedModules = [
   NzCardModule,
   NzCascaderModule,
   NzEmptyModule,
+  NzCheckboxModule,
+  NzSwitchModule,
 ];
 
 @NgModule({

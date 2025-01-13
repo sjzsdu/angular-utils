@@ -1,9 +1,8 @@
 /*
  * Public API Surface of wn-zorro
  */
-
-export * from './lib/directives/blur-on-click.directive';
-export * from './lib/directives/click-outside.directive';
-export * from './lib/directives/scrollto.directive';
-export * from './lib/components/form/form.module';
-export * from './lib/components/form/form.component';
+export * from './lib/directives/';
+export * from './lib/components/';
+export * from './lib/pipes/';
+export * from './lib/shared/shared.module';
+export * from './lib/helper';

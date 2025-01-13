@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  header {
+    width: 100%;
+    text-align: right;
+    margin-bottom: 10px;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    .item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      background-color: white;
+      .content {
+        flex: 1;
+      }
+      .del-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        border: 1px solid var(--unnamed, #e6e8eb);
+        margin-left: 8px;
+        color: #4c5766;
+      }
+      .drag-icon {
+        display: block;
+        padding: 10px;
+      }
+    }
+  }
+  footer {
+    width: 100%;
+  }
+}

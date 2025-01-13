@@ -1,0 +1,14 @@
+<nz-upload
+  [ngClass]="{ 'has-error': hasError }"
+  [nzAccept]="_accept"
+  [nzBeforeUpload]="beforeUpload"
+  [(nzFileList)]="fileList"
+  [nzShowUploadList]="_showUploadList"
+  [nzCustomRequest]="customRequest"
+  nzType="drag"
+>
+  <ng-container *nzStringTemplateOutlet="content || defaultContent"></ng-container>
+</nz-upload>
+<ng-template #defaultContent>
+  <p class="ant-upload-text">Click or drag file to this area to upload</p>
+</ng-template>

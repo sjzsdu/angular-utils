@@ -1,0 +1,38 @@
+<div [ngClass]="{ 'show-reorder': rows && rows.length >= 2 }">
+  <header *ngIf="rows && rows.length >= 2">
+    <label>
+      <i nz-icon nzType="swap"></i>
+      Reorder
+      <nz-switch [(ngModel)]="reorderEnabled"></nz-switch>
+    </label>
+  </header>
+  <main>
+    @if (rows.length) {
+      <div cdkDropList [cdkDropListData]="rows!" (cdkDropListDropped)="onDrop($event)">
+        @for (row of rows; track row.id; let i = $index) {
+          <div cdkDrag class="item">
+            @if (reorderEnabled) {
+              <span class="drag-icon" nz-icon nzType="drag" cdkDragHandle></span>
+            }
+            <div class="content">
+              <ng-template [cdkPortalOutlet]="getPortal(row)"></ng-template>
+            </div>
+            @if (!reorderEnabled) {
+              <button nz-button nzType="default" class="del-icon" (click)="onDel(row)">
+                <span nz-icon nzType="delete"></span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    }
+  </main>
+  <footer>
+    <button nz-button nzType="dashed" nzBlock (click)="onAdd()">
+      <i nz-icon nzType="plus"></i>
+      {{ title }}
+    </button>
+  </footer>
+</div>
+
+<ng-template #templatePortalContent>You need pass the content</ng-template>

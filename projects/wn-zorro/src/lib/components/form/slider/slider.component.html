@@ -1,0 +1,33 @@
+<div class="row">
+    <nz-input-number
+        class="input left"
+        *ngIf="_config.showInput"
+        [(ngModel)]="min"
+        (ngModelChange)="onChangeVal()"
+        [disabled]="nzDisabled"
+        nzSize="small"
+        [nzMin]="minVal"
+        [nzMax]="min_maxVal"
+        [nzPrecision]="_config.precision"
+        [nzStep]="_config.step"></nz-input-number>
+    <nz-slider
+        class="main-slider"
+        [nzMax]="slide_max"
+        [nzMin]="slide_min"
+        [nzStep]="_config.step"
+        [disabled]="nzDisabled"
+        nzRange
+        [(ngModel)]="innerValue"
+        (ngModelChange)="slideChange($event)"></nz-slider>
+    <nz-input-number
+        class="input right"
+        *ngIf="_config.showInput"
+        [(ngModel)]="max"
+        (ngModelChange)="onChangeVal()"
+        nzSize="small"
+        [disabled]="nzDisabled"
+        [nzMin]="max_minVal"
+        [nzMax]="maxVal"
+        [nzPrecision]="_config.precision"
+        [nzStep]="_config.step"></nz-input-number>
+</div>

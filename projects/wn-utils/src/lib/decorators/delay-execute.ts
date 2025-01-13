@@ -2,7 +2,7 @@
  * Delays the execution of a method by the specified time
  * @param delayTime - Time in milliseconds to delay execution
  */
-export function DelayExecute(delayTime: number): MethodDecorator {
+export function delayExecute(delayTime: number): MethodDecorator {
   return function (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 

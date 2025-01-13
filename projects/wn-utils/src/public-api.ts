@@ -3,6 +3,8 @@
  */
 
 export * from './lib/color';
+export * from './lib/key';
+export * from './lib/number';
 export * from './lib/file';
 export * from './lib/str';
 export * from './lib/variable';

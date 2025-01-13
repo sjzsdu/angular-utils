@@ -1,0 +1,27 @@
+<div class="wrap">
+  @for (color of _options; track color.value) {
+    <div class="item-wrap">
+      <div
+        class="color-item"
+        [style.width.px]="size()"
+        [style.height.px]="size()"
+        [style.background]="color.label"
+        (click)="onClick(color)"
+      >
+        @if (isImage()) {
+          <img class="image" [src]="color.label" />
+        }
+        @if (color.value === innerValue) {
+          <span class="icon" nz-icon nzType="ng-zorro:selected2" nzTheme="outline"> </span>
+        }
+      </div>
+      @if (showValue()) {
+        <div nz-tooltip [nzTooltipTitle]="color.value" class="value-text" [style.maxWidth.px]="size()">
+          {{ color.value }}
+        </div>
+      }
+    </div>
+  } @empty {
+    <div>No colors available</div>
+  }
+</div>
