@@ -201,26 +201,26 @@ export function ValidateReactiveFormData(items: FormItem[], row: any) {
             const first = result[firstKey];
             errors[item.name] =
               typeof first === 'string'
-                ? first.replace('{label}', item.label ?? item.name)
+                ? first.replace('{label}', item?.label?.label ?? item.name)
                 : `the ${firstKey} of ${item.label ?? item.name} should be ${first[firstKey]}`;
           }
         }
       }
-      if ((item?.componentInstance as any)?.ValidateData) {
-        const error = (item?.componentInstance as any).ValidateData(row[item.name]);
+      if ((item?.params?.componentInstance as any)?.ValidateData) {
+        const error = (item?.params?.componentInstance as any).ValidateData(row[item.name]);
         if (error) {
           errors[item.name] = error;
         }
       }
-      if (item?.children?.length) {
+      if (item?.params?.children?.length) {
         if (item.type === 'arrayForm' || item.type === 'formArray') {
           if (Array.isArray(row[item.name])) {
             for (const itemRow of row[item.name]) {
-              validateForm(item.children, itemRow);
+              validateForm(item.params.children, itemRow);
             }
           }
         } else {
-          validateForm(item.children, row[item.name]);
+          validateForm(item.params.children, row[item.name]);
         }
       }
     }

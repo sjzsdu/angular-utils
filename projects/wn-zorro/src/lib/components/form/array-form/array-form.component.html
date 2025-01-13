@@ -1,6 +1,6 @@
 @for (form of forms; track form.id; let i = $index) {
   <div class="form-wrap">
-    @if (isDropDown) {
+    @if (isDropDown()) {
       <header class="header">
         <i class="icon" nz-icon [nzType]="form.dropdown ? 'down' : 'right'" (click)="onDrop(form)"></i>
       </header>
@@ -9,7 +9,7 @@
       <div class="content">
         <wn-form
           class="form-comp"
-          [itemSpan]="itemSpan"
+          [itemSpan]="itemSpan()"
           [isSub]="true"
           [items]="form.items"
           [row]="form.initRow"
@@ -36,6 +36,6 @@
 <div class="add-row">
   <button nz-button nzType="default" (click)="addRow()">
     <span nz-icon nzType="plus" nzTheme="outline"></span>
-    {{ addTitle }}
+    {{ addTitle() }}
   </button>
 </div>

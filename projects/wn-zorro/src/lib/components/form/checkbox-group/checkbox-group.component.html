@@ -1,3 +1,2 @@
-@if (options) {
-  <nz-checkbox-group [ngModel]="options" (ngModelChange)="onCheck($event)"> </nz-checkbox-group>
-}
+<nz-checkbox-group [nzOptions]="computedOptions()" [(ngModel)]="innerValue" (ngModelChange)="onCheck($event)">
+</nz-checkbox-group>

@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
-  Injector,
-  Input,
-  Output,
-  ViewChild,
+  inject,
+  input,
   OnDestroy,
   OnInit,
+  output,
+  signal,
+  ViewChild,
 } from '@angular/core';
 import { EditorState } from '@codemirror/state';
 import { KeyBinding, keymap } from '@codemirror/view';
@@ -18,27 +16,35 @@ import { basicSetup, EditorView } from 'codemirror';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { BaseAccessorComponent } from './base-accessor';
 
-@Component({ standalone: false, template: '' })
+@Component({
+  standalone: true,
+  template: '',
+})
 export abstract class MirrorBaseComponent
   extends BaseAccessorComponent<string>
   implements AfterViewInit, OnDestroy, OnInit
 {
   @ViewChild('editor') editorElement!: ElementRef<HTMLDivElement>;
   editorView!: EditorView;
-  @Output() execute = new EventEmitter<EditorView>();
-  @Output() mode = new EventEmitter<EditorView>();
-  @Input() minHeight = '0px';
-  @Input() initCode = '';
-  data: any;
+
+  execute = output<EditorView>();
+  mode = output<EditorView>();
+
+  minHeight = input('0px');
+  initCode = input('');
+
+  data = inject(NZ_MODAL_DATA, { optional: true });
+
+  innerValue = signal('');
 
   ctrlEnterBinding: KeyBinding;
   shiftEnterBinding: KeyBinding;
   escMBinding: KeyBinding;
   cmdEnterBinding: KeyBinding;
 
-  constructor(injector: Injector) {
+  constructor() {
     super();
-    this.data = injector.get(NZ_MODAL_DATA, null);
+
     this.shiftEnterBinding = {
       key: 'Shift-Enter',
       run: (view: EditorView) => {
@@ -53,7 +59,6 @@ export abstract class MirrorBaseComponent
         return true;
       },
     };
-
     this.escMBinding = {
       key: 'Ctrl-w',
       run: (view: EditorView) => {
@@ -61,7 +66,6 @@ export abstract class MirrorBaseComponent
         return true;
       },
     };
-
     this.cmdEnterBinding = {
       key: 'Mod-Enter',
       run: (view: EditorView) => {
@@ -73,32 +77,32 @@ export abstract class MirrorBaseComponent
 
   ngOnInit(): void {
     if (this.data?.initCode) {
-      this.initCode = this.data?.initCode;
+      this.initCode.set(this.data.initCode);
     }
-    if (!this.innerValue) {
-      this.innerValue = this.initCode;
+    if (!this.innerValue()) {
+      this.innerValue.set(this.initCode());
     }
   }
 
   override writeValue(value: string): void {
-    this.innerValue = value || this.initCode;
+    this.innerValue.set(value || this.initCode());
   }
 
   ngAfterViewInit(): void {
     const state = EditorState.create({
-      doc: this.innerValue,
+      doc: this.innerValue(),
       extensions: [
         basicSetup,
         this.getLanguageExtension(),
         keymap.of([this.ctrlEnterBinding, this.shiftEnterBinding, this.cmdEnterBinding, this.escMBinding]),
         EditorView.updateListener.of((update: any) => {
           if (update.docChanged) {
-            this.innerValue = update.state.doc.toString();
+            this.innerValue.set(update.state.doc.toString());
             this.doChange();
           }
         }),
         EditorView.theme({
-          '&': { 'min-height': this.minHeight, width: '100%', border: '1px solid lightgray' },
+          '&': { 'min-height': this.minHeight(), width: '100%', border: '1px solid lightgray' },
           '.cm-editor': { height: 'auto' },
         }),
       ],
@@ -131,6 +135,6 @@ export abstract class MirrorBaseComponent
   }
 
   protected doChange() {
-    this.change(this.innerValue!);
+    this.change(this.innerValue());
   }
 }

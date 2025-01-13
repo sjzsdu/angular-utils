@@ -1,4 +1,14 @@
-import { ChangeDetectorRef, Component, Injector, Input, QueryList, ViewChildren, forwardRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Injector,
+  Input,
+  QueryList,
+  ViewChildren,
+  effect,
+  forwardRef,
+  input,
+} from '@angular/core';
 import { BaseAccessorComponent } from '../base-accessor';
 import { FormItem } from '../types';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';
@@ -28,47 +38,38 @@ export interface ArrayItemForm {
   ],
 })
 export class ArrayFormComponent extends BaseAccessorComponent<any[]> {
-  @Input() items: FormItem[] | undefined;
-  @Input()
-  set itemCount(num: number) {
-    if (!this.items) {
-      console.error('The form items is required');
-      return;
-    }
-    this.initRows(num);
-  }
-  @Input() isDropDown: boolean = false;
-  @Input() itemSpan: number = 24;
-  @Input() addTitle: string = 'Add One Row';
+  name = input<string>();
+  items = input<FormItem[]>();
+  isDropDown = input(false);
+  itemSpan = input(24);
+  itemCount = input(2);
+  addTitle = input<string>('Add One Row');
 
   @ViewChildren(FormComponent) formsRef?: QueryList<FormComponent>;
 
   forms: ArrayItemForm[] = [];
   rows: any[] = [];
 
-  constructor(
-    private destroy$: NzDestroyService,
-    private injector: Injector,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     super();
+    effect(() => {
+      this.forms = new Array(this.itemCount()).fill(0).map(() => ({
+        items: this.mapItems(),
+        id: generateUUID(),
+      }));
+    });
+  }
+
+  private mapItems(): FormItem[] {
+    return (this.items() || []).map((item) => ({ ...item }));
   }
 
   override writeValue(value: any): void {
     this.innerValue = value || [];
     this.forms = this.innerValue!.map((item) => {
       return {
-        items: [...(this.items || []).map((item) => ({ ...item }))],
+        items: this.mapItems(),
         initRow: item,
-        id: generateUUID(),
-      };
-    });
-  }
-
-  initRows(num: number) {
-    this.forms = new Array(num).fill(0).map((_) => {
-      return {
-        items: [...(this.items || []).map((item) => ({ ...item }))],
         id: generateUUID(),
       };
     });
@@ -109,7 +110,7 @@ export class ArrayFormComponent extends BaseAccessorComponent<any[]> {
   addRow(): void {
     this.forms.push({
       id: generateUUID(),
-      items: [...(this.items || []).map((item) => ({ ...item }))],
+      items: this.mapItems(),
       dropdown: false,
     });
     this.rows.push({});

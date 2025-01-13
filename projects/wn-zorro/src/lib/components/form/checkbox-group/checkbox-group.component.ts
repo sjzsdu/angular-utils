@@ -1,10 +1,8 @@
-import { Component, OnInit, forwardRef, input } from '@angular/core';
+import { Component, computed, forwardRef, input } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseAccessorComponent } from '../base-accessor';
-import { NzSelectOptionInterface } from 'ng-zorro-antd/select';
-import { NzCheckBoxOptionInterface } from 'ng-zorro-antd/checkbox';
+import { NzCheckboxOption } from 'ng-zorro-antd/checkbox';
 
-export type CheckBoxOption = NzSelectOptionInterface | string;
 export type CheckBoxValue = number | string;
 
 @Component({
@@ -20,35 +18,19 @@ export type CheckBoxValue = number | string;
     },
   ],
 })
-export class CheckboxGroupComponent extends BaseAccessorComponent<CheckBoxValue[]> implements OnInit {
-  options = input<CheckBoxOption[]>();
-  _options?: NzCheckBoxOptionInterface[];
+export class CheckboxGroupComponent extends BaseAccessorComponent<CheckBoxValue[]> {
+  options = input<NzCheckboxOption[]>([]);
 
-  ngOnInit(): void {
-    this.updateOptions();
-  }
+  // Computed options with checked state
+  computedOptions = computed(() => {
+    const currentValue = this.innerValue ?? [];
+    return this.options().map((option) => ({
+      ...option,
+      checked: currentValue.includes(option.value),
+    }));
+  });
 
-  override writeValue(value?: CheckBoxValue[]): void {
-    if (value?.length) {
-      this.innerValue = value;
-      this.updateOptions();
-    }
-  }
-  updateOptions() {
-    if (!this.options()?.length) {
-      return;
-    }
-    this._options = this.options()?.map((item) => {
-      const value = typeof item === 'string' ? item : (item.value as string);
-      return {
-        label: (typeof item === 'string' ? item : item.label) as string,
-        value,
-        checked: this.innerValue?.includes(value),
-      };
-    });
-  }
-
-  onCheck(options: NzCheckBoxOptionInterface[]) {
-    this.change(options.filter((item) => item.checked).map((item) => item.value));
+  onCheck(checkedValues: CheckBoxValue[]) {
+    this.change(checkedValues);
   }
 }

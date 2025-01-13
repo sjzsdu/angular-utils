@@ -1,22 +1,22 @@
 import {
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
-  forwardRef,
-  Injector,
-  Input,
+  effect,
+  inject,
+  input,
+  model,
   OnInit,
   QueryList,
+  signal,
   ViewChildren,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';
-import { BaseAccessorComponent } from '../base-accessor';
 import { FormItem } from '../types';
 import { FormComponent } from '../form.component';
 import { debounceExecute } from 'wn-utils';
 
 @Component({
-  standalone: false,
   selector: 'wn-form-array',
   templateUrl: './form-array.component.html',
   styleUrl: './form-array.component.less',
@@ -24,47 +24,64 @@ import { debounceExecute } from 'wn-utils';
     NzDestroyService,
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormArrayComponent),
+      useExisting: FormArrayComponent,
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
-export class FormArrayComponent extends BaseAccessorComponent<any[]> implements OnInit {
-  @Input() items: FormItem[] | undefined;
-  @Input()
-  set itemCount(num: number) {
-    if (!this.items) {
-      console.error('The form items is required');
-      return;
-    }
-    this.initRows(num);
-  }
-  @Input() isDropDown = false;
-  @Input() itemSpan = 24;
-  @Input() addTitle = 'Add One Row';
+export class FormArrayComponent implements OnInit, ControlValueAccessor {
+  items = input<FormItem[]>();
+  isDropDown = input(false);
+  itemSpan = input(24);
+  addTitle = input('Add One Row');
+
   @ViewChildren(FormComponent) formsRef?: QueryList<FormComponent>;
 
-  constructor(
-    private destroy$: NzDestroyService,
-    private injector: Injector,
-    private cdr: ChangeDetectorRef
-  ) {
-    super();
-  }
+  private destroy$ = inject(NzDestroyService);
 
-  override writeValue(value: any[]): void {
-    console.log('writeValue n formarray', value);
-    this.innerValue = value || [];
+  innerValue = signal<any[]>([]);
+  disabled = signal(false);
+
+  itemCount = model(0);
+
+  onChange = (value: any[]) => {};
+  onTouched = () => {};
+
+  constructor() {
+    effect(() => {
+      if (this.itemCount() > 0 && this.items()) {
+        this.initRows(this.itemCount());
+      }
+    });
   }
 
   ngOnInit() {
-    if (!this.innerValue) {
-      this.innerValue = [];
+    if (this.innerValue().length === 0) {
+      this.innerValue.set([]);
     }
   }
 
+  writeValue(value: any[]): void {
+    console.log('writeValue in formarray', value);
+    this.innerValue.set(value || []);
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+  }
+
   formChange(row: Record<string, any>, newRow: Record<string, any>) {
-    console.log('formChange', row, newRow, this.innerValue);
+    console.log('formChange', row, newRow, this.innerValue());
     for (const o in newRow) {
       if (newRow[o] !== '' && newRow[o] !== null && newRow[o] !== undefined) {
         row[o] = newRow[o];
@@ -74,19 +91,21 @@ export class FormArrayComponent extends BaseAccessorComponent<any[]> implements 
   }
 
   listChange(rows: any[]) {
-    this.innerValue = rows;
-    console.log('listChange', this.innerValue);
+    this.innerValue.set(rows);
+    console.log('listChange', this.innerValue());
     this.doChange();
   }
 
   @debounceExecute(200)
   doChange() {
-    this.change(this.innerValue!);
+    this.onChange(this.innerValue());
   }
 
   initRows(num: number) {
-    if (this.innerValue) {
-      this.innerValue = Array.from({ length: num }, (_, i) => ({}));
+    if (!this.items()) {
+      console.error('The form items is required');
+      return;
     }
+    this.innerValue.set(Array.from({ length: num }, () => ({})));
   }
 }
