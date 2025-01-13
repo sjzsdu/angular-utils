@@ -24,7 +24,7 @@
     "baseUrl": "./",
     "paths": {
       "wn-utils": ["projects/wn-utils/src/index"],
-      "wn-zorro/*": ["projects/wn-zorro/src/*"]
+      "wn-zorro": ["projects/wn-zorro/src/index"]
     }
   },
   "angularCompilerOptions": {
