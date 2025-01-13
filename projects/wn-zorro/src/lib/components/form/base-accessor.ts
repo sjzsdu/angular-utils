@@ -1,15 +1,14 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 @Component({ standalone: false, template: '' })
 export abstract class BaseAccessorComponent<T> implements ControlValueAccessor {
-  public innerValue?: T;
+  innerValue = model<T>();
 
   onChange: (value: T) => void = () => {};
   onTouched: (value: T) => void = () => {};
-  [key: string]: any;
 
   writeValue(value: T): void {
-    this.innerValue = value;
+    this.innerValue.set(value);
   }
 
   registerOnChange(fn: any): void {

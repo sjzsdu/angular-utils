@@ -253,7 +253,7 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
 
     const validators = getValidator(item?.validates, item?.validatesArgs);
     const asyncValidators = getAsyncValidator(item?.asyncValidates);
-    if (item.injector) {
+    if (item.type === 'custom') {
       const emitter = new EventEmitter();
       const commands = new Subject<ComponentCommand>();
       this.customComponents[item.name] = { emitter, commands };
@@ -266,9 +266,9 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
       if (item.params) {
         providers.push({ provide: FORM_PARAMS, useValue: item.params });
       }
-      item.injector = Injector.create({
+      item.params.injector = Injector.create({
         providers,
-        parent: item.injector,
+        parent: item.params.injector,
       });
       emitter.pipe(takeUntil(this.destroy$)).subscribe((val) => {
         this.updateCustomItem(item, val);
@@ -342,26 +342,6 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
     return row[name] ?? defaults;
   }
 
-  checkControl(item: FormItem) {
-    const { resets } = this._control() || {};
-    const { name, options } = item;
-    const reset = resets?.find((rItem) => rItem.field === name);
-    if (reset) {
-      for (const column of reset.columns) {
-        const control = this.validateForm?.controls[column];
-        if (control) {
-          if (!options?.length) {
-            control?.reset();
-          }
-          if (!options?.some((item: any) => item === control.value || item.value === control.value)) {
-            control.reset();
-          }
-        }
-      }
-      this.cdr.detectChanges();
-    }
-  }
-
   // @delayExecute(30)
   setControl() {
     const { hides, disableds, resets } = this._control() || {};
@@ -399,15 +379,15 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
         for (const column of columns) {
           const item = this._items().find((sItem) => sItem.name === column);
           const control = this.validateForm?.controls[column];
-          if (control && item) {
-            const { options } = item!;
-            if (!options?.length) {
-              control?.reset();
-            }
-            if (!options?.some((item: any) => item === control.value || item.value === control.value)) {
-              control.reset();
-            }
-          }
+          // if (control && item) {
+          //   const { options } = item!;
+          //   if (!options?.length) {
+          //     control?.reset();
+          //   }
+          //   if (!options?.some((item: any) => item === control.value || item.value === control.value)) {
+          //     control.reset();
+          //   }
+          // }
         }
         this.cdr.detectChanges();
       });
@@ -574,12 +554,12 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
         const val = str['requiredLength'] ?? str[key];
         str = `the ${key} of the {label} should be ${val}`;
       }
-      return str.replace(/{([^}]+)}/g, (match: string, variable: string) => {
-        if (variable === 'label') {
-          return item[variable] || item.name || match;
-        }
-        return item[variable] || match;
-      });
+      // return str.replace(/{([^}]+)}/g, (match: string, variable: string) => {
+      //   if (variable === 'label') {
+      //     return item[variable] || item.name || match;
+      //   }
+      //   return item[variable] || match;
+      // });
     });
   }
 
@@ -593,12 +573,6 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
     if (subForms) {
       for (const form of subForms) {
         form.setShowError(bool);
-      }
-    }
-
-    if (this['arrayForms']) {
-      for (const arrayForm of this['arrayForms']) {
-        arrayForm.setShowError(bool);
       }
     }
 
@@ -627,16 +601,10 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
   }
 
   formValid() {
-    if (!this['inited']) {
-      return false;
-    }
     this.setShowError(true);
     let result: any = this.validateForm?.status === 'VALID';
     if (this.subForms) {
       result = result && this.subForms().every((form: any) => form.formValid());
-    }
-    if (this['arrayForms']) {
-      result = result && this['arrayForms'].toArray().every((form: any) => form.formValid());
     }
     if (Object.keys(this.customError)?.length) {
       return false;
@@ -648,16 +616,5 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
     );
     result = result && res === false;
     return result;
-  }
-
-  getContent(item: FormItem) {
-    if (!item.content) {
-      return '';
-    }
-    if (typeof item.content === 'function') {
-      return item.content.call(this);
-    } else {
-      return item.content;
-    }
   }
 }

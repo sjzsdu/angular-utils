@@ -4,17 +4,6 @@ import { ValidatorFn } from '@angular/forms';
 import { NzFormLayoutType } from 'ng-zorro-antd/form';
 import { NzSelectModeType } from 'ng-zorro-antd/select';
 import { Subject } from 'rxjs';
-import { ColorSelectComponent } from './color-select/color-select.component';
-import { ArrayFormComponent } from './array-form/array-form.component';
-import { CheckboxGroupComponent } from './checkbox-group/checkbox-group.component';
-import { CodeMirrorEditorComponent } from './code-mirror-editor/code-mirror-editor.component';
-import { FormArrayComponent } from './form-array/form-array.component';
-import { MarkdownEditorComponent } from './markdown-editor/markdown-editor.component';
-import { RangeComponent, RangeConfig } from './range/range.component';
-import { SliderComponent, SliderConfig } from './slider/slider.component';
-import { SortedSelectComponent } from './sorted-select/sorted-select.component';
-import { TabFormComponent } from './tab-form/tab-form.component';
-import { UploadComponent } from './upload/upload.component';
 import { NzAutosizeDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzCascaderComponent } from 'ng-zorro-antd/cascader';
@@ -29,17 +18,6 @@ export type ExtractInputTypes<T> = {
       ? U
       : never;
 };
-export type IColorSelect = ExtractInputTypes<ColorSelectComponent>;
-export type IArrayForm = ExtractInputTypes<ArrayFormComponent>;
-export type ICheckboxGroup = ExtractInputTypes<CheckboxGroupComponent>;
-export type ICodeMirrorEditor = ExtractInputTypes<CodeMirrorEditorComponent>;
-export type IFormArray = ExtractInputTypes<FormArrayComponent>;
-export type IMarkdownEditor = ExtractInputTypes<MarkdownEditorComponent>;
-export type IRange = ExtractInputTypes<RangeComponent>;
-export type ISlider = ExtractInputTypes<SliderComponent>;
-export type ISortedSelect = ExtractInputTypes<SortedSelectComponent>;
-export type ITabForm = ExtractInputTypes<TabFormComponent>;
-export type IUpload = ExtractInputTypes<UploadComponent>;
 
 type IInputGroup = Pick<NzInputGroupComponent, 'nzAddOnBefore' | 'nzAddOnAfter'>;
 
@@ -55,8 +33,6 @@ export type ComponentParamsMap = {
   textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
   number: IInputGroup & ExtractInputTypes<NzInputNumberComponent>;
   checkbox: { tooltip: string; label: string };
-  colorSelect: IColorSelect;
-  checkboxGroup: ICheckboxGroup;
   cascade: Pick<NzCascaderComponent, 'nzOptions'> & IInputGroup;
   select: {
     nzMode?: NzSelectModeType;
@@ -67,36 +43,15 @@ export type ComponentParamsMap = {
     };
   };
   radioGroup: Pick<NzRadioGroupComponent, 'nzButtonStyle'> & { buttonRadio?: boolean; nzOptions: OptioinItem[] };
-  arrayForm: ISubForm;
-  tabForm: ISubForm;
-  codeMirrorEditor: ICodeMirrorEditor;
-  formArray: ISubForm;
-  markdownEditor: IMarkdownEditor;
-  range: {
-    config?: RangeConfig;
-    reverse?: boolean;
-  };
-  slider: {
-    config: SliderConfig;
-    nzDisabled?: boolean;
-  };
-  file: {
-    accept?: string;
-    mode?: 'server' | 'frontend';
-    showUploadList?: boolean;
-    content?: TemplateRef<any> | string;
-  };
-  subForm: {
-    children: FormItem[];
-    control: FormController;
-  };
-  sortedSelect: ISortedSelect;
-  code: {};
   custom: {
     injector: Injector;
     componentInstance: Type<any>;
   };
   tip: { title: string };
+  subForm: {
+    children: FormItem[];
+    control: FormController;
+  };
 };
 
 export interface OptItem {
@@ -135,6 +90,8 @@ export type FormItem = {
     isHide?: boolean;
     span?: number;
     required?: boolean;
+    current: any;
+    formParams: any[];
   };
 }[keyof ComponentParamsMap];
 

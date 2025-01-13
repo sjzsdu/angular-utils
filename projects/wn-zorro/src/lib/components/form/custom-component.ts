@@ -1,4 +1,4 @@
-import { EventEmitter, inject } from '@angular/core';
+import { EventEmitter, inject, signal } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { FORM_COMMANDS, FORM_DATA, FORM_EMITTER, FORM_PARAMS } from './const';
 import { Subject } from 'rxjs';
@@ -6,7 +6,7 @@ import { BaseAccessorComponent } from './base-accessor';
 import { ComponentCommand } from './types';
 
 export class CustomComponent<T = any> extends BaseAccessorComponent<T> implements ControlValueAccessor {
-  public innerParams?: Record<string, any> = {};
+  innerParams = signal<Record<string, any>>({});
   formEmitter?: EventEmitter<any>;
   constructor() {
     super();
@@ -21,7 +21,7 @@ export class CustomComponent<T = any> extends BaseAccessorComponent<T> implement
     }
     const params = inject(FORM_PARAMS, { optional: true }) as Record<string, any>;
     if (params) {
-      this.writeParams(params);
+      this.innerParams.set(params);
     }
   }
 
@@ -30,16 +30,13 @@ export class CustomComponent<T = any> extends BaseAccessorComponent<T> implement
     if (commands) {
       commands.subscribe((res: ComponentCommand) => {
         if (res && res.type) {
-          if (this[res.type]) {
-            this[res.type](res?.data);
+          const method = (this as any)[res.type] as ((data: any) => void) | undefined;
+          if (method && typeof method === 'function') {
+            method.call(this, res.data);
           }
         }
       });
     }
-  }
-
-  writeParams(params: Record<string, any>): void {
-    this.innerParams = params;
   }
 
   override change(value: T): void {

@@ -206,23 +206,23 @@ export function ValidateReactiveFormData(items: FormItem[], row: any) {
           }
         }
       }
-      if ((item?.params?.componentInstance as any)?.ValidateData) {
-        const error = (item?.params?.componentInstance as any).ValidateData(row[item.name]);
-        if (error) {
-          errors[item.name] = error;
-        }
-      }
-      if (item?.params?.children?.length) {
-        if (item.type === 'arrayForm' || item.type === 'formArray') {
-          if (Array.isArray(row[item.name])) {
-            for (const itemRow of row[item.name]) {
-              validateForm(item.params.children, itemRow);
-            }
-          }
-        } else {
-          validateForm(item.params.children, row[item.name]);
-        }
-      }
+      // if ((item?.params?.componentInstance as any)?.ValidateData) {
+      //   const error = (item?.params?.componentInstance as any).ValidateData(row[item.name]);
+      //   if (error) {
+      //     errors[item.name] = error;
+      //   }
+      // }
+      // if (item?.params?.children?.length) {
+      //   if (item.type === 'arrayForm' || item.type === 'formArray') {
+      //     if (Array.isArray(row[item.name])) {
+      //       for (const itemRow of row[item.name]) {
+      //         validateForm(item.params.children, itemRow);
+      //       }
+      //     }
+      //   } else {
+      //     validateForm(item.params.children, row[item.name]);
+      //   }
+      // }
     }
   };
   validateForm(items, row);

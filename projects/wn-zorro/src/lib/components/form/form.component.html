@@ -1,270 +1,203 @@
-<form
-  *ngIf="validateForm"
-  [ngClass]="{ 'sub-form': isSub }"
-  [style.maxHeight]="500"
-  nz-form
-  [formGroup]="validateForm"
-  [nzLayout]="_layout()"
-  [nzAutoTips]="autoTips"
-  (ngSubmit)="submitForm()"
->
-  <div nz-row [nzGutter]="20">
-    @for (item of _items(); track item.name) {
-      @if (!item.isHide) {
-        <div
-          nz-col
-          [nzSpan]="item.span || _itemSpan()"
-          [class]="item.name + ' ' + item?.label?.hideLabel ? 'hide-label' : ''"
-        >
-          <nz-form-item>
-            @if (!item?.label?.hideLabel) {
-              <nz-form-label [nzSpan]="_labelSpan()" [nzRequired]="item.required">
-                {{ item?.label?.label || (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
-                @if (item?.label?.tooltip) {
-                  <span
-                    nz-icon
-                    nzType="info-circle"
-                    class="label-icon"
-                    nzTheme="outline"
-                    nz-tooltip
-                    [nzTooltipPlacement]="item?.label?.tooltipPlacement ?? 'right'"
-                    [nzTooltipTitle]="item?.label?.tooltip"
-                  ></span>
-                }
-                @if (item?.label?.help) {
-                  <wn-help-center
-                    [anchorPoint]="item?.label?.help"
-                    [pathKey]="item?.label?.helpPath"
-                    text=""
-                    type="link"
-                  />
-                }
-              </nz-form-label>
-            }
-            <nz-form-control [nzSpan]="_controlSpan()" nzHasFeedback nzValidatingTip="item.nzValidatingTipe">
-              @switch (item.type) {
-                @case ('input') {
-                  <nz-input-group
-                    [nzAddOnBefore]="item?.params?.nzAddOnBefore"
-                    [nzAddOnAfter]="item?.params?.nzAddOnAfter"
-                  >
-                    <input
-                      type="text"
-                      [formControlName]="item.name"
+@if (validateForm) {
+  <form
+    [ngClass]="{ 'sub-form': isSub() }"
+    [style.maxHeight]="500"
+    nz-form
+    [formGroup]="validateForm"
+    [nzLayout]="_layout()"
+    [nzAutoTips]="autoTips"
+    (ngSubmit)="submitForm()"
+  >
+    <div nz-row [nzGutter]="20">
+      @for (item of _items(); track item.name) {
+        @if (!item.isHide) {
+          <div
+            nz-col
+            [nzSpan]="item.span || _itemSpan()"
+            [class]="item.name + ' ' + item?.label?.hideLabel ? 'hide-label' : ''"
+          >
+            <nz-form-item>
+              @if (!item?.label?.hideLabel) {
+                <nz-form-label [nzSpan]="_labelSpan()" [nzRequired]="item.required">
+                  {{ item?.label?.label || (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
+                  @if (item?.label?.tooltip) {
+                    <span
+                      nz-icon
+                      nzType="info-circle"
+                      class="label-icon"
+                      nzTheme="outline"
+                      nz-tooltip
+                      [nzTooltipPlacement]="item?.label?.tooltipPlacement ?? 'right'"
+                      [nzTooltipTitle]="item?.label?.tooltip"
+                    ></span>
+                  }
+                  @if (item?.label?.help) {
+                    <wn-help-center
+                      [anchorPoint]="item?.label?.help"
+                      [pathKey]="item?.label?.helpPath"
+                      text=""
+                      type="link"
+                    />
+                  }
+                </nz-form-label>
+              }
+              <nz-form-control [nzSpan]="_controlSpan()" nzHasFeedback nzValidatingTip="item.nzValidatingTipe">
+                @switch (item.type) {
+                  @case ('input') {
+                    <nz-input-group
+                      [nzAddOnBefore]="item?.params?.nzAddOnBefore"
+                      [nzAddOnAfter]="item?.params?.nzAddOnAfter"
+                    >
+                      <input
+                        type="text"
+                        [formControlName]="item.name"
+                        nz-input
+                        [placeholder]="
+                          item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))
+                        "
+                      />
+                    </nz-input-group>
+                  }
+                  @case ('textarea') {
+                    <textarea
                       nz-input
-                      [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
-                    />
-                  </nz-input-group>
-                }
-                @case ('textarea') {
-                  <textarea
-                    nz-input
-                    [formControlName]="item.name"
-                    style="width: 100%"
-                    [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
-                    [nzAutosize]="item?.params?.nzAutosize || { minRows: 2, maxRows: 6 }"
-                  >
-                  </textarea>
-                }
-                @case ('number') {
-                  <nz-input-group
-                    [nzAddOnBefore]="item?.params?.nzAddOnBefore"
-                    [nzAddOnAfter]="item?.params?.nzAddOnAfter"
-                  >
-                    <nz-input-number
-                      style="width: 100%"
                       [formControlName]="item.name"
-                      [nzMin]="item?.params?.nzMin"
-                      [nzMax]="item?.params?.nzMax"
-                      [nzPrecision]="item?.params?.nzPrecision ?? 1"
-                      [nzStep]="item?.params?.nzStep"
-                    />
-                  </nz-input-group>
-                }
-                @case ('checkbox') {
-                  <label nz-checkbox [formControlName]="item.name">
-                    {{ item?.params?.label ?? (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
-                    @if (item.params.tooltip) {
-                      <span
-                        nz-icon
-                        nzType="info-circle"
-                        class="label-icon"
-                        nzTheme="outline"
-                        nz-tooltip
-                        nzTooltipPlacement="right"
-                        [nzTooltipTitle]="item.params.tooltip"
-                      ></span>
-                    }
-                  </label>
-                }
-                @case ('checkboxGroup') {
-                  <wn-checkbox-group [formControlName]="item.name" [options]="item.params.options" />
-                }
-                @case ('cascade') {
-                  <nz-input-group [nzAddOnBefore]="item.params.nzAddOnBefore" [nzAddOnAfter]="item.params.nzAddOnAfter">
-                    <nz-cascader
-                      class="cascade"
+                      style="width: 100%"
+                      [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
+                      [nzAutosize]="item?.params?.nzAutosize || { minRows: 2, maxRows: 6 }"
+                    >
+                    </textarea>
+                  }
+                  @case ('number') {
+                    <nz-input-group
+                      [nzAddOnBefore]="item?.params?.nzAddOnBefore"
+                      [nzAddOnAfter]="item?.params?.nzAddOnAfter"
+                    >
+                      <nz-input-number
+                        style="width: 100%"
+                        [formControlName]="item.name"
+                        [nzMin]="item?.params?.nzMin"
+                        [nzMax]="item?.params?.nzMax"
+                        [nzPrecision]="item?.params?.nzPrecision ?? 1"
+                        [nzStep]="item?.params?.nzStep"
+                      />
+                    </nz-input-group>
+                  }
+                  @case ('checkbox') {
+                    <label nz-checkbox [formControlName]="item.name">
+                      {{ item?.params?.label ?? (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
+                      @if (item.params.tooltip) {
+                        <span
+                          nz-icon
+                          nzType="info-circle"
+                          class="label-icon"
+                          nzTheme="outline"
+                          nz-tooltip
+                          nzTooltipPlacement="right"
+                          [nzTooltipTitle]="item.params.tooltip"
+                        ></span>
+                      }
+                    </label>
+                  }
+                  @case ('cascade') {
+                    <nz-input-group
+                      [nzAddOnBefore]="item.params.nzAddOnBefore"
+                      [nzAddOnAfter]="item.params.nzAddOnAfter"
+                    >
+                      <nz-cascader
+                        class="cascade"
+                        [formControlName]="item.name"
+                        [nzDisabled]="item.disabled"
+                        [nzOptions]="item.params.nzOptions"
+                      />
+                    </nz-input-group>
+                  }
+                  @case ('select') {
+                    <nz-select
                       [formControlName]="item.name"
                       [nzDisabled]="item.disabled"
-                      [nzOptions]="item.params.nzOptions"
-                    />
-                  </nz-input-group>
-                }
-                @case ('select') {
-                  <nz-select
-                    [formControlName]="item.name"
-                    [nzDisabled]="item.disabled"
-                    [nzMode]="item.params.nzMode || 'default'"
-                    [nzPlaceHolder]="item.placeholder ?? 'Please Select ' + (item.label?.label || (item.name | label))"
-                  >
-                    @if (item.params.addOption) {
-                      <nz-option
-                        [nzLabel]="item.params.addOption.text"
-                        [nzValue]="null"
-                        (click)="item.params.addOption.onClick()"
-                      >
-                        <ng-container *nzOptionTemplate>
-                          <div class="custom-option">{{ item.params.addOption.text }}</div>
-                        </ng-container>
-                      </nz-option>
-                    }
-                    @for (option of item.params.nzOptions || []; track option) {
-                      <nz-option
-                        [nzLabel]="isOptItem(option) ? option.label : option"
-                        [nzValue]="isOptItem(option) ? option.value : option"
+                      [nzMode]="item.params.nzMode || 'default'"
+                      [nzPlaceHolder]="
+                        item.placeholder ?? 'Please Select ' + (item.label?.label || (item.name | label))
+                      "
+                    >
+                      @if (item.params.addOption) {
+                        <nz-option
+                          [nzLabel]="item.params.addOption.text"
+                          [nzValue]="null"
+                          (click)="item.params.addOption.onClick()"
+                        >
+                          <ng-container *nzOptionTemplate>
+                            <div class="custom-option">{{ item.params.addOption.text }}</div>
+                          </ng-container>
+                        </nz-option>
+                      }
+                      @for (option of item.params.nzOptions || []; track option) {
+                        <nz-option
+                          [nzLabel]="isOptItem(option) ? option.label : option"
+                          [nzValue]="isOptItem(option) ? option.value : option"
+                        />
+                      }
+                    </nz-select>
+                  }
+                  @case ('radioGroup') {
+                    <nz-radio-group
+                      [formControlName]="item.name"
+                      [nzDisabled]="item.disabled"
+                      [nzButtonStyle]="item.params.nzButtonStyle || 'outline'"
+                    >
+                      @if (item.params.buttonRadio) {
+                        @for (option of item.params.nzOptions; track option) {
+                          <label nz-radio-button [nzValue]="isOptItem(option) ? option.value : option">
+                            {{ isOptItem(option) ? option.label : option }}
+                          </label>
+                        }
+                      } @else {
+                        @for (option of item.params.nzOptions; track option) {
+                          <label nz-radio [nzValue]="isOptItem(option) ? option.value : option">
+                            {{ isOptItem(option) ? option.label : option }}
+                          </label>
+                        }
+                      }
+                    </nz-radio-group>
+                  }
+                  @case ('subForm') {
+                    <div [ngClass]="item.name">
+                      <wn-form
+                        [formControlName]="item.name"
+                        [name]="item.name"
+                        [items]="item.params.children"
+                        [control]="item.params.control"
+                        [row]="item.defaults"
+                        [isSub]="true"
+                        [itemSpan]="item.itemSpan || 24"
+                        (rowChange)="subRowChange($event, item)"
                       />
-                    }
-                  </nz-select>
+                    </div>
+                  }
+                  @case ('tip') {
+                    <div class="tip-wrap">
+                      <span nz-icon nzType="info-circle" class="tip-icon" nzTheme="outline"></span>
+                      <div class="tip-content">{{ item.params.title }}</div>
+                    </div>
+                  }
+                  @case ('custom') {
+                    <ng-container *ngComponentOutlet="item.params.componentInstance; injector: item.params.injector" />
+                  }
+                  @default {
+                    <div>no type initialize</div>
+                  }
                 }
-                @case ('colorSelect') {
-                  <wn-color-select
-                    style="width: 100%"
-                    [formControlName]="item.name"
-                    [options]="item.params.options"
-                    [selected]="item.params.selected"
-                    [size]="item.params.size"
-                    [showValue]="item.params.showValue"
-                    [isImage]="item.params.isImage"
-                  />
-                }
-                @case ('radioGroup') {
-                  <nz-radio-group
-                    [formControlName]="item.name"
-                    [nzDisabled]="item.disabled"
-                    [nzButtonStyle]="item.params.nzButtonStyle || 'outline'"
-                  >
-                    @if (item.params.buttonRadio) {
-                      @for (option of item.params.nzOptions; track option) {
-                        <label nz-radio-button [nzValue]="isOptItem(option) ? option.value : option">
-                          {{ isOptItem(option) ? option.label : option }}
-                        </label>
-                      }
-                    } @else {
-                      @for (option of item.params.nzOptions; track option) {
-                        <label nz-radio [nzValue]="isOptItem(option) ? option.value : option">
-                          {{ isOptItem(option) ? option.label : option }}
-                        </label>
-                      }
-                    }
-                  </nz-radio-group>
-                }
-                @case ('range') {
-                  <wn-range
-                    style="width: 100%"
-                    [formControlName]="item.name"
-                    [required]="item.required ?? false"
-                    [config]="item.params.config ?? {}"
-                    [reverse]="item.params.reverse ?? false"
-                  />
-                }
-                @case ('slider') {
-                  <wn-slider
-                    [formControlName]="item.name"
-                    style="width: 100%"
-                    [nzDisabled]="item.disabled ?? false"
-                    [config]="item.params.config"
-                  />
-                }
-                @case ('file') {
-                  <wn-upload
-                    [formControlName]="item.name"
-                    [accept]="item.params.accept ?? 'json'"
-                    [mode]="item.params.mode ?? 'frontend'"
-                    [showUploadList]="item.params.showUploadList ?? false"
-                    [content]="item.params.content"
-                  />
-                }
-                @case ('subForm') {
-                  <div [ngClass]="item.name">
-                    <wn-form
-                      [formControlName]="item.name"
-                      [name]="item.name"
-                      [items]="item.params.children"
-                      [control]="item.params.control"
-                      [row]="item.defaults"
-                      [isSub]="true"
-                      [itemSpan]="item.itemSpan || 24"
-                      (rowChange)="subRowChange($event, item)"
-                    />
-                  </div>
-                }
-                @case ('arrayForm') {
-                  <div [ngClass]="item.name">
-                    <wn-array-form
-                      [formControlName]="item.name"
-                      [items]="item.params.children"
-                      [addTitle]="item.params.addTitle"
-                      [itemCount]="item.params.itemCount"
-                      [itemSpan]="item.params.itemSpan"
-                    />
-                  </div>
-                }
-                @case ('tabForm') {
-                  <div [ngClass]="item.name">
-                    <wn-tab-form
-                      [formControlName]="item.name"
-                      [items]="item.params.children"
-                      [control]="item.params.control"
-                      [title]="item.params.addTitle"
-                    />
-                  </div>
-                }
-                @case ('formArray') {
-                  <div [ngClass]="item.name">
-                    <wn-form-array
-                      [formControlName]="item.name"
-                      [items]="item.params.children"
-                      [addTitle]="item.params.addTitle"
-                      [itemCount]="item.params.itemCount"
-                      [itemSpan]="item.params.itemSpan"
-                    />
-                  </div>
-                }
-                @case ('tip') {
-                  <div class="tip-wrap">
-                    <span nz-icon nzType="info-circle" class="tip-icon" nzTheme="outline"></span>
-                    <div class="tip-content">{{ item.params.title }}</div>
-                  </div>
-                }
-                @case ('code') {
-                  <wn-code-mirror-editor [formControlName]="item.name" />
-                }
-                @case ('custom') {
-                  <ng-container *ngComponentOutlet="item.params.componentInstance; injector: item.params.injector" />
-                }
-                @default {
-                  {{ getContent(item) }}
-                }
-              }
-              <ul class="error">
-                @for (err of getError(item); track err) {
-                  <li class="error-item">{{ err }}</li>
-                }
-              </ul>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
+                <ul class="error">
+                  @for (err of getError(item); track err) {
+                    <li class="error-item">{{ err }}</li>
+                  }
+                </ul>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        }
       }
-    }
-  </div>
-</form>
+    </div>
+  </form>
+}
