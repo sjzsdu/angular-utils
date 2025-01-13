@@ -67,7 +67,7 @@
                   </textarea>
                 }
                 @case ('number') {
-                  <nz-input-number-group
+                  <nz-input-group
                     [nzAddOnBefore]="item?.params?.nzAddOnBefore"
                     [nzAddOnAfter]="item?.params?.nzAddOnAfter"
                   >
@@ -76,10 +76,10 @@
                       [formControlName]="item.name"
                       [nzMin]="item?.params?.nzMin"
                       [nzMax]="item?.params?.nzMax"
-                      [nzPrecision]="item?.params?.nzPrecision"
+                      [nzPrecision]="item?.params?.nzPrecision ?? 1"
                       [nzStep]="item?.params?.nzStep"
                     />
-                  </nz-input-number-group>
+                  </nz-input-group>
                 }
                 @case ('checkbox') {
                   <label nz-checkbox [formControlName]="item.name">

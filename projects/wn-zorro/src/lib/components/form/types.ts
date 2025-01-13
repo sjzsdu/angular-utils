@@ -1,8 +1,8 @@
-import { EventEmitter, Injector, Input, input, InputFunction, InputSignal, TemplateRef, Type } from '@angular/core';
-import { AsyncValidatorFn, FormArray } from '@angular/forms';
+import { EventEmitter, Injector, InputSignal, InputSignalWithTransform, TemplateRef, Type } from '@angular/core';
+import { AsyncValidatorFn } from '@angular/forms';
 import { ValidatorFn } from '@angular/forms';
-import { NzFormControlComponent, NzFormLayoutType } from 'ng-zorro-antd/form';
-import { NzSelectComponent, NzSelectModeType, NzSelectOptionInterface } from 'ng-zorro-antd/select';
+import { NzFormLayoutType } from 'ng-zorro-antd/form';
+import { NzSelectModeType } from 'ng-zorro-antd/select';
 import { Subject } from 'rxjs';
 import { ColorSelectComponent } from './color-select/color-select.component';
 import { ArrayFormComponent } from './array-form/array-form.component';
@@ -15,17 +15,20 @@ import { SliderComponent, SliderConfig } from './slider/slider.component';
 import { SortedSelectComponent } from './sorted-select/sorted-select.component';
 import { TabFormComponent } from './tab-form/tab-form.component';
 import { UploadComponent } from './upload/upload.component';
-import { AutoSizeType, NzAutosizeDirective, NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
-import { NzInputNumberComponent, NzInputNumberGroupComponent } from 'ng-zorro-antd/input-number';
-import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
-import { NzToolTipComponent } from 'ng-zorro-antd/tooltip';
+import { NzAutosizeDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzCascaderComponent } from 'ng-zorro-antd/cascader';
 import { NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 
 export type ExtractInputTypes<T> = {
-  [K in keyof T as T[K] extends InputSignal<infer U> ? K : never]: T[K] extends InputSignal<infer U> ? U : never;
+  [K in keyof T as T[K] extends InputSignal<infer U> | InputSignalWithTransform<infer U, unknown>
+    ? K
+    : never]: T[K] extends InputSignal<infer U>
+    ? U
+    : T[K] extends InputSignalWithTransform<infer U, unknown>
+      ? U
+      : never;
 };
-
 export type IColorSelect = ExtractInputTypes<ColorSelectComponent>;
 export type IArrayForm = ExtractInputTypes<ArrayFormComponent>;
 export type ICheckboxGroup = ExtractInputTypes<CheckboxGroupComponent>;
@@ -50,7 +53,7 @@ export interface ISubForm {
 export type ComponentParamsMap = {
   input: IInputGroup;
   textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
-  number: IInputGroup & Pick<NzInputNumberComponent, 'nzMin' | 'nzMax' | 'nzPrecision' | 'nzStep'>;
+  number: IInputGroup & ExtractInputTypes<NzInputNumberComponent>;
   checkbox: { tooltip: string; label: string };
   colorSelect: IColorSelect;
   checkboxGroup: ICheckboxGroup;
@@ -135,73 +138,6 @@ export type FormItem = {
   };
 }[keyof ComponentParamsMap];
 
-export interface FormItem2<T extends keyof ComponentParamsMap = keyof ComponentParamsMap>
-  extends Partial<NzFormControlComponent> {
-  name: string;
-  type: T;
-  params: ComponentParamsMap[T];
-  label?: ILabel;
-  placeholder?: string;
-
-  defaults?: any;
-  disabled?: boolean;
-  validates?: string[];
-  validatesArgs?: Record<string, any[]>;
-  asyncValidates?: string[];
-
-  itemSpan?: number;
-  isHide?: boolean;
-  span?: number;
-  required?: boolean;
-
-  // Common properties
-  checkLabel?: string;
-  labelFunc?: string;
-  tooltip?: string;
-  options?: any[];
-  prefix?: string;
-  suffix?: string;
-  mode?: string;
-  onAdd?: Function;
-  btnStyle?: string;
-  buttonRadio?: boolean;
-  accept?: string;
-  showUploadList?: boolean;
-  control?: any;
-  addTitle?: string;
-  itemCount?: number;
-  title?: string;
-  config?: any;
-  reverse?: boolean;
-  selected?: any;
-  size?: any;
-  showValue?: boolean;
-  isImage?: boolean;
-
-  children?: FormItem<keyof ComponentParamsMap>[];
-  injector?: Injector;
-  componentInstance?: Type<any>;
-
-  content?: string | TemplateRef<any>;
-  addText?: string;
-}
-
-// control?: FormController;
-// current?: any;
-// onAdd?: (callback?: (...rest: any) => any) => void;
-// formParams?: any[];
-
-// prefix?: string;
-// suffix?: string;
-// size?: any;
-// min?: number;
-// max?: number;
-// precision?: number;
-// step?: number;
-// checkLabel?: string;
-// title?: string;
-// mode?: any;
-// [key: string]: any;
 export interface ControlRules {
   value: any;
   columns: string[];

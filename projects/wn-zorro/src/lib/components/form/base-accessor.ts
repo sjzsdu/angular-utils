@@ -1,18 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
+
 @Component({ standalone: false, template: '' })
 export abstract class BaseAccessorComponent<T> implements ControlValueAccessor {
-  public innerValue?: T;
-
+  public innerValue = signal<T | undefined>(undefined);
   onChange: (value: T) => void = () => {};
   onTouched: (value: T) => void = () => {};
   [key: string]: any;
-  @Output() ngModelChange = new EventEmitter<T>();
-
-  constructor() {}
+  ngModelChange = output<T>();
 
   writeValue(value: T): void {
-    this.innerValue = value;
+    this.innerValue.set(value);
   }
 
   registerOnChange(fn: any): void {
