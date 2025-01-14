@@ -1,14 +1,40 @@
-<nz-table #basicTable [nzData]="nzData()">
+<header>
+  @if (showChecked()) {
+    <span>Selected {{ setOfCheckedId.size }} items</span>
+  }
+</header>
+<nz-table
+  #tableRef
+  [nzShowPagination]="nzShowPagination()"
+  [nzShowSizeChanger]="nzShowSizeChanger()"
+  [nzData]="nzData()"
+  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+>
   <thead>
     <tr>
+      @if (showChecked()) {
+        <th
+          [nzChecked]="checked"
+          [nzIndeterminate]="indeterminate"
+          nzLabel="Select all"
+          (nzCheckedChange)="onAllChecked($event)"
+        ></th>
+      }
       @for (col of columns(); track col.name) {
         <th>{{ col.title ?? (col.name | label: col?.titleFunc || 'WordUppercase') }}</th>
       }
     </tr>
   </thead>
   <tbody>
-    @for (data of basicTable.data; track data) {
+    @for (data of tableRef.data; track data) {
       <tr>
+        @if (showChecked()) {
+          <td
+            [nzChecked]="setOfCheckedId.has(data[mainKey()])"
+            [nzDisabled]="!!data.disabled"
+            (nzCheckedChange)="onItemChecked(data[mainKey()], $event)"
+          ></td>
+        }
         @for (col of columns(); track col.name) {
           @switch (col.type) {
             @case ('text') {

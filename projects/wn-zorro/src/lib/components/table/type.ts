@@ -1,6 +1,10 @@
 import { LabelFunc } from '../../pipes';
 
-export type IRow = Record<string, any>;
+export interface IRowStatus {
+  disabled?: boolean;
+}
+
+export type IRow = Record<string, any> & IRowStatus;
 
 export type IData = Array<IRow>;
 

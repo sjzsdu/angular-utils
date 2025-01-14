@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "TableData",
-            "id": "interface-TableData-4409fd68b6ef1e0d34a1a4ae3e0c5a172cb19e1ffbb74b511dbf1fd3c768e58c7eade3474a98ec75f8f1198df6ffe3da69b6775703fbd6036fc243b5174f786e",
+            "id": "interface-TableData-8a17f2db936e00345a515aa31941525223897f534b5d78a5366c7bba10249c729168ae9bc86f8e33165acd34f0588510b8f95e1a673058e6e92577df76e0a910",
             "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { FrontendTableComponent } from '../../components/table/frontend-table/frontend-table.component';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { PipesModule } from '../../pipes';\n\ninterface TableData {\n  key: string;\n  name: string;\n  age: number;\n  address: string;\n}\n\nconst meta: Meta<FrontendTableComponent> = {\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent>;\n\nconst sampleData: TableData[] = [\n  {\n    key: '1',\n    name: 'John Brown',\n    age: 32,\n    address: 'New York No. 1 Lake Park',\n  },\n  {\n    key: '2',\n    name: 'Jim Green',\n    age: 42,\n    address: 'London No. 1 Lake Park',\n  },\n  {\n    key: '3',\n    name: 'Joe Black',\n    age: 32,\n    address: 'Sidney No. 1 Lake Park',\n  },\n];\n\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { FrontendTableComponent } from '../../components/table/frontend-table/frontend-table.component';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { PipesModule } from '../../pipes';\nimport { faker } from '@faker-js/faker';\n\ninterface TableData {\n  key: string;\n  name: string;\n  age: number;\n  address: string;\n}\n\nconst generateSampleData = (count: number): TableData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    key: (index + 1).toString(),\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n};\n\nconst meta: Meta<FrontendTableComponent> = {\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent>;\n\nconst sampleData: TableData[] = generateSampleData(100);\n\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
             "properties": [
                 {
                     "name": "address",
@@ -18,7 +18,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 13
+                    "line": 14
                 },
                 {
                     "name": "age",
@@ -28,7 +28,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 13
                 },
                 {
                     "name": "key",
@@ -38,7 +38,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 10
+                    "line": 11
                 },
                 {
                     "name": "name",
@@ -48,7 +48,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 11
+                    "line": 12
                 }
             ],
             "indexSignatures": [],
@@ -310,6 +310,16 @@
                 "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
             },
             {
+                "name": "generateSampleData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "(count: number): TableData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    key: (index + 1).toString(),\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n}"
+            },
+            {
                 "name": "Interactive",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -357,7 +367,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<FrontendTableComponent>",
-                "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                "defaultValue": "{\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
             },
             {
                 "name": "meta",
@@ -447,7 +457,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "TableData[]",
-                "defaultValue": "[\n  {\n    key: '1',\n    name: 'John Brown',\n    age: 32,\n    address: 'New York No. 1 Lake Park',\n  },\n  {\n    key: '2',\n    name: 'Jim Green',\n    age: 42,\n    address: 'London No. 1 Lake Park',\n  },\n  {\n    key: '3',\n    name: 'Joe Black',\n    age: 32,\n    address: 'Sidney No. 1 Lake Park',\n  },\n]"
+                "defaultValue": "generateSampleData(100)"
             },
             {
                 "name": "Template",
@@ -625,6 +635,16 @@
                     "defaultValue": "[\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n]"
                 },
                 {
+                    "name": "generateSampleData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "(count: number): TableData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    key: (index + 1).toString(),\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n}"
+                },
+                {
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -632,7 +652,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<FrontendTableComponent>",
-                    "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                    "defaultValue": "{\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
                 },
                 {
                     "name": "Primary",
@@ -652,7 +672,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "TableData[]",
-                    "defaultValue": "[\n  {\n    key: '1',\n    name: 'John Brown',\n    age: 32,\n    address: 'New York No. 1 Lake Park',\n  },\n  {\n    key: '2',\n    name: 'Jim Green',\n    age: 42,\n    address: 'London No. 1 Lake Park',\n  },\n  {\n    key: '3',\n    name: 'Joe Black',\n    age: 32,\n    address: 'Sidney No. 1 Lake Park',\n  },\n]"
+                    "defaultValue": "generateSampleData(100)"
                 }
             ],
             "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts": [
@@ -986,6 +1006,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "columns",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "generateSampleData",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
