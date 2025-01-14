@@ -2,13 +2,13 @@
     "pipes": [],
     "interfaces": [
         {
-            "name": "TableData",
-            "id": "interface-TableData-8a17f2db936e00345a515aa31941525223897f534b5d78a5366c7bba10249c729168ae9bc86f8e33165acd34f0588510b8f95e1a673058e6e92577df76e0a910",
+            "name": "IData",
+            "id": "interface-IData-6843c4843e8553d4ad7ae3d647394627436324f103c7fb6f6e848e7c67621d270fad1c6ef1383988fa6b29c800653583e2792b938b193b51098e8839918a5939",
             "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { FrontendTableComponent } from '../../components/table/frontend-table/frontend-table.component';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { PipesModule } from '../../pipes';\nimport { faker } from '@faker-js/faker';\n\ninterface TableData {\n  key: string;\n  name: string;\n  age: number;\n  address: string;\n}\n\nconst generateSampleData = (count: number): TableData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    key: (index + 1).toString(),\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n};\n\nconst meta: Meta<FrontendTableComponent> = {\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent>;\n\nconst sampleData: TableData[] = generateSampleData(100);\n\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { FrontendTableComponent } from '../../components/table/frontend-table/frontend-table.component';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { PipesModule } from '../../pipes';\nimport { faker } from '@faker-js/faker';\nimport { IRow } from '../../components/table/type';\n\ninterface IData extends IRow {\n  id: number;\n  name: string;\n  age: number;\n  address: string;\n}\n\nconst generateSampleData = (count: number): IData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    id: index + 1,\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n};\n\nconst meta: Meta<FrontendTableComponent<IData>> = {\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent<IData>>;\n\nconst sampleData: IData[] = generateSampleData(100);\n\n// Keep source columns unchanged\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\n// add column to the end of the columns array\nconst getUniqueValues = (data: IData[], key: keyof IData, count = 5) => {\n  const values = [\n    ...new Set(\n      data.map((item) => {\n        if (key === 'age') {\n          return Math.floor(item[key] / 10) * 10;\n        }\n        return item[key].toString().split(' ')[0];\n      })\n    ),\n  ];\n  return values.slice(0, count).map((value) => ({ text: value, value }));\n};\n\nconst columnsWithSortFilter = [\n  {\n    ...columns[0],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.name.localeCompare(b.name),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((name) => item.name.includes(name)),\n      listOfFilter: getUniqueValues(sampleData, 'name'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[1],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.age - b.age,\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: number[], item: IData) => list.some((age) => item.age >= age && item.age < age + 10),\n      listOfFilter: getUniqueValues(sampleData, 'age'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[2],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.address.localeCompare(b.address),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((address) => item.address.includes(address)),\n      listOfFilter: getUniqueValues(sampleData, 'address'),\n      filterMultiple: true,\n    },\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Checkable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Pagination: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowPagination: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowPagination]=\"nzShowPagination\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const SizeChanger: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Sorting: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsWithSortFilter,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Filtering: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const AllFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n    nzShowPagination: true,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n        [nzShowPagination]=\"nzShowPagination\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
             "properties": [
                 {
                     "name": "address",
@@ -18,7 +18,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 14
+                    "line": 15
                 },
                 {
                     "name": "age",
@@ -28,17 +28,17 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 13
+                    "line": 14
                 },
                 {
-                    "name": "key",
+                    "name": "id",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "string",
+                    "type": "number",
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 11
+                    "line": 12
                 },
                 {
                     "name": "name",
@@ -48,13 +48,15 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 13
                 }
             ],
             "indexSignatures": [],
             "kind": 171,
             "methods": [],
-            "extends": []
+            "extends": [
+                "IRow"
+            ]
         }
     ],
     "injectables": [],
@@ -270,6 +272,16 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "AllFeatures",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n    nzShowPagination: true,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n        [nzShowPagination]=\"nzShowPagination\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "ButtonMode",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -280,6 +292,16 @@
                 "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Click for help',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as a clickable button',\n      },\n    },\n  },\n}"
             },
             {
+                "name": "Checkable",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "columns",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -288,6 +310,16 @@
                 "deprecationMessage": "",
                 "type": "[]",
                 "defaultValue": "[\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n]"
+            },
+            {
+                "name": "columnsWithSortFilter",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "[]",
+                "defaultValue": "[\n  {\n    ...columns[0],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.name.localeCompare(b.name),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((name) => item.name.includes(name)),\n      listOfFilter: getUniqueValues(sampleData, 'name'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[1],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.age - b.age,\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: number[], item: IData) => list.some((age) => item.age >= age && item.age < age + 10),\n      listOfFilter: getUniqueValues(sampleData, 'age'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[2],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.address.localeCompare(b.address),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((address) => item.address.includes(address)),\n      listOfFilter: getUniqueValues(sampleData, 'address'),\n      filterMultiple: true,\n    },\n  },\n]"
             },
             {
                 "name": "CustomText",
@@ -310,6 +342,16 @@
                 "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
             },
             {
+                "name": "Filtering",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "generateSampleData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -317,7 +359,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "(count: number): TableData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    key: (index + 1).toString(),\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n}"
+                "defaultValue": "(count: number): IData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    id: index + 1,\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n}"
+            },
+            {
+                "name": "getUniqueValues",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "(data: IData[], key: keyof IData, count = 5) => {\n  const values = [\n    ...new Set(\n      data.map((item) => {\n        if (key === 'age') {\n          return Math.floor(item[key] / 10) * 10;\n        }\n        return item[key].toString().split(' ')[0];\n      })\n    ),\n  ];\n  return values.slice(0, count).map((value) => ({ text: value, value }));\n}"
             },
             {
                 "name": "Interactive",
@@ -366,8 +418,8 @@
                 "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<FrontendTableComponent>",
-                "defaultValue": "{\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                "type": "Meta<FrontendTableComponent<IData>>",
+                "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -388,6 +440,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<HelpCenterComponent>",
                 "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    mode: {\n      control: 'select',\n      options: [undefined, 'button', 'text'],\n      description: 'Display mode of the help center',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'undefined' },\n      },\n    },\n    text: {\n      control: 'text',\n      description: 'Help text content',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Help' },\n      },\n    },\n    type: {\n      control: 'select',\n      options: ['primary', 'text', 'link'],\n      description: 'Button type style',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'primary' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe HelpCenter component provides contextual help information in different display modes.\n\n### Features:\n- Multiple display modes: button, text, or default\n- Customizable icon and tooltip\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Pagination",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowPagination: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowPagination]=\"nzShowPagination\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
             },
             {
                 "name": "preview",
@@ -456,8 +518,28 @@
                 "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "TableData[]",
+                "type": "IData[]",
                 "defaultValue": "generateSampleData(100)"
+            },
+            {
+                "name": "SizeChanger",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Sorting",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columnsWithSortFilter,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
             },
             {
                 "name": "Template",
@@ -519,7 +601,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<FrontendTableComponent>",
+                "rawtype": "StoryObj<FrontendTableComponent<IData>>",
                 "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -551,6 +633,138 @@
         ],
         "enumerations": [],
         "groupedVariables": {
+            "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts": [
+                {
+                    "name": "AllFeatures",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n    nzShowPagination: true,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n        [nzShowPagination]=\"nzShowPagination\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Checkable",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "columns",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "defaultValue": "[\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n]"
+                },
+                {
+                    "name": "columnsWithSortFilter",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "defaultValue": "[\n  {\n    ...columns[0],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.name.localeCompare(b.name),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((name) => item.name.includes(name)),\n      listOfFilter: getUniqueValues(sampleData, 'name'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[1],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.age - b.age,\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: number[], item: IData) => list.some((age) => item.age >= age && item.age < age + 10),\n      listOfFilter: getUniqueValues(sampleData, 'age'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[2],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.address.localeCompare(b.address),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((address) => item.address.includes(address)),\n      listOfFilter: getUniqueValues(sampleData, 'address'),\n      filterMultiple: true,\n    },\n  },\n]"
+                },
+                {
+                    "name": "Filtering",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "generateSampleData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "(count: number): IData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    id: index + 1,\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n}"
+                },
+                {
+                    "name": "getUniqueValues",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "(data: IData[], key: keyof IData, count = 5) => {\n  const values = [\n    ...new Set(\n      data.map((item) => {\n        if (key === 'age') {\n          return Math.floor(item[key] / 10) * 10;\n        }\n        return item[key].toString().split(' ')[0];\n      })\n    ),\n  ];\n  return values.slice(0, count).map((value) => ({ text: value, value }));\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<FrontendTableComponent<IData>>",
+                    "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "Pagination",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowPagination: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowPagination]=\"nzShowPagination\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "sampleData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "IData[]",
+                    "defaultValue": "generateSampleData(100)"
+                },
+                {
+                    "name": "SizeChanger",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Sorting",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columnsWithSortFilter,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+                }
+            ],
             "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts": [
                 {
                     "name": "ButtonMode",
@@ -621,58 +835,6 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n    mode: 'text',\n    text: 'Hover for more information',\n    type: 'text',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as inline text',\n      },\n    },\n  },\n}"
-                }
-            ],
-            "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts": [
-                {
-                    "name": "columns",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "[]",
-                    "defaultValue": "[\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n]"
-                },
-                {
-                    "name": "generateSampleData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "(count: number): TableData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    key: (index + 1).toString(),\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n  }));\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<FrontendTableComponent>",
-                    "defaultValue": "{\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "sampleData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "TableData[]",
-                    "defaultValue": "generateSampleData(100)"
                 }
             ],
             "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts": [
@@ -823,7 +985,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<FrontendTableComponent>",
+                    "rawtype": "StoryObj<FrontendTableComponent<IData>>",
                     "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -995,7 +1157,7 @@
                 "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
                 "type": "interface",
                 "linktype": "interface",
-                "name": "TableData",
+                "name": "IData",
                 "coveragePercent": 0,
                 "coverageCount": "0/5",
                 "status": "low"
@@ -1005,7 +1167,47 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "AllFeatures",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Checkable",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "columns",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "columnsWithSortFilter",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Filtering",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1025,7 +1227,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "getUniqueValues",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Pagination",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1046,6 +1268,26 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "sampleData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SizeChanger",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Sorting",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

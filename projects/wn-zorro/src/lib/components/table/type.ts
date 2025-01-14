@@ -1,3 +1,4 @@
+import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { LabelFunc } from '../../pipes';
 
 export interface IRowStatus {
@@ -12,12 +13,20 @@ export type ColumnMap = {
   text: {};
 };
 
-export type IColumn = {
+export type IColumn<K extends IRow> = {
   [T in keyof ColumnMap]: {
     name: string;
     title?: string;
     titleFunc?: LabelFunc;
     type: T;
     params: ColumnMap[T];
+    sortFilter?: {
+      sortOrder: NzTableSortOrder | null;
+      sortFn: NzTableSortFn<K> | null;
+      listOfFilter: NzTableFilterList;
+      filterFn: NzTableFilterFn<K> | null;
+      filterMultiple: boolean;
+      sortDirections: NzTableSortOrder[];
+    };
   };
 }[keyof ColumnMap];

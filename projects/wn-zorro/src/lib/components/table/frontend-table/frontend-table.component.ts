@@ -1,17 +1,17 @@
 import { Component, input, signal } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { IColumn, IData, IRow } from '../type';
-import { LabelPipe, PipesModule } from '../../../pipes';
-import { NzTableComponent } from 'ng-zorro-antd/table';
+import { IColumn, IRow } from '../type';
+import { PipesModule } from '../../../pipes';
 
 @Component({
   selector: 'wn-frontend-table',
   imports: [NzTableModule, PipesModule],
   templateUrl: './frontend-table.component.html',
 })
-export class FrontendTableComponent {
-  nzData = input<IRow[]>([]);
-  columns = input<IColumn[]>([]);
+export class FrontendTableComponent<T extends IRow> {
+  nzData = input<T[]>([]);
+  columns = input<IColumn<T>[]>([]);
+  nzSelections = input<Array<{ text: string; onSelect(...args: any[]): any }>>([]);
   nzShowPagination = input(true);
   nzShowSizeChanger = input(false);
   showChecked = input(false);

@@ -14,6 +14,7 @@
     <tr>
       @if (showChecked()) {
         <th
+          [nzSelections]="nzSelections() || null"
           [nzChecked]="checked"
           [nzIndeterminate]="indeterminate"
           nzLabel="Select all"
@@ -21,7 +22,16 @@
         ></th>
       }
       @for (col of columns(); track col.name) {
-        <th>{{ col.title ?? (col.name | label: col?.titleFunc || 'WordUppercase') }}</th>
+        <th
+          [nzSortOrder]="col?.sortFilter?.sortOrder ?? null"
+          [nzSortFn]="col?.sortFilter?.sortFn ?? null"
+          [nzSortDirections]="col?.sortFilter?.sortDirections ?? ['ascend', 'descend', null]"
+          [nzFilterMultiple]="col?.sortFilter?.filterMultiple ?? true"
+          [nzFilters]="col?.sortFilter?.listOfFilter ?? []"
+          [nzFilterFn]="col?.sortFilter?.filterFn ?? null"
+        >
+          {{ col.title ?? (col.name | label: col?.titleFunc || 'WordUppercase') }}
+        </th>
       }
     </tr>
   </thead>
