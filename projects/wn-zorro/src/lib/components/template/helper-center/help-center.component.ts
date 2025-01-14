@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   standalone: false,
@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './help-center.component.html',
   styleUrls: ['./help-center.component.less'],
 })
-export class HelpCenterComponent {
+export class HelpCenterComponent implements OnInit {
   @Input() anchorPoint?: string;
   @Input() pathKey?: string;
   @Input() text: string = 'Help';
@@ -14,6 +14,10 @@ export class HelpCenterComponent {
   @Input() mode: string = 'button';
 
   constructor() {}
+
+  ngOnInit(): void {
+    console.log('HelpCenterComponent', this.mode);
+  }
 
   open(): void {}
 

@@ -9,7 +9,7 @@
     "components": [
         {
             "name": "BlurOnClickStoryComponent",
-            "id": "component-BlurOnClickStoryComponent-975bded4ef56c1c618423f7d6d561d16b313a5a76c154cc2f581fb99b876d2a0c4e0a9b6c3d5e06224bb6b8b3f40049c9eaac5e8ed986cc482ed855608e74849",
+            "id": "component-BlurOnClickStoryComponent-dd53c8de7849fa47d367f549a1f2fee753364e7ec79541ba287cfa6ec4919dcf627725d1c14cf14cba6e4ae599d5d8b747dbe39278dce2a4dc1e983534b6c616",
             "file": "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -19,7 +19,7 @@
             "selector": "story-blur-on-click",
             "styleUrls": [],
             "styles": [],
-            "template": "<div style=\"padding: 20px;\">\n  <button appBlurOnClick style=\"padding: 10px 20px;\">\n    Click to Blur\n  </button>\n</div>\n",
+            "template": "<div style=\"padding: 20px;\">\n  <button appBlurOnClick style=\"padding: 10px 20px;\">Click to Blur</button>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -36,7 +36,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { BlurOnClickDirective } from '../directives/blur-on-click.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-blur-on-click',\n  template: `\n    <div style=\"padding: 20px;\">\n      <button appBlurOnClick style=\"padding: 10px 20px;\">\n        Click to Blur\n      </button>\n    </div>\n  `\n})\nclass BlurOnClickStoryComponent {}\n\nconst meta: Meta<BlurOnClickStoryComponent> = {\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs']\n};\n\nexport default meta;\ntype Story = StoryObj<BlurOnClickStoryComponent>;\n\nexport const Primary: Story = {\n  args: {}\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { BlurOnClickDirective } from '../directives/blur-on-click.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-blur-on-click',\n  template: `\n    <div style=\"padding: 20px;\">\n      <button appBlurOnClick style=\"padding: 10px 20px;\">Click to Blur</button>\n    </div>\n  `,\n})\nclass BlurOnClickStoryComponent {}\n\nconst meta: Meta<BlurOnClickStoryComponent> = {\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<BlurOnClickStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -44,7 +44,7 @@
         },
         {
             "name": "ClickOutsideStoryComponent",
-            "id": "component-ClickOutsideStoryComponent-a723c0e20146477a32676cfad966d0a07ec500fefc1552e04e47f32f5b81ac31ca62a53569a7bc6cb74ffbefca3572acd6708bb5b139d8715b2a0c1e0db76116",
+            "id": "component-ClickOutsideStoryComponent-e51df32d86f9e25a16a2c91431593062d287d24a629d6cb82f801559fd3ff4e77c9b12484a232e09484012d0a33e0eca227f9870eb32a8e34bc74b91eacd6c5b",
             "file": "projects/wn-zorro/src/lib/stories/click-outside.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -54,7 +54,7 @@
             "selector": "story-click-outside",
             "styleUrls": [],
             "styles": [],
-            "template": "<div style=\"padding: 20px;\">\n  <div appClickOutside (clickOutside)=\"onClickOutside($event)\"\n       style=\"border: 1px solid #ccc; padding: 20px;\">\n    <p>Click inside this box - nothing happens</p>\n    <button class=\"excluded\">Excluded Button</button>\n  </div>\n  <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n</div>\n",
+            "template": "<div style=\"padding: 20px;\">\n  <div appClickOutside (clickOutside)=\"onClickOutside($event)\" style=\"border: 1px solid #ccc; padding: 20px;\">\n    <p>Click inside this box - nothing happens</p>\n    <button class=\"excluded\">Excluded Button</button>\n  </div>\n  <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -70,7 +70,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 18
                 }
             ],
             "methodsClass": [
@@ -87,7 +87,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 21,
+                    "line": 20,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -112,7 +112,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ClickOutsideDirective } from '../directives/click-outside.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-click-outside',\n  template: `\n    <div style=\"padding: 20px;\">\n      <div appClickOutside (clickOutside)=\"onClickOutside($event)\"\n           style=\"border: 1px solid #ccc; padding: 20px;\">\n        <p>Click inside this box - nothing happens</p>\n        <button class=\"excluded\">Excluded Button</button>\n      </div>\n      <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n    </div>\n  `\n})\nclass ClickOutsideStoryComponent {\n  clickedElement: HTMLElement | null = null;\n\n  onClickOutside(element: HTMLElement) {\n    this.clickedElement = element;\n  }\n}\n\nconst meta: Meta<ClickOutsideStoryComponent> = {\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs']\n};\n\nexport default meta;\ntype Story = StoryObj<ClickOutsideStoryComponent>;\n\nexport const Primary: Story = {\n  args: {}\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ClickOutsideDirective } from '../directives/click-outside.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-click-outside',\n  template: `\n    <div style=\"padding: 20px;\">\n      <div appClickOutside (clickOutside)=\"onClickOutside($event)\" style=\"border: 1px solid #ccc; padding: 20px;\">\n        <p>Click inside this box - nothing happens</p>\n        <button class=\"excluded\">Excluded Button</button>\n      </div>\n      <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n    </div>\n  `,\n})\nclass ClickOutsideStoryComponent {\n  clickedElement: HTMLElement | null = null;\n\n  onClickOutside(element: HTMLElement) {\n    this.clickedElement = element;\n  }\n}\n\nconst meta: Meta<ClickOutsideStoryComponent> = {\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<ClickOutsideStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -120,7 +120,7 @@
         },
         {
             "name": "ScrollToStoryComponent",
-            "id": "component-ScrollToStoryComponent-946d1a15be50bf7b5df68a80bfd0dcd5ce3df00cd2535a4c7553e04c7b5a0c9a4cb7228fd878d3ce9debb99ada0af6e4c8dcb43cb0425662558a9065ee95c8d9",
+            "id": "component-ScrollToStoryComponent-a53c1985b8458b76c038c3f6b73ff54cbbad98e7533c1322fae3837e57bfaea42401a606b683970e6b50140de1865e71fdbb3bd2922036aaa7ae5da0e463d01e",
             "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -130,7 +130,7 @@
             "selector": "story-scroll-to",
             "styleUrls": [],
             "styles": [],
-            "template": "<div style=\"height: 100vh; display: flex; flex-direction: column;\">\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\" >Scroll to Target 1</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n  <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n    <div style=\"height: 500px;\">\n      <p>Scrollable content area</p>\n\n      <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">\n        Target 1\n      </div>\n\n      <div style=\"height: 300px;\" appScrollTo #scrollToDirective=\"appScrollTo\"></div>\n\n      <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">\n        Target 2\n      </div>\n      <div style=\"height: 800px;\"></div>\n      <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">\n        Target 3\n      </div>\n    </div>\n  </div>\n</div>\n",
+            "template": "<div style=\"height: 100vh; display: flex; flex-direction: column;\">\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\">Scroll to Target 1</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n  <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n    <div style=\"height: 500px;\">\n      <p>Scrollable content area</p>\n\n      <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">Target 1</div>\n\n      <div style=\"height: 300px;\" appScrollTo #scrollToDirective=\"appScrollTo\"></div>\n\n      <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">Target 2</div>\n      <div style=\"height: 800px;\"></div>\n      <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">Target 3</div>\n    </div>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -145,7 +145,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 37,
+                    "line": 31,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -172,7 +172,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 39,
+                    "line": 33,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -203,7 +203,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ScrollToDirective } from '../directives/scrollto.directive';\nimport { Component, ViewChild } from '@angular/core';\n\n@Component({\n  selector: 'story-scroll-to',\n  imports: [ScrollToDirective],\n  template: `\n    <div style=\"height: 100vh; display: flex; flex-direction: column;\">\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\" >Scroll to Target 1</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n      <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n        <div style=\"height: 500px;\">\n          <p>Scrollable content area</p>\n\n          <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">\n            Target 1\n          </div>\n\n          <div style=\"height: 300px;\" appScrollTo #scrollToDirective=\"appScrollTo\"></div>\n\n          <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">\n            Target 2\n          </div>\n          <div style=\"height: 800px;\"></div>\n          <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">\n            Target 3\n          </div>\n        </div>\n      </div>\n    </div>\n  `\n})\nclass ScrollToStoryComponent {\n  @ViewChild('scrollToDirective') scrollToDirective!: ScrollToDirective;\n\n  scrollTo(target?: string) {\n    this.scrollToDirective.scrollToTarget(target);\n  }\n}\n\nconst meta: Meta<ScrollToStoryComponent> = {\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs']\n};\n\nexport default meta;\ntype Story = StoryObj<ScrollToStoryComponent>;\n\nexport const Primary: Story = {\n  args: {}\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ScrollToDirective } from '../directives/scrollto.directive';\nimport { Component, ViewChild } from '@angular/core';\n\n@Component({\n  selector: 'story-scroll-to',\n  imports: [ScrollToDirective],\n  template: `\n    <div style=\"height: 100vh; display: flex; flex-direction: column;\">\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\">Scroll to Target 1</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n      <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n        <div style=\"height: 500px;\">\n          <p>Scrollable content area</p>\n\n          <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">Target 1</div>\n\n          <div style=\"height: 300px;\" appScrollTo #scrollToDirective=\"appScrollTo\"></div>\n\n          <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">Target 2</div>\n          <div style=\"height: 800px;\"></div>\n          <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">Target 3</div>\n        </div>\n      </div>\n    </div>\n  `,\n})\nclass ScrollToStoryComponent {\n  @ViewChild('scrollToDirective') scrollToDirective!: ScrollToDirective;\n\n  scrollTo(target?: string) {\n    this.scrollToDirective.scrollToTarget(target);\n  }\n}\n\nconst meta: Meta<ScrollToStoryComponent> = {\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<ScrollToStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -214,6 +214,16 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {},\n}"
+            },
+            {
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -221,7 +231,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<BlurOnClickStoryComponent>",
-                "defaultValue": "{\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs']\n}"
+                "defaultValue": "{\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs'],\n}"
             },
             {
                 "name": "meta",
@@ -231,7 +241,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<ClickOutsideStoryComponent>",
-                "defaultValue": "{\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs']\n}"
+                "defaultValue": "{\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs'],\n}"
             },
             {
                 "name": "meta",
@@ -241,7 +251,37 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<ScrollToStoryComponent>",
-                "defaultValue": "{\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs']\n}"
+                "defaultValue": "{\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs'],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<HelpCenterComponent>",
+                "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n}"
+            },
+            {
+                "name": "ModeDisplay",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: modeTemplate,\n  }),\n  args: {\n    mode: undefined,\n  },\n}"
+            },
+            {
+                "name": "modeTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "`\n<wn-help-center [mode]=\"mode\"></wn-help-center>\n<p>Current mode: {{ helpCenter.mode }}</p>\n`"
             },
             {
                 "name": "preview",
@@ -261,7 +301,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {}\n}"
+                "defaultValue": "{\n  args: {},\n}"
             },
             {
                 "name": "Primary",
@@ -271,7 +311,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {}\n}"
+                "defaultValue": "{\n  args: {},\n}"
             },
             {
                 "name": "Primary",
@@ -281,7 +321,37 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {}\n}"
+                "defaultValue": "{\n  args: {},\n}"
+            },
+            {
+                "name": "WithButtonMode",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    mode: 'button',\n  },\n}"
+            },
+            {
+                "name": "WithTextMode",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    mode: 'text',\n  },\n}"
+            },
+            {
+                "name": "WithUndefinedMode",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    mode: undefined,\n  },\n}"
             }
         ],
         "functions": [],
@@ -318,10 +388,93 @@
                 "deprecationMessage": "",
                 "description": "",
                 "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<HelpCenterComponent>",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
             }
         ],
         "enumerations": [],
         "groupedVariables": {
+            "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {},\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<HelpCenterComponent>",
+                    "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n}"
+                },
+                {
+                    "name": "ModeDisplay",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: modeTemplate,\n  }),\n  args: {\n    mode: undefined,\n  },\n}"
+                },
+                {
+                    "name": "modeTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "`\n<wn-help-center [mode]=\"mode\"></wn-help-center>\n<p>Current mode: {{ helpCenter.mode }}</p>\n`"
+                },
+                {
+                    "name": "WithButtonMode",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    mode: 'button',\n  },\n}"
+                },
+                {
+                    "name": "WithTextMode",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    mode: 'text',\n  },\n}"
+                },
+                {
+                    "name": "WithUndefinedMode",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    mode: undefined,\n  },\n}"
+                }
+            ],
             "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts": [
                 {
                     "name": "meta",
@@ -331,7 +484,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<BlurOnClickStoryComponent>",
-                    "defaultValue": "{\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs']\n}"
+                    "defaultValue": "{\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs'],\n}"
                 },
                 {
                     "name": "Primary",
@@ -341,7 +494,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {}\n}"
+                    "defaultValue": "{\n  args: {},\n}"
                 }
             ],
             "projects/wn-zorro/src/lib/stories/click-outside.stories.ts": [
@@ -353,7 +506,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<ClickOutsideStoryComponent>",
-                    "defaultValue": "{\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs']\n}"
+                    "defaultValue": "{\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs'],\n}"
                 },
                 {
                     "name": "Primary",
@@ -363,7 +516,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {}\n}"
+                    "defaultValue": "{\n  args: {},\n}"
                 }
             ],
             "projects/wn-zorro/src/lib/stories/scrollto.stories.ts": [
@@ -375,7 +528,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<ScrollToStoryComponent>",
-                    "defaultValue": "{\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs']\n}"
+                    "defaultValue": "{\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs'],\n}"
                 },
                 {
                     "name": "Primary",
@@ -385,7 +538,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {}\n}"
+                    "defaultValue": "{\n  args: {},\n}"
                 }
             ],
             "projects/wn-zorro/.storybook/preview.ts": [
@@ -437,6 +590,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<ScrollToStoryComponent>",
                     "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<HelpCenterComponent>",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -569,6 +735,86 @@
             },
             {
                 "filePath": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ModeDisplay",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "modeTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithButtonMode",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextMode",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithUndefinedMode",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
