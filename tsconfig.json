@@ -23,7 +23,7 @@
     "types": ["node", "jest"],
     "baseUrl": "./",
     "paths": {
-      "wn-utils": ["projects/wn-utils/src/index"],
+      "wn-helper": ["projects/wn-helper/src/index"],
       "wn-zorro": ["projects/wn-zorro/src/index"]
     }
   },

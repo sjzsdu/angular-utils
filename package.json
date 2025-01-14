@@ -9,8 +9,8 @@
     "test": "ng test",
     "storybook:zorro": "ng run wn-zorro:storybook",
     "build-storybook:zorro": "ng run wn-zorro:build-storybook",
-    "build:all": "npm run build:wn-utils && npm run build:wn-zorro",
-    "build:wn-utils": "ng build wn-utils",
+    "build:all": "npm run build:wn-helper && npm run build:wn-zorro",
+    "build:wn-helper": "ng build wn-helper",
     "build:wn-zorro": "ng build wn-zorro",
     "format": "prettier --write \"projects/**/*.ts\" \"projects/**/*.html\"",
     "lint": "ng lint"

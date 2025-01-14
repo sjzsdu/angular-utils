@@ -1,6 +1,6 @@
 {
-  "name": "wn-utils",
-  "version": "0.0.1",
+  "name": "wn-helper",
+  "version": "0.0.2",
   "peerDependencies": {},
   "dependencies": {
     "tslib": "^2.3.0"

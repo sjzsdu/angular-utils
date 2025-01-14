@@ -112,23 +112,23 @@
         }
       }
     },
-    "wn-utils": {
+    "wn-helper": {
       "projectType": "library",
-      "root": "projects/wn-utils",
-      "sourceRoot": "projects/wn-utils/src",
+      "root": "projects/wn-helper",
+      "sourceRoot": "projects/wn-helper/src",
       "prefix": "wn",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/wn-utils/ng-package.json"
+            "project": "projects/wn-helper/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/wn-utils/tsconfig.lib.prod.json"
+              "tsConfig": "projects/wn-helper/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/wn-utils/tsconfig.lib.json"
+              "tsConfig": "projects/wn-helper/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -136,7 +136,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/wn-utils/tsconfig.spec.json",
+            "tsConfig": "projects/wn-helper/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"

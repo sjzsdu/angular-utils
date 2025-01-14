@@ -22,18 +22,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build wn-utils
-        run: pnpm run build wn-utils
+      - name: Build wn-helper
+        run: pnpm run build wn-helper
 
       - name: Build wn-zorro
         run: pnpm run build wn-zorro
 
-      - name: Publish wn-utils
-        run: pnpm publish dist/wn-utils
+      - name: Publish wn-helper
+        run: |
+          cd dist/wn-helper
+          pnpm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish wn-zorro
-        run: pnpm publish dist/wn-zorro
+        run: |
+          cd dist/wn-zorro
+          pnpm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

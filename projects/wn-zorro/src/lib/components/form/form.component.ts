@@ -41,7 +41,7 @@ import { NzFormLayoutType } from 'ng-zorro-antd/form';
 import { NzSelectComponent } from 'ng-zorro-antd/select';
 import { FormService } from './form.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounceExecute, delayExecute } from 'wn-utils';
+import { debounceExecute, delayExecute } from 'wn-helper';
 import { getAsyncValidator, getValidator, ValidateReactiveFormData } from './validates';
 import { Subject, takeUntil } from 'rxjs';
 import { FORM_COMMANDS, FORM_DATA, FORM_EMITTER, FORM_PARAMS } from './const';
