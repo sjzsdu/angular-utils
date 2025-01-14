@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-const labelFuncs: Record<string, Function> = {
+export const labelFuncs: Record<string, Function> = {
   FirstUppercase: (str: string): string => {
     const parts = str.split('_');
     const formattedParts = parts.map((part, index) => {
@@ -39,6 +39,8 @@ const labelFuncs: Record<string, Function> = {
     return str;
   },
 };
+
+export type LabelFunc = keyof typeof labelFuncs;
 
 @Pipe({
   name: 'label',

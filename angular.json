@@ -197,6 +197,9 @@
               "-d",
               "projects/wn-zorro"
             ],
+            "styles": [
+              "projects/wn-zorro/src/style.less"
+            ],
             "port": 6006
           }
         },
@@ -211,6 +214,9 @@
               "json",
               "-d",
               "projects/wn-zorro"
+            ],
+            "styles": [
+              "projects/wn-zorro/src/style.less"
             ],
             "outputDir": "storybook-static/wn-zorro"
           }

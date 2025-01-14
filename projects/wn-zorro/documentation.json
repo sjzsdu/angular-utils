@@ -1,6 +1,62 @@
 {
     "pipes": [],
-    "interfaces": [],
+    "interfaces": [
+        {
+            "name": "TableData",
+            "id": "interface-TableData-4409fd68b6ef1e0d34a1a4ae3e0c5a172cb19e1ffbb74b511dbf1fd3c768e58c7eade3474a98ec75f8f1198df6ffe3da69b6775703fbd6036fc243b5174f786e",
+            "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { FrontendTableComponent } from '../../components/table/frontend-table/frontend-table.component';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { PipesModule } from '../../pipes';\n\ninterface TableData {\n  key: string;\n  name: string;\n  age: number;\n  address: string;\n}\n\nconst meta: Meta<FrontendTableComponent> = {\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent>;\n\nconst sampleData: TableData[] = [\n  {\n    key: '1',\n    name: 'John Brown',\n    age: 32,\n    address: 'New York No. 1 Lake Park',\n  },\n  {\n    key: '2',\n    name: 'Jim Green',\n    age: 42,\n    address: 'London No. 1 Lake Park',\n  },\n  {\n    key: '3',\n    name: 'Joe Black',\n    age: 32,\n    address: 'Sidney No. 1 Lake Park',\n  },\n];\n\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
+            "properties": [
+                {
+                    "name": "address",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13
+                },
+                {
+                    "name": "age",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12
+                },
+                {
+                    "name": "key",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10
+                },
+                {
+                    "name": "name",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        }
+    ],
     "injectables": [],
     "guards": [],
     "interceptors": [],
@@ -214,6 +270,36 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "ButtonMode",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Click for help',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as a clickable button',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "columns",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "[]",
+                "defaultValue": "[\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n]"
+            },
+            {
+                "name": "CustomText",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Custom help text',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center with custom text',\n      },\n    },\n  },\n}"
+            },
+            {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -221,7 +307,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {},\n}"
+                "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Interactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  ...Template,\n  args: {\n    mode: 'button',\n    text: 'Interactive example',\n    type: 'primary',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -257,31 +353,31 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<FrontendTableComponent>",
+                "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<HeaderTemplateComponent>",
+                "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<HelpCenterComponent>",
-                "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n}"
-            },
-            {
-                "name": "ModeDisplay",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: modeTemplate,\n  }),\n  args: {\n    mode: undefined,\n  },\n}"
-            },
-            {
-                "name": "modeTemplate",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "`\n<wn-help-center [mode]=\"mode\"></wn-help-center>\n<p>Current mode: {{ helpCenter.mode }}</p>\n`"
+                "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    mode: {\n      control: 'select',\n      options: [undefined, 'button', 'text'],\n      description: 'Display mode of the help center',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'undefined' },\n      },\n    },\n    text: {\n      control: 'text',\n      description: 'Help text content',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Help' },\n      },\n    },\n    type: {\n      control: 'select',\n      options: ['primary', 'text', 'link'],\n      description: 'Button type style',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'primary' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe HelpCenter component provides contextual help information in different display modes.\n\n### Features:\n- Multiple display modes: button, text, or default\n- Customizable icon and tooltip\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "preview",
@@ -324,34 +420,54 @@
                 "defaultValue": "{\n  args: {},\n}"
             },
             {
-                "name": "WithButtonMode",
+                "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    mode: 'button',\n  },\n}"
+                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
             },
             {
-                "name": "WithTextMode",
+                "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "file": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    mode: 'text',\n  },\n}"
+                "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
             },
             {
-                "name": "WithUndefinedMode",
+                "name": "sampleData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "TableData[]",
+                "defaultValue": "[\n  {\n    key: '1',\n    name: 'John Brown',\n    age: 32,\n    address: 'New York No. 1 Lake Park',\n  },\n  {\n    key: '2',\n    name: 'Jim Green',\n    age: 42,\n    address: 'London No. 1 Lake Park',\n  },\n  {\n    key: '3',\n    name: 'Joe Black',\n    age: 32,\n    address: 'Sidney No. 1 Lake Park',\n  },\n]"
+            },
+            {
+                "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    mode: undefined,\n  },\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-help-center\n        [mode]=\"mode\"\n        [text]=\"text\"\n        [type]=\"type\"\n      ></wn-help-center>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "TextMode",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    mode: 'text',\n    text: 'Hover for more information',\n    type: 'text',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as inline text',\n      },\n    },\n  },\n}"
             }
         ],
         "functions": [],
@@ -393,6 +509,28 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<FrontendTableComponent>",
+                "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<HeaderTemplateComponent>",
+                "file": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<HelpCenterComponent>",
                 "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
                 "deprecated": false,
@@ -405,6 +543,26 @@
         "groupedVariables": {
             "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts": [
                 {
+                    "name": "ButtonMode",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Click for help',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as a clickable button',\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "CustomText",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Custom help text',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center with custom text',\n      },\n    },\n  },\n}"
+                },
+                {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -412,7 +570,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {},\n}"
+                    "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "Interactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  ...Template,\n  args: {\n    mode: 'button',\n    text: 'Interactive example',\n    type: 'primary',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
                 },
                 {
                     "name": "meta",
@@ -422,57 +590,69 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<HelpCenterComponent>",
-                    "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n}"
+                    "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    mode: {\n      control: 'select',\n      options: [undefined, 'button', 'text'],\n      description: 'Display mode of the help center',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'undefined' },\n      },\n    },\n    text: {\n      control: 'text',\n      description: 'Help text content',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Help' },\n      },\n    },\n    type: {\n      control: 'select',\n      options: ['primary', 'text', 'link'],\n      description: 'Button type style',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'primary' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe HelpCenter component provides contextual help information in different display modes.\n\n### Features:\n- Multiple display modes: button, text, or default\n- Customizable icon and tooltip\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
                 },
                 {
-                    "name": "ModeDisplay",
+                    "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: modeTemplate,\n  }),\n  args: {\n    mode: undefined,\n  },\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-help-center\n        [mode]=\"mode\"\n        [text]=\"text\"\n        [type]=\"type\"\n      ></wn-help-center>\n    `,\n  }),\n}"
                 },
                 {
-                    "name": "modeTemplate",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "`\n<wn-help-center [mode]=\"mode\"></wn-help-center>\n<p>Current mode: {{ helpCenter.mode }}</p>\n`"
-                },
-                {
-                    "name": "WithButtonMode",
+                    "name": "TextMode",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    mode: 'button',\n  },\n}"
-                },
+                    "defaultValue": "{\n  args: {\n    mode: 'text',\n    text: 'Hover for more information',\n    type: 'text',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as inline text',\n      },\n    },\n  },\n}"
+                }
+            ],
+            "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts": [
                 {
-                    "name": "WithTextMode",
+                    "name": "columns",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "defaultValue": "[\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n]"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<FrontendTableComponent>",
+                    "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    mode: 'text',\n  },\n}"
+                    "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
                 },
                 {
-                    "name": "WithUndefinedMode",
+                    "name": "sampleData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    mode: undefined,\n  },\n}"
+                    "type": "TableData[]",
+                    "defaultValue": "[\n  {\n    key: '1',\n    name: 'John Brown',\n    age: 32,\n    address: 'New York No. 1 Lake Park',\n  },\n  {\n    key: '2',\n    name: 'Jim Green',\n    age: 42,\n    address: 'London No. 1 Lake Park',\n  },\n  {\n    key: '3',\n    name: 'Joe Black',\n    age: 32,\n    address: 'Sidney No. 1 Lake Park',\n  },\n]"
                 }
             ],
             "projects/wn-zorro/src/lib/stories/blur-on-click.stories.ts": [
@@ -541,6 +721,28 @@
                     "defaultValue": "{\n  args: {},\n}"
                 }
             ],
+            "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<HeaderTemplateComponent>",
+                    "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
+                }
+            ],
             "projects/wn-zorro/.storybook/preview.ts": [
                 {
                     "name": "preview",
@@ -590,6 +792,32 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<ScrollToStoryComponent>",
                     "file": "projects/wn-zorro/src/lib/stories/scrollto.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<FrontendTableComponent>",
+                    "file": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<HeaderTemplateComponent>",
+                    "file": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -744,11 +972,130 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "TableData",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "columns",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "sampleData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/table/frontend-table.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/header-template.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ButtonMode",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CustomText",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Interactive",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -768,7 +1115,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "ModeDisplay",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -778,37 +1125,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "modeTemplate",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "WithButtonMode",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "WithTextMode",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/lib/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "WithUndefinedMode",
+                "name": "TextMode",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

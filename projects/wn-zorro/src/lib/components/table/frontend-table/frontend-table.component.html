@@ -1,0 +1,22 @@
+<nz-table #basicTable [nzData]="nzData()">
+  <thead>
+    <tr>
+      @for (col of columns(); track col.name) {
+        <th>{{ col.title ?? (col.name | label: col?.titleFunc || 'WordUppercase') }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of basicTable.data; track data) {
+      <tr>
+        @for (col of columns(); track col.name) {
+          @switch (col.type) {
+            @case ('text') {
+              <td>{{ data[col.name] }}</td>
+            }
+          }
+        }
+      </tr>
+    }
+  </tbody>
+</nz-table>
