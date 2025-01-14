@@ -2,7 +2,7 @@ name: Publish Packages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   publish:
@@ -16,21 +16,24 @@ jobs:
           node-version: 18
           registry-url: https://registry.npmjs.org/
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build wn-utils
-        run: npm run build wn-utils
+        run: pnpm run build wn-utils
 
       - name: Build wn-zorro
-        run: npm run build wn-zorro
+        run: pnpm run build wn-zorro
 
       - name: Publish wn-utils
-        run: npm publish projects/wn-utils
+        run: pnpm publish projects/wn-utils
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish wn-zorro
-        run: npm publish projects/wn-zorro
+        run: pnpm publish projects/wn-zorro
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
