@@ -11,6 +11,7 @@ export type IData = Array<IRow>;
 
 export type ColumnMap = {
   text: {};
+  copy: { content?: string };
 };
 
 export type IColumn<K extends IRow> = {
@@ -31,3 +32,20 @@ export type IColumn<K extends IRow> = {
     };
   };
 }[keyof ColumnMap];
+
+export type IServerTableColumns<K extends IRow> = {
+  [T in keyof ColumnMap]: {
+    name: string;
+    title?: string;
+    titleFunc?: LabelFunc;
+    type: T;
+    params: ColumnMap[T];
+  };
+}[keyof ColumnMap];
+
+export interface ServerTableConfig {
+  pageIndexName: string;
+  pageSizeName: string;
+  sortName: string;
+  fitlerName: string;
+}

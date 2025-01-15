@@ -158,6 +158,11 @@
       "projectType": "library",
       "root": "projects/wn-zorro",
       "sourceRoot": "projects/wn-zorro/src",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "less"
+        }
+      },
       "prefix": "wn",
       "architect": {
         "build": {

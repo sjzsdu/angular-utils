@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, signal, TemplateRef } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { IColumn, IRow } from '../type';
 import { PipesModule } from '../../../pipes';
@@ -12,10 +12,27 @@ export class FrontendTableComponent<T extends IRow> {
   nzData = input<T[]>([]);
   columns = input<IColumn<T>[]>([]);
   nzSelections = input<Array<{ text: string; onSelect(...args: any[]): any }>>([]);
+  nzSize = input<'middle' | 'small' | 'default'>('default');
+  nzBordered = input<boolean>(false);
+  nzTitle = input<string | TemplateRef<void> | null>(null);
+  nzFooter = input<string | TemplateRef<void> | null>(null);
   nzShowPagination = input(true);
   nzShowSizeChanger = input(false);
   showChecked = input(false);
+  nzExpandable = input<boolean>(false);
   mainKey = input('id');
+  expandKey = input('description');
+
+  // -----------------enable expand------------------
+  expandSet = new Set<number>();
+  onExpandChange(id: number, checked: boolean): void {
+    if (checked) {
+      this.expandSet.add(id);
+    } else {
+      this.expandSet.delete(id);
+    }
+  }
+  //==================enable pagination=============
 
   // -----------------enable pagination------------------
   onCurrentPageDataChange(listOfCurrentPageData: readonly IRow[]): void {

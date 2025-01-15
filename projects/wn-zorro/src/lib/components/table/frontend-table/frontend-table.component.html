@@ -5,6 +5,10 @@
 </header>
 <nz-table
   #tableRef
+  [nzSize]="nzSize()"
+  [nzBordered]="nzBordered()"
+  [nzFooter]="nzFooter()"
+  [nzTitle]="nzTitle()"
   [nzShowPagination]="nzShowPagination()"
   [nzShowSizeChanger]="nzShowSizeChanger()"
   [nzData]="nzData()"
@@ -39,6 +43,12 @@
   <tbody>
     @for (data of tableRef.data; track data) {
       <tr>
+        @if (nzExpandable()) {
+          <td
+            [nzExpand]="expandSet.has(data[mainKey()])"
+            (nzExpandChange)="onExpandChange(data[mainKey()], $event)"
+          ></td>
+        }
         @if (showChecked()) {
           <td
             [nzChecked]="setOfCheckedId.has(data[mainKey()])"
@@ -51,9 +61,17 @@
             @case ('text') {
               <td>{{ data[col.name] }}</td>
             }
+            @case ('copy') {
+              <td>{{ data[col.name] }}</td>
+            }
           }
         }
       </tr>
+      @if (nzExpandable()) {
+        <tr [nzExpand]="expandSet.has(data[mainKey()])">
+          <span>{{ data[expandKey()] }}</span>
+        </tr>
+      }
     }
   </tbody>
 </nz-table>
