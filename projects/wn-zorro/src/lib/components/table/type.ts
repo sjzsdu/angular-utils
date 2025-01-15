@@ -28,6 +28,9 @@ export type IColumn<K extends IRow> = {
     titleFunc?: LabelFunc;
     type: T;
     params: ColumnMap[T];
+    width?: string;
+    fixLeft?: string | boolean;
+    fixRight?: string | boolean;
     sortFilter?: {
       sortOrder: NzTableSortOrder | null;
       sortFn: NzTableSortFn<K> | null;

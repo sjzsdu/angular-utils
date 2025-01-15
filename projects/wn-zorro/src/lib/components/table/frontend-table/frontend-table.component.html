@@ -12,6 +12,7 @@
   [nzShowPagination]="nzShowPagination()"
   [nzShowSizeChanger]="nzShowSizeChanger()"
   [nzData]="nzData()"
+  [nzScroll]="scroll()"
   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
 >
   <thead>
@@ -31,6 +32,9 @@
       }
       @for (col of columns(); track col.name) {
         <th
+          [nzLeft]="col?.fixLeft ?? false"
+          [nzRight]="col?.fixRight ?? false"
+          [nzWidth]="col.width ?? ''"
           [nzShowFilter]="!!col?.sortFilter?.listOfFilter"
           [nzShowSort]="!!col?.sortFilter?.sortDirections"
           [nzSortOrder]="col?.sortFilter?.sortOrder ?? null"
@@ -63,14 +67,16 @@
           ></td>
         }
         @for (col of columns(); track col.name) {
-          @switch (col.type) {
-            @case ('text') {
-              <td>{{ data[col.name] }}</td>
+          <td [nzLeft]="col?.fixLeft ?? false" [nzRight]="col?.fixRight ?? false">
+            @switch (col.type) {
+              @case ('text') {
+                <span>{{ data[col.name] }}</span>
+              }
+              @case ('copy') {
+                {{ data[col.name] }}
+              }
             }
-            @case ('copy') {
-              <td>{{ data[col.name] }}</td>
-            }
-          }
+          </td>
         }
       </tr>
       @if (nzExpandable()) {

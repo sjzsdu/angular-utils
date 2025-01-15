@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { PipesModule } from '../../pipes';
 import { faker } from '@faker-js/faker';
-import { IRow } from '../../components/table/type';
+import { IColumn, IRow } from '../../components/table/type';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FormsModule } from '@angular/forms';
 
@@ -390,6 +390,60 @@ export const Expandable: Story = {
         [nzData]="nzData"
         [columns]="columns"
         [nzExpandable]="nzExpandable"
+      ></wn-frontend-table>
+    `,
+  }),
+};
+
+const columnsExtended: IColumn<IData>[] = [
+  ...columns,
+  ...columns.map((col) => ({ ...col, name: col.name + '-1', title: col.title + '-1' })),
+  {
+    name: 'actions',
+    title: 'Actions',
+    type: 'text',
+    params: {},
+    fixRight: true,
+    width: '100px',
+  },
+];
+export const WithMaxDimensions: Story = {
+  args: {
+    nzData: sampleData,
+    columns: columnsExtended,
+    maxWidth: '800px',
+    maxHeight: '400px',
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <wn-frontend-table
+        [nzData]="nzData"
+        [columns]="columns"
+        [maxWidth]="maxWidth"
+        [maxHeight]="maxHeight"
+        [nzShowPagination]="false"
+      ></wn-frontend-table>
+    `,
+  }),
+};
+
+export const WithFixedColumns: Story = {
+  args: {
+    nzData: sampleData,
+    columns: columnsExtended,
+    maxWidth: '800px',
+    maxHeight: '400px',
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <wn-frontend-table
+        [nzData]="nzData"
+        [columns]="columns"
+        [maxWidth]="maxWidth"
+        [maxHeight]="maxHeight"
+        [nzShowPagination]="false"
       ></wn-frontend-table>
     `,
   }),

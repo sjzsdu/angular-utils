@@ -1,4 +1,4 @@
-import { Component, input, signal, TemplateRef } from '@angular/core';
+import { Component, computed, input, signal, TemplateRef } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { IColumn, IRow } from '../type';
 import { PipesModule } from '../../../pipes';
@@ -22,6 +22,12 @@ export class FrontendTableComponent<T extends IRow> {
   nzExpandable = input<boolean>(false);
   mainKey = input('id');
   expandKey = input('description');
+  maxHeight = input('');
+  maxWidth = input('');
+
+  scroll = computed<{ x?: string; y?: string }>(() => {
+    return { x: this.maxWidth(), y: this.maxHeight() };
+  });
 
   // -----------------enable expand------------------
   expandSet = new Set<string | number>();
