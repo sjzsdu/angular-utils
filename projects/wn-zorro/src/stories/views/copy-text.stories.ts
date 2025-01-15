@@ -1,10 +1,16 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular';
 import { CopyTextComponent } from '../../lib/components/view/copy-text/copy-text.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const meta: Meta<CopyTextComponent> = {
   title: 'Components/CopyText',
   component: CopyTextComponent,
   tags: ['autodocs'],
+  decorators: [
+    applicationConfig({
+      providers: [provideAnimationsAsync()],
+    }),
+  ],
   argTypes: {
     value: {
       control: 'text',
@@ -14,20 +20,20 @@ const meta: Meta<CopyTextComponent> = {
         defaultValue: { summary: '' },
       },
     },
-    copyTip: {
+    title: {
       control: 'text',
-      description: 'Tooltip text for copy button',
+      description: 'Text show in ui',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'Copy' },
+        defaultValue: { summary: '' },
       },
     },
     copiedTip: {
       control: 'text',
-      description: 'Tooltip text after successful copy',
+      description: 'Message shown after successful copy',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'Copied!' },
+        defaultValue: { summary: 'Copied' },
       },
     },
   },
@@ -54,6 +60,7 @@ type Story = StoryObj<CopyTextComponent>;
 export const Default: Story = {
   args: {
     value: 'Sample text to copy',
+    title: 'Copy title',
   },
   parameters: {
     docs: {
@@ -93,8 +100,7 @@ export const EmptyText: Story = {
 
 export const CustomTooltips: Story = {
   args: {
-    value: 'Text with custom tooltips',
-    copyTip: 'Click to copy',
+    value: 'Text with custom message',
     copiedTip: 'Text copied to clipboard!',
   },
   parameters: {
@@ -112,7 +118,6 @@ const Template: Story = {
     template: `
       <wn-copy-text
         [value]="value"
-        [copyTip]="copyTip"
         [copiedTip]="copiedTip"
       ></wn-copy-text>
     `,
@@ -123,7 +128,6 @@ export const Interactive = {
   ...Template,
   args: {
     value: 'Interactive example',
-    copyTip: 'Copy text',
     copiedTip: 'Copied!',
   },
   parameters: {

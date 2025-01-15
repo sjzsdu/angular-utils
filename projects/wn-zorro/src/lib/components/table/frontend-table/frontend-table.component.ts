@@ -2,10 +2,11 @@ import { Component, computed, input, signal, TemplateRef } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { IColumn, IRow } from '../type';
 import { PipesModule } from '../../../pipes';
+import { CopyTextComponent } from '../../view/copy-text/copy-text.component';
 
 @Component({
   selector: 'wn-frontend-table',
-  imports: [NzTableModule, PipesModule],
+  imports: [NzTableModule, PipesModule, CopyTextComponent],
   templateUrl: './frontend-table.component.html',
 })
 export class FrontendTableComponent<T extends IRow> {

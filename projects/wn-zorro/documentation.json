@@ -437,6 +437,26 @@
                 "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Custom help text',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center with custom text',\n      },\n    },\n  },\n}"
             },
             {
+                "name": "CustomTooltips",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    value: 'Text with custom message',\n    copiedTip: 'Text copied to clipboard!',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'CopyText component with custom tooltip messages',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    value: 'Sample text to copy',\n    title: 'Copy title',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default CopyText component with sample text',\n      },\n    },\n  },\n}"
+            },
+            {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -445,6 +465,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "EmptyText",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    value: '',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'CopyText component with no text to copy',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Expandable",
@@ -490,11 +520,31 @@
                 "name": "Interactive",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  ...Template,\n  args: {\n    value: 'Interactive example',\n    copiedTip: 'Copied!',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Interactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\n  ...Template,\n  args: {\n    mode: 'button',\n    text: 'Interactive example',\n    type: 'primary',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "LongText",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    value:\n      \"This is a much longer text that demonstrates how the CopyTextComponent handles larger amounts of content. It might wrap or truncate depending on the component's implementation.\",\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'CopyText component with a long text to demonstrate text wrapping or truncation',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -535,6 +585,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<FrontendTableComponent<IData>>",
                 "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      autodocs: true,\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<CopyTextComponent>",
+                "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -660,6 +720,16 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -748,6 +818,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<FrontendTableComponent<IData>>",
                 "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<CopyTextComponent>",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1042,6 +1123,78 @@
                     "defaultValue": "{\n  args: {\n    mode: 'text',\n    text: 'Hover for more information',\n    type: 'text',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as inline text',\n      },\n    },\n  },\n}"
                 }
             ],
+            "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
+                {
+                    "name": "CustomTooltips",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    value: 'Text with custom message',\n    copiedTip: 'Text copied to clipboard!',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'CopyText component with custom tooltip messages',\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    value: 'Sample text to copy',\n    title: 'Copy title',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default CopyText component with sample text',\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "EmptyText",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    value: '',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'CopyText component with no text to copy',\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "Interactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  ...Template,\n  args: {\n    value: 'Interactive example',\n    copiedTip: 'Copied!',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "LongText",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    value:\n      \"This is a much longer text that demonstrates how the CopyTextComponent handles larger amounts of content. It might wrap or truncate depending on the component's implementation.\",\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'CopyText component with a long text to demonstrate text wrapping or truncation',\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<CopyTextComponent>",
+                    "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
+                }
+            ],
             "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts": [
                 {
                     "name": "meta",
@@ -1192,6 +1345,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<FrontendTableComponent<IData>>",
                     "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<CopyTextComponent>",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1678,6 +1844,86 @@
             },
             {
                 "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CustomTooltips",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "EmptyText",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Interactive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LongText",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

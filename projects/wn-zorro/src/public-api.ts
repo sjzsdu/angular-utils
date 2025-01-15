@@ -6,3 +6,4 @@ export * from './lib/components/';
 export * from './lib/pipes/';
 export * from './lib/shared/shared.module';
 export * from './lib/helper';
+export * from './lib/types';

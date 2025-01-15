@@ -1,5 +1,7 @@
 import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { LabelFunc } from '../../pipes';
+import { ExtractInputTypes } from '../../types';
+import { CopyTextComponent } from '../view/copy-text/copy-text.component';
 
 export interface IRowStatus {
   disabled?: boolean;
@@ -18,7 +20,7 @@ export type IData = Array<IRow>;
 
 export type ColumnMap = {
   text: {};
-  copy: { content?: string };
+  copy: { valueKey: string };
 };
 
 export type IColumn<K extends IRow> = {

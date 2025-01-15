@@ -1,4 +1,4 @@
-import { EventEmitter, Injector, InputSignal, InputSignalWithTransform, TemplateRef, Type } from '@angular/core';
+import { EventEmitter, Injector, TemplateRef, Type } from '@angular/core';
 import { AsyncValidatorFn } from '@angular/forms';
 import { ValidatorFn } from '@angular/forms';
 import { NzFormLayoutType } from 'ng-zorro-antd/form';
@@ -8,16 +8,7 @@ import { NzAutosizeDirective, NzInputGroupComponent } from 'ng-zorro-antd/input'
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzCascaderComponent } from 'ng-zorro-antd/cascader';
 import { NzRadioGroupComponent } from 'ng-zorro-antd/radio';
-
-export type ExtractInputTypes<T> = {
-  [K in keyof T as T[K] extends InputSignal<infer U> | InputSignalWithTransform<infer U, unknown>
-    ? K
-    : never]: T[K] extends InputSignal<infer U>
-    ? U
-    : T[K] extends InputSignalWithTransform<infer U, unknown>
-      ? U
-      : never;
-};
+import { ExtractInputTypes } from '../../types';
 
 type IInputGroup = Pick<NzInputGroupComponent, 'nzAddOnBefore' | 'nzAddOnAfter'>;
 
