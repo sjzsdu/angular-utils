@@ -33,11 +33,11 @@ jobs:
           cd dist/wn-helper
           pnpm publish
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish wn-zorro
         run: |
           cd dist/wn-zorro
           pnpm publish
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
