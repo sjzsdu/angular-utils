@@ -28,16 +28,20 @@ jobs:
       - name: Build wn-zorro
         run: pnpm run build wn-zorro
 
+      - name: Setup npm authentication
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Publish wn-helper
         run: |
           cd dist/wn-helper
-          pnpm publish
+          pnpm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish wn-zorro
         run: |
           cd dist/wn-zorro
-          pnpm publish
+          pnpm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
