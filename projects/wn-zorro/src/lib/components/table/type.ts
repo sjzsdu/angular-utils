@@ -5,6 +5,13 @@ export interface IRowStatus {
   disabled?: boolean;
 }
 
+export interface ITreeNode {
+  level?: number;
+  expand?: boolean;
+  children?: IRow[];
+  parent?: IRow;
+}
+
 export type IRow = Record<string, any> & IRowStatus;
 
 export type IData = Array<IRow>;

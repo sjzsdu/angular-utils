@@ -24,8 +24,10 @@ export class FrontendTableComponent<T extends IRow> {
   expandKey = input('description');
 
   // -----------------enable expand------------------
-  expandSet = new Set<number>();
-  onExpandChange(id: number, checked: boolean): void {
+  expandSet = new Set<string | number>();
+  mapOfExpandedData: { [key: string]: IRow[] } = {};
+
+  onExpandChange(id: string | number, checked: boolean): void {
     if (checked) {
       this.expandSet.add(id);
     } else {
@@ -45,16 +47,16 @@ export class FrontendTableComponent<T extends IRow> {
   checked = false;
   loading = false;
   indeterminate = false;
-  setOfCheckedId = new Set<number | string>();
+  setOfCheckedId = new Set<string | number>();
   currentPageData = signal<readonly IRow[]>([]);
-  updateCheckedSet(id: number, checked: boolean): void {
+  updateCheckedSet(id: string | number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
     } else {
       this.setOfCheckedId.delete(id);
     }
   }
-  onItemChecked(id: number, checked: boolean): void {
+  onItemChecked(id: string | number, checked: boolean): void {
     this.updateCheckedSet(id, checked);
     this.refreshCheckedStatus();
   }

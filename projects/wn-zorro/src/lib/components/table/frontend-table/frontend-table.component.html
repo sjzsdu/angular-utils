@@ -16,8 +16,12 @@
 >
   <thead>
     <tr>
+      @if (nzExpandable()) {
+        <th class="expand-header" nzWidth="60px"></th>
+      }
       @if (showChecked()) {
         <th
+          class="checkbox-header"
           [nzSelections]="nzSelections() || null"
           [nzChecked]="checked"
           [nzIndeterminate]="indeterminate"
@@ -27,11 +31,13 @@
       }
       @for (col of columns(); track col.name) {
         <th
+          [nzShowFilter]="!!col?.sortFilter?.listOfFilter"
+          [nzShowSort]="!!col?.sortFilter?.sortDirections"
           [nzSortOrder]="col?.sortFilter?.sortOrder ?? null"
           [nzSortFn]="col?.sortFilter?.sortFn ?? null"
           [nzSortPriority]="col?.sortFilter?.sortPriority ?? false"
-          [nzSortDirections]="col?.sortFilter?.sortDirections ?? ['ascend', 'descend', null]"
-          [nzFilterMultiple]="col?.sortFilter?.filterMultiple ?? true"
+          [nzSortDirections]="col?.sortFilter?.sortDirections ?? []"
+          [nzFilterMultiple]="col?.sortFilter?.filterMultiple ?? false"
           [nzFilters]="col?.sortFilter?.listOfFilter ?? []"
           [nzFilterFn]="col?.sortFilter?.filterFn ?? null"
         >
@@ -41,7 +47,7 @@
     </tr>
   </thead>
   <tbody>
-    @for (data of tableRef.data; track data) {
+    @for (data of tableRef.data; track data[mainKey()]) {
       <tr>
         @if (nzExpandable()) {
           <td

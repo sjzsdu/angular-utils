@@ -7,12 +7,15 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { PipesModule } from '../../pipes';
 import { faker } from '@faker-js/faker';
 import { IRow } from '../../components/table/type';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { FormsModule } from '@angular/forms';
 
 interface IData extends IRow {
   id: number;
   name: string;
   age: number;
   address: string;
+  expandContent?: string;
 }
 
 const generateSampleData = (count: number): IData[] => {
@@ -21,15 +24,21 @@ const generateSampleData = (count: number): IData[] => {
     name: faker.person.fullName(),
     age: faker.number.int({ min: 18, max: 80 }),
     address: faker.location.streetAddress(),
+    expandContent: `Details for ${faker.person.fullName()}:
+- Phone: ${faker.phone.number()}
+- Email: ${faker.internet.email()}
+- Company: ${faker.company.name()}
+- Job: ${faker.person.jobTitle()}`,
   }));
 };
 
 const meta: Meta<FrontendTableComponent<IData>> = {
   title: 'Components/FrontendTable',
   component: FrontendTableComponent,
+  tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [NzTableModule, PipesModule],
+      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],
     }),
     applicationConfig({
       providers: [importProvidersFrom(BrowserAnimationsModule)],
@@ -37,6 +46,7 @@ const meta: Meta<FrontendTableComponent<IData>> = {
   ],
   parameters: {
     docs: {
+      autodocs: true,
       description: {
         component: `
 ### FrontendTable Component Documentation
@@ -276,6 +286,110 @@ export const AllFeatures: Story = {
         [showChecked]="showChecked"
         [nzShowPagination]="nzShowPagination"
         [nzShowSizeChanger]="nzShowSizeChanger"
+      ></wn-frontend-table>
+    `,
+  }),
+};
+
+export const BasicFeatures: Story = {
+  args: {
+    nzData: sampleData,
+    columns: columns,
+    nzTitle: 'Table Header',
+    nzFooter: 'Table Footer',
+    nzBordered: true,
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <wn-frontend-table
+        [nzData]="nzData"
+        [columns]="columns"
+        [nzTitle]="nzTitle"
+        [nzFooter]="nzFooter"
+        [nzBordered]="nzBordered"
+      ></wn-frontend-table>
+    `,
+  }),
+};
+
+interface WithSizeProps {
+  nzData: IData[];
+  columns: Array<{
+    name: string;
+    title: string;
+    type: 'text';
+    params: Record<string, any>;
+    sortFilter?: {
+      sortOrder: 'ascend' | 'descend' | null;
+      sortFn: (a: any, b: any) => number;
+      sortDirections: Array<'ascend' | 'descend' | null>;
+      filterFn: (list: any[], item: any) => boolean;
+      listOfFilter: Array<{ text: string; value: any }>;
+      filterMultiple: boolean;
+    };
+  }>;
+  sizeOptions: Array<{ label: string; value: 'small' | 'middle' | 'default' }>;
+  currentSize: 'small' | 'middle' | 'default';
+  toggleSize: () => void;
+  onSizeChange: (size: 'small' | 'middle' | 'default') => void;
+}
+
+export const WithSize: Story = {
+  args: {
+    nzData: sampleData,
+    columns: columns,
+  },
+  render: (args) => ({
+    props: {
+      ...args,
+      currentSize: 'small',
+      sizeOptions: [
+        { label: 'Small', value: 'small' },
+        { label: 'Middle', value: 'middle' },
+        { label: 'Default', value: 'default' },
+      ],
+      onSizeChange: function (size: 'small' | 'middle' | 'default') {
+        console.log('onSizeChange', size);
+        this['currentSize'] = size;
+      },
+    },
+    template: `
+      <div>
+        <nz-radio-group
+          [(ngModel)]="currentSize"
+          (ngModelChange)="onSizeChange($event)"
+          style="margin-bottom: 16px"
+        >
+          <label nz-radio *ngFor="let option of sizeOptions" [nzValue]="option.value">
+            {{option.label}}
+          </label>
+        </nz-radio-group>
+        <wn-frontend-table
+          [nzData]="nzData"
+          [columns]="columns"
+          [nzSize]="currentSize"
+          [nzBordered]="true"
+        ></wn-frontend-table>
+      </div>
+    `,
+  }),
+};
+
+export const Expandable: Story = {
+  args: {
+    nzData: sampleData,
+    columns: columns,
+    nzExpandable: true,
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <wn-frontend-table
+        [expandKey]="'expandContent'"
+        [nzData]="nzData"
+        [columns]="columns"
+        [nzExpandable]="nzExpandable"
       ></wn-frontend-table>
     `,
   }),
