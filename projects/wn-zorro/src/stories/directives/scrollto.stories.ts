@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { ScrollToDirective } from '../directives/scrollto.directive';
+import { ScrollToDirective } from '../../lib/directives/scrollto.directive';
 import { Component, ViewChild } from '@angular/core';
 
 @Component({

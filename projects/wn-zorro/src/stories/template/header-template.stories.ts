@@ -1,8 +1,8 @@
 import { applicationConfig, Meta, moduleMetadata, StoryObj } from '@storybook/angular';
-import { HeaderTemplateComponent } from '../../components/template/header-template/header-template.component';
-import { TemplateService } from '../../components/template/template.service';
 import { importProvidersFrom, TemplateRef } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderTemplateComponent } from '../../lib/components/template/header-template/header-template.component';
+import { TemplateService } from '../../lib/components/template/template.service';
 
 const meta: Meta<HeaderTemplateComponent> = {
   title: 'Components/HeaderTemplate',

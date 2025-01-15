@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { ClickOutsideDirective } from '../directives/click-outside.directive';
+import { ClickOutsideDirective } from '../../lib/directives/click-outside.directive';
 import { Component } from '@angular/core';
 
 @Component({

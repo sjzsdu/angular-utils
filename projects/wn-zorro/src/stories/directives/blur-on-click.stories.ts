@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { BlurOnClickDirective } from '../directives/blur-on-click.directive';
+import { BlurOnClickDirective } from '../../lib/directives/blur-on-click.directive';
 import { Component } from '@angular/core';
 
 @Component({

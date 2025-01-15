@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { FrontendTableComponent } from '../../components/table/frontend-table/frontend-table.component';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { PipesModule } from '../../pipes';
 import { faker } from '@faker-js/faker';
-import { IColumn, IRow } from '../../components/table/type';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FormsModule } from '@angular/forms';
+import { IColumn, IRow } from '../../lib/components/table/type';
+import { FrontendTableComponent } from '../../lib/components/table/frontend-table/frontend-table.component';
+import { PipesModule } from '../../lib/pipes/';
 
 interface IData extends IRow {
   id: number;

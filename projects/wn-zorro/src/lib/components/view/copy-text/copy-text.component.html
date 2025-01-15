@@ -1,0 +1,13 @@
+<div class="copy-text-container">
+  <span class="copy-text-value">{{ value() }}</span>
+  <button
+    nz-button
+    nzType="text"
+    nzSize="small"
+    (click)="copyToClipboard()"
+    nz-tooltip
+    [nzTooltipTitle]="copied ? copiedTip() : copyTip()"
+  >
+    <i nz-icon nzType="copy" nzTheme="outline"></i>
+  </button>
+</div>

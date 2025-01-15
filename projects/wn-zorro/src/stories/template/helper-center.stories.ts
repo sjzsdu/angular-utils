@@ -1,7 +1,5 @@
-// FILEPATH: /Users/juzhongsun/Codes/javascripts/angular-utils/projects/wn-zorro/src/lib/components/template/helper-center/help-center.stories.ts
-
 import { Meta, StoryObj } from '@storybook/angular';
-import { HelpCenterComponent } from '../../components';
+import { HelpCenterComponent } from '../../lib/components/template/helper-center/help-center.component';
 
 const meta: Meta<HelpCenterComponent> = {
   title: 'Components/HelpCenter',
