@@ -23,6 +23,7 @@ export type IColumn<K extends IRow> = {
     sortFilter?: {
       sortOrder: NzTableSortOrder | null;
       sortFn: NzTableSortFn<K> | null;
+      sortPriority?: number | boolean;
       listOfFilter: NzTableFilterList;
       filterFn: NzTableFilterFn<K> | null;
       filterMultiple: boolean;

@@ -25,6 +25,7 @@
         <th
           [nzSortOrder]="col?.sortFilter?.sortOrder ?? null"
           [nzSortFn]="col?.sortFilter?.sortFn ?? null"
+          [nzSortPriority]="col?.sortFilter?.sortPriority ?? false"
           [nzSortDirections]="col?.sortFilter?.sortDirections ?? ['ascend', 'descend', null]"
           [nzFilterMultiple]="col?.sortFilter?.filterMultiple ?? true"
           [nzFilters]="col?.sortFilter?.listOfFilter ?? []"
