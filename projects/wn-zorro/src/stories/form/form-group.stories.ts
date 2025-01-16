@@ -190,3 +190,61 @@ export const WithHide: Story = {
     `,
   }),
 };
+
+const controlDisabled: FormController = {
+  disableds: [
+    {
+      field: 'username',
+      rules: [
+        { value: 'sjz111111', columns: ['age'] },
+        { value: 'sjz222222', columns: ['email'] },
+        { value: 'sjz333333', columns: ['age', 'email'] },
+      ],
+    },
+  ],
+};
+
+export const WithDisabled: Story = {
+  args: {
+    items: defaultItems,
+    control: controlDisabled,
+  },
+  render: (args) => ({
+    props: {
+      ...args,
+    },
+    template: `
+      <wn-form-group
+        [items]="items"
+        [control]="control"
+      ></wn-form-group>
+    `,
+  }),
+};
+
+const controlReset: FormController = {
+  resets: [
+    {
+      field: 'username',
+      columns: ['email'],
+    },
+  ],
+};
+
+export const WithReset: Story = {
+  args: {
+    items: defaultItems,
+    control: controlReset,
+  },
+  render: (args) => ({
+    props: {
+      ...args,
+    },
+    template: `
+      <wn-form-group
+        [items]="items"
+        [control]="control"
+      ></wn-form-group>
+    `,
+  }),
+};

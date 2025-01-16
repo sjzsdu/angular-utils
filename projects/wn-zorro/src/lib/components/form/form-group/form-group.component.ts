@@ -60,6 +60,7 @@ export class FormGroupComponent {
 
   constructor() {
     effect(() => {
+      console.log('construct');
       if (this.items()?.length) {
         this.handleItems(this.items());
       }
@@ -91,72 +92,98 @@ export class FormGroupComponent {
   createForm(items: FormItem[]) {
     for (const item of items) {
       if (!item.isHide) {
-        this.addControl(item.name, item.formControl!);
+        this.addControl(item.name, this.getControl(item.name)!);
       } else {
         this.removeControl(item.name);
       }
     }
   }
-
   setHides(hides: FormHide[]) {
     for (const hide of hides) {
       const { field, rules } = hide;
       const item = this.getItem(field);
-      if (item) {
+      const control = this.getControl(field);
+      if (item && control) {
         item!.isHide = false;
         const setValue = (val: any) => {
-          for (const rule of rules) {
-            const { value, columns } = rule;
-            for (const col of columns) {
+          const allColumns = rules.flatMap((rule) => rule.columns);
+
+          for (const col of allColumns) {
+            const sub = this.getItem(col);
+            if (sub) {
+              sub.isHide = true;
+            }
+          }
+
+          const matchedRule = rules.find((rule) => rule.value === val);
+          if (matchedRule) {
+            for (const col of matchedRule.columns) {
               const sub = this.getItem(col);
               if (sub) {
-                sub.isHide = !(val === value);
+                sub.isHide = false;
               }
             }
           }
-          console.log('asdfadsf', this.items());
+
+          console.log('setHides: ', val, allColumns, matchedRule?.columns);
+          console.log('Updated items', this.items());
           this.createForm(this.items());
           this.cdr.detectChanges();
         };
-        item.formControl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+
+        control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
           console.log('value change', val);
           setValue(val);
         });
-        setValue(item.formControl?.value);
+        console.log('Hidden item', control);
+        setValue(control.value);
       }
     }
   }
-
   setDisableds(disableds: (FormDisabled | string)[]) {
     for (const disabled of disableds) {
       if (typeof disabled === 'string') {
-        const sub = this.getItem(disabled);
-        if (sub) {
-          sub.formControl?.disable();
+        const item = this.getItem(disabled);
+        const control = this.getControl(disabled);
+        if (item && control) {
+          control.disable();
         }
       } else {
         const { field, rules } = disabled;
         const item = this.getItem(field);
-        if (item) {
+        const control = this.getControl(field);
+        if (item && control) {
+          control.enable();
           const setValue = (val: any) => {
-            for (const rule of rules) {
-              const { value, columns } = rule;
-              for (const col of columns) {
-                const sub = this.getItem(col);
-                if (sub) {
-                  if (val === value) {
-                    sub.formControl?.enable();
-                  } else {
-                    sub.formControl?.disable();
-                  }
+            const allColumns = rules.flatMap((rule) => rule.columns);
+
+            for (const col of allColumns) {
+              const subControl = this.getControl(col);
+              if (subControl) {
+                subControl.enable();
+              }
+            }
+
+            const matchedRule = rules.find((rule) => rule.value === val);
+            if (matchedRule) {
+              for (const col of matchedRule.columns) {
+                const subControl = this.getControl(col);
+                if (subControl) {
+                  subControl.disable();
                 }
               }
             }
+
+            console.log('setDisableds: ', val, allColumns, matchedRule?.columns);
+            this.cdr.detectChanges();
           };
-          item.formControl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+
+          control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+            console.log('value change for disable', val);
             setValue(val);
           });
-          setValue(item.formControl?.value);
+          console.log('Disabled item', control);
+          setValue(control.value);
         }
       }
     }
@@ -166,19 +193,25 @@ export class FormGroupComponent {
     for (const reset of resets) {
       const { field, columns } = reset;
       const item = this.getItem(field);
-      if (item) {
+      const control = this.getControl(field);
+      if (item && control) {
         const setValue = (val: any) => {
           for (const column of columns) {
-            const sub = this.getItem(column);
-            if (sub) {
-              sub.formControl?.reset(val);
+            const subControl = this.getControl(column);
+            if (subControl) {
+              subControl.reset();
             }
           }
+          console.log('setResets: ', field, val, columns);
+          this.cdr.detectChanges();
         };
-        item.formControl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+
+        control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+          console.log('value change for reset', val);
           setValue(val);
         });
-        setValue(item.formControl?.value);
+        console.log('Reset item', control);
+        setValue(control.value);
       }
     }
   }

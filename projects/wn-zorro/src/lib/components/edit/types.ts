@@ -92,7 +92,6 @@ export type FormItem = {
     name: string;
     type: T;
     params: ComponentParamsMap[T];
-    formControl?: AbstractControl;
     label?: ILabel;
     control?: IControl;
     placeholder?: string;
