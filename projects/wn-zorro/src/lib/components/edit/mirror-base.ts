@@ -35,8 +35,6 @@ export abstract class MirrorBaseComponent
 
   data = inject(NZ_MODAL_DATA, { optional: true });
 
-  innerValue = signal('');
-
   ctrlEnterBinding: KeyBinding;
   shiftEnterBinding: KeyBinding;
   escMBinding: KeyBinding;
@@ -76,9 +74,6 @@ export abstract class MirrorBaseComponent
   }
 
   ngOnInit(): void {
-    if (this.data?.initCode) {
-      this.initCode.set(this.data.initCode);
-    }
     if (!this.innerValue()) {
       this.innerValue.set(this.initCode());
     }
@@ -135,6 +130,6 @@ export abstract class MirrorBaseComponent
   }
 
   protected doChange() {
-    this.change(this.innerValue());
+    this.change(this.innerValue()!);
   }
 }
