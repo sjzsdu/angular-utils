@@ -1,5 +1,5 @@
 import { EventEmitter, Injector, TemplateRef, Type } from '@angular/core';
-import { AsyncValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormControl, NgModel } from '@angular/forms';
 import { ValidatorFn } from '@angular/forms';
 import { NzFormLayoutType } from 'ng-zorro-antd/form';
 import { NzSelectModeType } from 'ng-zorro-antd/select';
@@ -9,6 +9,8 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzCascaderComponent } from 'ng-zorro-antd/cascader';
 import { NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 import { ExtractInputTypes } from '../../types';
+
+export type IFormRow = Record<string, any>;
 
 type IInputGroup = Pick<NzInputGroupComponent, 'nzAddOnBefore' | 'nzAddOnAfter'>;
 
@@ -43,6 +45,14 @@ export type ComponentParamsMap = {
     children: FormItem[];
     control: FormController;
   };
+  groupForm: {
+    children: FormItem[];
+    control: FormController;
+  };
+  arrayForm: {
+    children: FormItem[];
+    control: FormController;
+  };
 };
 
 export interface OptItem {
@@ -52,7 +62,7 @@ export interface OptItem {
 export type OptioinItem = string | OptItem;
 
 export type ValidateStore = Record<string, ValidatorFn | ((...rest: any) => ValidatorFn)>;
-export type AsyncValidateStore = Record<string, AsyncValidatorFn>;
+export type AsyncValidateStore = Record<string, AsyncValidatorFn | ((...rest: any) => AsyncValidatorFn)>;
 
 export interface ILabel {
   label?: string;
@@ -64,25 +74,39 @@ export interface ILabel {
   helpPath?: string;
 }
 
+export type templateOrString = string | TemplateRef<{ $implicit: FormControl | NgModel }>;
+
+export interface IControl {
+  hasFeedback?: boolean;
+  validatingTip?: templateOrString;
+  errorTip?: templateOrString;
+  successTip?: templateOrString;
+  warningTip?: templateOrString;
+  autoTips?: Record<string, Record<string, string>>;
+  disableAutoTips?: boolean;
+  extra?: string | TemplateRef<void>;
+}
+
 export type FormItem = {
   [T in keyof ComponentParamsMap]: {
     name: string;
     type: T;
     params: ComponentParamsMap[T];
+    formControl?: AbstractControl;
     label?: ILabel;
+    control?: IControl;
     placeholder?: string;
     defaults?: any;
     disabled?: boolean;
     validates?: string[];
     validatesArgs?: Record<string, any[]>;
     asyncValidates?: string[];
+    asyncValidatesArgs?: Record<string, any[]>;
 
     itemSpan?: number;
     isHide?: boolean;
     span?: number;
     required?: boolean;
-    current: any;
-    formParams: any[];
   };
 }[keyof ComponentParamsMap];
 
@@ -92,6 +116,12 @@ export interface ControlRules {
   values?: any[];
 }
 
+/**
+ * Represents the structure for controlling form item visibility.
+ * When the value of a specific item in the current row changes,
+ * if it matches the 'value' in ControlRules, the items specified
+ * in 'columns' will be displayed.
+ */
 export interface FormHide {
   field: string;
   rules: ControlRules[];

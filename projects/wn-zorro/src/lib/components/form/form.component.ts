@@ -25,7 +25,7 @@ import {
   ComponentCommand,
   ControlRules,
   CustomComponentCache,
-  FormController,
+  FormControl,
   FormDisabled,
   FormHide,
   FormItem,
@@ -72,7 +72,7 @@ export class FormComponent<T = any> extends BaseAccessorComponent<T> {
   inModal = input(false);
   showError = model(false);
   row = input<any>();
-  control = input<FormController>();
+  control = input<FormControl>();
   nzModalData: FormModalData = inject(NZ_MODAL_DATA, { optional: true });
 
   _layout = computed(() => {

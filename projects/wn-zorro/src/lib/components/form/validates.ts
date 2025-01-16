@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { AsyncValidateStore, FormItem, ValidateStore } from './types';
+import { AsyncValidateStore, FormItem, ValidateStore } from '../edit/types';
 
 function getControl(control: AbstractControl, target: string) {
   const controls = control['_parent']?.controls;
@@ -142,25 +142,34 @@ export function registerValidator(key: string, validator: ValidatorFn) {
   validatorStore[key] = validator;
 }
 
-export function getValidator(key?: string | string[], args?: Record<string, any[]>): ValidatorFn[] {
+function getValidators<T extends ValidatorFn | AsyncValidatorFn>(
+  store: Record<string, T | ((...rest: any[]) => T)>,
+  key?: string | string[],
+  args?: Record<string, any[]>
+): T[] {
   if (!key) {
     return [];
   }
   const keys = Array.isArray(key) ? key : [key];
   const validates = keys
     .map((item) => {
-      const validator = validatorStore[item];
+      const validator = store[item];
       if (!validator) {
         return;
       }
       if (args) {
+        const _validator = validator as (...rest: any) => T;
         const arg = args[item];
-        return arg ? validator.apply(null, arg) : validator;
+        return arg ? _validator.apply(null, arg) : _validator;
       }
-      return validator as ValidatorFn;
+      return validator as T;
     })
     .filter((item) => !!item);
-  return validates as ValidatorFn[];
+  return validates as T[];
+}
+
+export function getValidator(key?: string | string[], args?: Record<string, any[]>): ValidatorFn[] {
+  return getValidators<ValidatorFn>(validatorStore, key, args);
 }
 
 // this is asyncValidates Function
@@ -170,12 +179,8 @@ export function registerAsyncValidator(key: string, validator: AsyncValidatorFn)
   asyncValidatorStore[key] = validator;
 }
 
-export function getAsyncValidator(key?: string | string[]): AsyncValidatorFn[] {
-  if (!key) {
-    return [];
-  }
-  const keys = Array.isArray(key) ? key : [key];
-  return keys.map((item) => asyncValidatorStore[item]).filter((item) => !!item);
+export function getAsyncValidator(key?: string | string[], args?: Record<string, any[]>): AsyncValidatorFn[] {
+  return getValidators<AsyncValidatorFn>(asyncValidatorStore, key, args);
 }
 
 export function ValidateReactiveFormData(items: FormItem[], row: any) {

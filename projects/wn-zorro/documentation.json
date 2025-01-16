@@ -450,6 +450,16 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -457,14 +467,14 @@
                 "defaultValue": "{\n  args: {\n    value: 'Sample text to copy',\n    title: 'Copy title',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default CopyText component with sample text',\n      },\n    },\n  },\n}"
             },
             {
-                "name": "Default",
+                "name": "defaultItems",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
+                "type": "FormItem[]",
+                "defaultValue": "[\n  {\n    name: 'username',\n    type: 'input',\n    params: {\n      nzAddOnBefore: '',\n      nzAddOnAfter: '',\n    },\n    label: {\n      label: 'Username',\n      tooltip: 'Your login name',\n      help: 'Must be unique',\n    },\n    placeholder: 'Enter your username',\n    required: true,\n    validates: ['required', 'minLength'],\n    validatesArgs: {\n      minLength: [8],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Username is required',\n      successTip: 'Looks good!',\n    },\n    itemSpan: 24,\n    span: 12,\n  },\n  {\n    name: 'email',\n    type: 'input',\n    params: {\n      nzAddOnBefore: '',\n      nzAddOnAfter: '',\n    },\n    label: {\n      label: 'Email',\n      tooltip: 'Your email address',\n      help: 'We will send verification email',\n    },\n    placeholder: 'Enter your email',\n    required: true,\n    validates: ['regexp'],\n    validatesArgs: {\n      regexp: [/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Invalid email format',\n      successTip: 'Valid email',\n    },\n    itemSpan: 24,\n    span: 12,\n  },\n]"
             },
             {
                 "name": "EmptyText",
@@ -520,11 +530,11 @@
                 "name": "Interactive",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\n  ...Template,\n  args: {\n    value: 'Interactive example',\n    copiedTip: 'Copied!',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: defaultItems,\n    nzLayout: 'horizontal',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.nzLayout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"nzLayout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"nzLayout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
             },
             {
                 "name": "Interactive",
@@ -535,6 +545,16 @@
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\n  ...Template,\n  args: {\n    mode: 'button',\n    text: 'Interactive example',\n    type: 'primary',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Interactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  ...Template,\n  args: {\n    value: 'Interactive example',\n    copiedTip: 'Copied!',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "LongText",
@@ -580,21 +600,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<FrontendTableComponent<IData>>",
-                "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      autodocs: true,\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n}"
+                "type": "Meta<FormGroupComponent>",
+                "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    nzLayout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzFormModule, NzInputModule, NzRadioModule, NzSwitchModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
             },
             {
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<CopyTextComponent>",
-                "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
+                "type": "Meta<FrontendTableComponent<IData>>",
+                "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      autodocs: true,\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -615,6 +635,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<HelpCenterComponent>",
                 "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    mode: {\n      control: 'select',\n      options: [undefined, 'button', 'text'],\n      description: 'Display mode of the help center',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'undefined' },\n      },\n    },\n    text: {\n      control: 'text',\n      description: 'Help text content',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Help' },\n      },\n    },\n    type: {\n      control: 'select',\n      options: ['primary', 'text', 'link'],\n      description: 'Button type style',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'primary' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe HelpCenter component provides contextual help information in different display modes.\n\n### Features:\n- Multiple display modes: button, text, or default\n- Customizable icon and tooltip\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<CopyTextComponent>",
+                "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimationsAsync()],\n    }),\n  ],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Pagination",
@@ -720,21 +750,21 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-help-center\n        [mode]=\"mode\"\n        [text]=\"text\"\n        [type]=\"type\"\n      ></wn-help-center>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
             },
             {
                 "name": "TextMode",
@@ -816,8 +846,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<FrontendTableComponent<IData>>",
-                "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
+                "rawtype": "StoryObj<FormGroupComponent>",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -827,8 +857,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<CopyTextComponent>",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "rawtype": "StoryObj<FrontendTableComponent<IData>>",
+                "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -851,6 +881,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<HelpCenterComponent>",
                 "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<CopyTextComponent>",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1182,7 +1223,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<CopyTextComponent>",
-                    "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
+                    "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimationsAsync()],\n    }),\n  ],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
                 },
                 {
                     "name": "Template",
@@ -1193,6 +1234,38 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
+                }
+            ],
+            "projects/wn-zorro/src/stories/form/form-group.stories.ts": [
+                {
+                    "name": "defaultItems",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormItem[]",
+                    "defaultValue": "[\n  {\n    name: 'username',\n    type: 'input',\n    params: {\n      nzAddOnBefore: '',\n      nzAddOnAfter: '',\n    },\n    label: {\n      label: 'Username',\n      tooltip: 'Your login name',\n      help: 'Must be unique',\n    },\n    placeholder: 'Enter your username',\n    required: true,\n    validates: ['required', 'minLength'],\n    validatesArgs: {\n      minLength: [8],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Username is required',\n      successTip: 'Looks good!',\n    },\n    itemSpan: 24,\n    span: 12,\n  },\n  {\n    name: 'email',\n    type: 'input',\n    params: {\n      nzAddOnBefore: '',\n      nzAddOnAfter: '',\n    },\n    label: {\n      label: 'Email',\n      tooltip: 'Your email address',\n      help: 'We will send verification email',\n    },\n    placeholder: 'Enter your email',\n    required: true,\n    validates: ['regexp'],\n    validatesArgs: {\n      regexp: [/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Invalid email format',\n      successTip: 'Valid email',\n    },\n    itemSpan: 24,\n    span: 12,\n  },\n]"
+                },
+                {
+                    "name": "Interactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: defaultItems,\n    nzLayout: 'horizontal',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.nzLayout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"nzLayout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"nzLayout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<FormGroupComponent>",
+                    "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    nzLayout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzFormModule, NzInputModule, NzRadioModule, NzSwitchModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
                 }
             ],
             "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts": [
@@ -1338,6 +1411,19 @@
                     "kind": 183
                 }
             ],
+            "projects/wn-zorro/src/stories/form/form-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<FormGroupComponent>",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
             "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts": [
                 {
                     "name": "Story",
@@ -1345,19 +1431,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<FrontendTableComponent<IData>>",
                     "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
-            "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<CopyTextComponent>",
-                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1384,6 +1457,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<HelpCenterComponent>",
                     "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<CopyTextComponent>",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1516,6 +1602,46 @@
             },
             {
                 "filePath": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultItems",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Interactive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

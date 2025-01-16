@@ -21,10 +21,9 @@
     "module": "ES2022",
     "lib": ["ES2022", "dom"],
     "types": ["node", "jest"],
-    "baseUrl": "./",
     "paths": {
-      "wn-helper": ["projects/wn-helper/src/index"],
-      "wn-zorro": ["projects/wn-zorro/src/index"]
+      "wn-helper": ["./dist/wn-helper"],
+      "wn-zorro": ["./dist/wn-zorro"]
     }
   },
   "angularCompilerOptions": {
