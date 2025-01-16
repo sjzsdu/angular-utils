@@ -1,7 +1,7 @@
 @if (formGroup) {
   <form
     nz-form
-    [nzLayout]="nzLayout()"
+    [nzLayout]="layout()"
     [nzNoColon]="nzNoColon()"
     [nzLabelAlign]="nzLabelAlign()"
     [nzLabelWrap]="nzLabelWrap()"
@@ -9,34 +9,55 @@
     (ngSubmit)="submitForm()"
   >
     @for (item of this.items(); track item.name) {
-      <nz-form-item>
-        <nz-form-label [nzRequired]="item.required">
-          {{ item?.label?.label || (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
-        </nz-form-label>
-        <nz-form-control
-          [nzHasFeedback]="item?.control?.hasFeedback ?? false"
-          [nzSuccessTip]="item?.control?.successTip"
-          [nzErrorTip]="item?.control?.errorTip"
-          [nzWarningTip]="item?.control?.warningTip"
-          [nzValidatingTip]="item?.control?.validatingTip"
-          [nzAutoTips]="item?.control?.autoTips ?? {}"
-          [nzDisableAutoTips]="item?.control?.disableAutoTips"
-          [nzExtra]="item?.control?.extra"
-        >
-          @switch (item.type) {
-            @case ('input') {
-              <nz-input-group [nzAddOnBefore]="item?.params?.nzAddOnBefore" [nzAddOnAfter]="item?.params?.nzAddOnAfter">
-                <input
-                  type="text"
-                  [formControlName]="item.name"
-                  nz-input
-                  [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
-                />
-              </nz-input-group>
+      @if (!item.isHide) {
+        <nz-form-item>
+          <nz-form-label [nzSpan]="labelSpan() ?? null" [nzRequired]="item.required">
+            {{ item?.label?.label || (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
+          </nz-form-label>
+          <nz-form-control
+            [nzSpan]="controlSpan() ?? null"
+            [nzHasFeedback]="item?.control?.hasFeedback ?? false"
+            [nzSuccessTip]="item?.control?.successTip"
+            [nzErrorTip]="item?.control?.errorTip"
+            [nzWarningTip]="item?.control?.warningTip"
+            [nzValidatingTip]="item?.control?.validatingTip"
+            [nzAutoTips]="item?.control?.autoTips ?? {}"
+            [nzDisableAutoTips]="item?.control?.disableAutoTips"
+            [nzExtra]="item?.control?.extra"
+          >
+            @switch (item.type) {
+              @case ('input') {
+                <nz-input-group
+                  [nzAddOnBefore]="item?.params?.nzAddOnBefore"
+                  [nzAddOnAfter]="item?.params?.nzAddOnAfter"
+                >
+                  <input
+                    type="text"
+                    [formControlName]="item.name"
+                    nz-input
+                    [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
+                  />
+                </nz-input-group>
+              }
+              @case ('number') {
+                <nz-input-group
+                  [nzAddOnBefore]="item?.params?.nzAddOnBefore"
+                  [nzAddOnAfter]="item?.params?.nzAddOnAfter"
+                >
+                  <nz-input-number
+                    style="width: 100%"
+                    [formControlName]="item.name"
+                    [nzMin]="item?.params?.nzMin"
+                    [nzMax]="item?.params?.nzMax"
+                    [nzPrecision]="item?.params?.nzPrecision ?? 1"
+                    [nzStep]="item?.params?.nzStep"
+                  />
+                </nz-input-group>
+              }
             }
-          }
-        </nz-form-control>
-      </nz-form-item>
+          </nz-form-control>
+        </nz-form-item>
+      }
     }
     <nz-form-item>
       <nz-form-control>

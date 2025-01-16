@@ -3,7 +3,7 @@ import { FormGroupComponent } from '../../lib/components/form/form-group/form-gr
 import { NzFormModule, NzLabelAlignType } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FormItem } from '../../lib/components/edit/';
+import { FormController, FormItem } from '../../lib/components/edit/';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
@@ -14,7 +14,7 @@ const meta: Meta<FormGroupComponent> = {
   component: FormGroupComponent,
   tags: ['autodocs'],
   argTypes: {
-    nzLayout: {
+    layout: {
       control: 'select',
       options: ['horizontal', 'vertical', 'inline'],
       description: 'Form layout mode',
@@ -48,8 +48,8 @@ const defaultItems: FormItem[] = [
     name: 'username',
     type: 'input',
     params: {
-      nzAddOnBefore: '',
-      nzAddOnAfter: '',
+      nzAddOnBefore: 'Name',
+      nzAddOnAfter: 'ss',
     },
     label: {
       label: 'Username',
@@ -67,8 +67,6 @@ const defaultItems: FormItem[] = [
       errorTip: 'Username is required',
       successTip: 'Looks good!',
     },
-    itemSpan: 24,
-    span: 12,
   },
   {
     name: 'email',
@@ -93,15 +91,32 @@ const defaultItems: FormItem[] = [
       errorTip: 'Invalid email format',
       successTip: 'Valid email',
     },
-    itemSpan: 24,
-    span: 12,
+  },
+  {
+    name: 'age',
+    type: 'number',
+    params: {
+      nzAddOnBefore: 'Age',
+      nzAddOnAfter: 'Y',
+    },
+    placeholder: 'Enter your age',
+    required: true,
+    validates: ['min'],
+    validatesArgs: {
+      min: [8],
+    },
+    control: {
+      hasFeedback: true,
+      errorTip: 'Age is required',
+      successTip: 'age is good!',
+    },
   },
 ];
 
 export const Interactive: Story = {
   args: {
     items: defaultItems,
-    nzLayout: 'horizontal',
+    layout: 'horizontal',
     nzLabelAlign: 'right',
     nzNoColon: false,
     nzLabelWrap: false,
@@ -109,7 +124,7 @@ export const Interactive: Story = {
   render: (args) => ({
     props: {
       ...args,
-      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.nzLayout = layout),
+      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),
       onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),
     },
     template: `
@@ -140,6 +155,37 @@ export const Interactive: Story = {
         [nzLabelAlign]="nzLabelAlign"
         [nzNoColon]="nzNoColon"
         [nzLabelWrap]="nzLabelWrap"
+      ></wn-form-group>
+    `,
+  }),
+};
+
+const controlHide: FormController = {
+  hides: [
+    {
+      field: 'username',
+      rules: [
+        { value: 'sjz111111', columns: ['age'] },
+        { value: 'sjz222222', columns: ['email'] },
+        { value: 'sjz333333', columns: ['age', 'email'] },
+      ],
+    },
+  ],
+};
+
+export const WithHide: Story = {
+  args: {
+    items: defaultItems,
+    control: controlHide,
+  },
+  render: (args) => ({
+    props: {
+      ...args,
+    },
+    template: `
+      <wn-form-group
+        [items]="items"
+        [control]="control"
       ></wn-form-group>
     `,
   }),

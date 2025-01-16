@@ -6,12 +6,16 @@ import { getAsyncValidator, getValidator } from '../validates';
 import { PipesModule } from '../../../pipes';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { hasDuplicates } from 'wn-helper';
+import { takeUntil } from 'rxjs';
+import { NzDestroyService } from 'ng-zorro-antd/core/services';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
   selector: 'wn-form-group',
-  imports: [ReactiveFormsModule, NzFormModule, PipesModule, NzInputModule],
+  imports: [ReactiveFormsModule, NzFormModule, PipesModule, NzInputModule, NzInputNumberModule],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',
+  providers: [NzDestroyService],
 })
 export class FormGroupComponent {
   key = input('');
@@ -20,7 +24,9 @@ export class FormGroupComponent {
   row = model<IFormRow>();
 
   // form
-  nzLayout = input<'horizontal' | 'vertical' | 'inline'>('horizontal');
+  layout = input<'horizontal' | 'vertical' | 'inline'>('vertical');
+  labelSpan = input<number>();
+  controlSpan = input<number>();
 
   // label
   nzNoColon = input(false);
@@ -29,6 +35,7 @@ export class FormGroupComponent {
 
   private fb = inject(FormBuilder);
   private cdr = inject(ChangeDetectorRef);
+  private destroy$ = inject(NzDestroyService);
   private parent = inject(FormGroupComponent, { optional: true, skipSelf: true });
 
   _hides = computed(() => {
@@ -107,8 +114,12 @@ export class FormGroupComponent {
               }
             }
           }
+          console.log('asdfadsf', this.items());
+          this.createForm(this.items());
+          this.cdr.detectChanges();
         };
-        item.formControl?.valueChanges.subscribe((val) => {
+        item.formControl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+          console.log('value change', val);
           setValue(val);
         });
         setValue(item.formControl?.value);
@@ -116,9 +127,61 @@ export class FormGroupComponent {
     }
   }
 
-  setDisableds(disableds: (FormDisabled | string)[]) {}
+  setDisableds(disableds: (FormDisabled | string)[]) {
+    for (const disabled of disableds) {
+      if (typeof disabled === 'string') {
+        const sub = this.getItem(disabled);
+        if (sub) {
+          sub.formControl?.disable();
+        }
+      } else {
+        const { field, rules } = disabled;
+        const item = this.getItem(field);
+        if (item) {
+          const setValue = (val: any) => {
+            for (const rule of rules) {
+              const { value, columns } = rule;
+              for (const col of columns) {
+                const sub = this.getItem(col);
+                if (sub) {
+                  if (val === value) {
+                    sub.formControl?.enable();
+                  } else {
+                    sub.formControl?.disable();
+                  }
+                }
+              }
+            }
+          };
+          item.formControl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+            setValue(val);
+          });
+          setValue(item.formControl?.value);
+        }
+      }
+    }
+  }
 
-  setResets(resets: FormResets[]) {}
+  setResets(resets: FormResets[]) {
+    for (const reset of resets) {
+      const { field, columns } = reset;
+      const item = this.getItem(field);
+      if (item) {
+        const setValue = (val: any) => {
+          for (const column of columns) {
+            const sub = this.getItem(column);
+            if (sub) {
+              sub.formControl?.reset(val);
+            }
+          }
+        };
+        item.formControl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+          setValue(val);
+        });
+        setValue(item.formControl?.value);
+      }
+    }
+  }
 
   handleItems(items: FormItem[]) {
     if (hasDuplicates(items.map((item) => item.name))) {
@@ -134,6 +197,8 @@ export class FormGroupComponent {
     return this.items()!.find((item) => item.name === name);
   }
 
+  private formControls = new Map<string, FormControl>();
+
   handleItem(item: FormItem) {
     switch (item.type) {
       case 'custom':
@@ -143,14 +208,20 @@ export class FormGroupComponent {
       case 'arrayForm':
         break;
       default:
-        const { required, defaults } = item;
+        const { required, defaults, name } = item;
         if (required && !item.validates?.includes('required')) {
           item.validates = ['required', ...(item.validates || [])];
         }
         const validators = getValidator(item?.validates, item?.validatesArgs);
         const asyncValidators = getAsyncValidator(item?.asyncValidates, item?.asyncValidatesArgs);
-        item.formControl = new FormControl(defaults, { validators, asyncValidators });
+        const control = new FormControl(defaults, { validators, asyncValidators });
+        this.formControls.set(name, control);
+        this.addControl(name, control);
     }
+  }
+
+  getControl(name: string): FormControl | undefined {
+    return this.formControls.get(name);
   }
 
   submitForm(): void {
