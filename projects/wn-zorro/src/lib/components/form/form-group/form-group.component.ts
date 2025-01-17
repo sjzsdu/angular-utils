@@ -1,7 +1,16 @@
 import { ChangeDetectorRef, Component, computed, effect, inject, input, model } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NzFormModule, NzLabelAlignType } from 'ng-zorro-antd/form';
-import { FormController, FormDisabled, FormHide, FormItem, FormResets, IFormRow } from '../../edit';
+import {
+  FormController,
+  FormDisabled,
+  FormHide,
+  FormItem,
+  FormResets,
+  IFormRow,
+  OptioinItem,
+  OptItem,
+} from '../../edit';
 import { getAsyncValidator, getValidator } from '../validates';
 import { PipesModule } from '../../../pipes';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -9,10 +18,11 @@ import { hasDuplicates } from 'wn-helper';
 import { takeUntil } from 'rxjs';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
   selector: 'wn-form-group',
-  imports: [ReactiveFormsModule, NzFormModule, PipesModule, NzInputModule, NzInputNumberModule],
+  imports: [ReactiveFormsModule, NzFormModule, PipesModule, NzInputModule, NzInputNumberModule, NzRadioModule],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',
   providers: [NzDestroyService],
@@ -259,5 +269,9 @@ export class FormGroupComponent {
 
   submitForm(): void {
     console.log('onSubmit:', this.formGroup.value);
+  }
+
+  isOptItem(item: OptioinItem): item is OptItem {
+    return typeof item !== 'string';
   }
 }

@@ -54,6 +54,24 @@
                   />
                 </nz-input-group>
               }
+              @case ('radio') {
+                <nz-radio-group
+                  [nzSize]="item?.params?.nzSize ?? 'default'"
+                  [nzButtonStyle]="item?.params?.nzButtonStyle ?? 'outline'"
+                  [nzDisabled]="item.disabled ?? false"
+                  [formControlName]="item.name"
+                >
+                  @for (opt of item.params?.options; track opt) {
+                    <label
+                      nz-radio
+                      [nzValue]="isOptItem(opt) ? opt.value : opt"
+                      [nzDisabled]="isOptItem(opt) ? opt.disabled : false"
+                    >
+                      {{ isOptItem(opt) ? opt.label : (opt | label: item?.label?.labelFunc || 'WordUppercase') }}</label
+                    >
+                  }
+                </nz-radio-group>
+              }
             }
           </nz-form-control>
         </nz-form-item>

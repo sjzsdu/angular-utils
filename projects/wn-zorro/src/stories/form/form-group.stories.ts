@@ -48,8 +48,7 @@ const defaultItems: FormItem[] = [
     name: 'username',
     type: 'input',
     params: {
-      nzAddOnBefore: 'Name',
-      nzAddOnAfter: 'ss',
+      nzAddOnBefore: 'User',
     },
     label: {
       label: 'Username',
@@ -60,13 +59,29 @@ const defaultItems: FormItem[] = [
     required: true,
     validates: ['required', 'minLength'],
     validatesArgs: {
-      minLength: [8],
+      minLength: [4],
     },
     control: {
       hasFeedback: true,
-      errorTip: 'Username is required',
-      successTip: 'Looks good!',
+      errorTip: 'Username is required and must be at least 4 characters',
+      successTip: 'Username is valid',
     },
+  },
+  {
+    name: 'gender',
+    type: 'radio',
+    required: true,
+    params: {
+      options: ['male', 'female'],
+    },
+  },
+  {
+    name: 'male_item',
+    type: 'input',
+  },
+  {
+    name: 'female_item',
+    type: 'input',
   },
   {
     name: 'email',
@@ -96,19 +111,22 @@ const defaultItems: FormItem[] = [
     name: 'age',
     type: 'number',
     params: {
-      nzAddOnBefore: 'Age',
-      nzAddOnAfter: 'Y',
+      nzAddOnAfter: 'years',
+    },
+    label: {
+      label: 'Age',
+      tooltip: 'Your actual age',
     },
     placeholder: 'Enter your age',
     required: true,
-    validates: ['min'],
+    validates: ['required', 'min', 'max'],
     validatesArgs: {
-      min: [8],
+      min: [0],
+      max: [120],
     },
     control: {
       hasFeedback: true,
-      errorTip: 'Age is required',
-      successTip: 'age is good!',
+      errorTip: 'Age must be between 0 and 120',
     },
   },
 ];
@@ -163,11 +181,10 @@ export const Interactive: Story = {
 const controlHide: FormController = {
   hides: [
     {
-      field: 'username',
+      field: 'gender',
       rules: [
-        { value: 'sjz111111', columns: ['age'] },
-        { value: 'sjz222222', columns: ['email'] },
-        { value: 'sjz333333', columns: ['age', 'email'] },
+        { value: 'male', columns: ['male_item'] },
+        { value: 'female', columns: ['female_item'] },
       ],
     },
   ],
@@ -194,11 +211,10 @@ export const WithHide: Story = {
 const controlDisabled: FormController = {
   disableds: [
     {
-      field: 'username',
+      field: 'gender',
       rules: [
-        { value: 'sjz111111', columns: ['age'] },
-        { value: 'sjz222222', columns: ['email'] },
-        { value: 'sjz333333', columns: ['age', 'email'] },
+        { value: 'male', columns: ['female_item'] },
+        { value: 'female', columns: ['male_item'] },
       ],
     },
   ],

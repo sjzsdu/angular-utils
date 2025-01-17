@@ -427,6 +427,16 @@
                 "defaultValue": "[\n  {\n    ...columns[0],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.name.localeCompare(b.name),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((name) => item.name.includes(name)),\n      listOfFilter: getUniqueValues(sampleData, 'name'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[1],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.age - b.age,\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: number[], item: IData) => list.some((age) => item.age >= age && item.age < age + 10),\n      listOfFilter: getUniqueValues(sampleData, 'age'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[2],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.address.localeCompare(b.address),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((address) => item.address.includes(address)),\n      listOfFilter: getUniqueValues(sampleData, 'address'),\n      filterMultiple: true,\n    },\n  },\n]"
             },
             {
+                "name": "controlDisabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "FormController",
+                "defaultValue": "{\n  disableds: [\n    {\n      field: 'gender',\n      rules: [\n        { value: 'male', columns: ['mail_item'] },\n        { value: 'female', columns: ['female_item'] },\n      ],\n    },\n  ],\n}"
+            },
+            {
                 "name": "controlHide",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -434,7 +444,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "FormController",
-                "defaultValue": "{\n  hides: [\n    {\n      field: 'username',\n      rules: [\n        { value: 'sjz111111', columns: ['age'] },\n        { value: 'sjz222222', columns: ['email'] },\n        { value: 'sjz333333', columns: ['age', 'email'] },\n      ],\n    },\n  ],\n}"
+                "defaultValue": "{\n  hides: [\n    {\n      field: 'gender',\n      rules: [\n        { value: 'male', columns: ['mail_item'] },\n        { value: 'female', columns: ['female_item'] },\n      ],\n    },\n  ],\n}"
+            },
+            {
+                "name": "controlReset",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "FormController",
+                "defaultValue": "{\n  resets: [\n    {\n      field: 'username',\n      columns: ['email'],\n    },\n  ],\n}"
             },
             {
                 "name": "CustomText",
@@ -484,7 +504,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "FormItem[]",
-                "defaultValue": "[\n  {\n    name: 'username',\n    type: 'input',\n    params: {\n      nzAddOnBefore: 'Name',\n      nzAddOnAfter: 'ss',\n    },\n    label: {\n      label: 'Username',\n      tooltip: 'Your login name',\n      help: 'Must be unique',\n    },\n    placeholder: 'Enter your username',\n    required: true,\n    validates: ['required', 'minLength'],\n    validatesArgs: {\n      minLength: [8],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Username is required',\n      successTip: 'Looks good!',\n    },\n  },\n  {\n    name: 'email',\n    type: 'input',\n    params: {\n      nzAddOnBefore: '',\n      nzAddOnAfter: '',\n    },\n    label: {\n      label: 'Email',\n      tooltip: 'Your email address',\n      help: 'We will send verification email',\n    },\n    placeholder: 'Enter your email',\n    required: true,\n    validates: ['regexp'],\n    validatesArgs: {\n      regexp: [/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Invalid email format',\n      successTip: 'Valid email',\n    },\n  },\n  {\n    name: 'age',\n    type: 'number',\n    params: {\n      nzAddOnBefore: 'Age',\n      nzAddOnAfter: 'Y',\n    },\n    placeholder: 'Enter your age',\n    required: true,\n    validates: ['min'],\n    validatesArgs: {\n      min: [8],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Age is required',\n      successTip: 'age is good!',\n    },\n  },\n]"
+                "defaultValue": "[\n  {\n    name: 'username',\n    type: 'input',\n    params: {\n      nzAddOnBefore: 'User',\n    },\n    label: {\n      label: 'Username',\n      tooltip: 'Your login name',\n      help: 'Must be unique',\n    },\n    placeholder: 'Enter your username',\n    required: true,\n    validates: ['required', 'minLength'],\n    validatesArgs: {\n      minLength: [4],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Username is required and must be at least 4 characters',\n      successTip: 'Username is valid',\n    },\n  },\n  {\n    name: 'age',\n    type: 'number',\n    params: {\n      nzAddOnAfter: 'years',\n    },\n    label: {\n      label: 'Age',\n      tooltip: 'Your actual age',\n    },\n    placeholder: 'Enter your age',\n    required: true,\n    validates: ['required', 'min', 'max'],\n    validatesArgs: {\n      min: [0],\n      max: [120],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Age must be between 0 and 120',\n    },\n  },\n  {\n    name: 'gender',\n    type: 'radio',\n    required: true,\n    params: {\n      options: ['male', 'female'],\n    },\n  },\n  {\n    name: 'male_item',\n    type: 'input',\n  },\n  {\n    name: 'female_item',\n    type: 'input',\n  },\n]"
             },
             {
                 "name": "EmptyText",
@@ -580,36 +600,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<BlurOnClickStoryComponent>",
-                "defaultValue": "{\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs'],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/directives/click-outside.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<ClickOutsideStoryComponent>",
-                "defaultValue": "{\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs'],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<ScrollToStoryComponent>",
-                "defaultValue": "{\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs'],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -657,6 +647,36 @@
                 "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimationsAsync()],\n    }),\n  ],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
             },
             {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<BlurOnClickStoryComponent>",
+                "defaultValue": "{\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs'],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/directives/click-outside.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ClickOutsideStoryComponent>",
+                "defaultValue": "{\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs'],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ScrollToStoryComponent>",
+                "defaultValue": "{\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs'],\n}"
+            },
+            {
                 "name": "Pagination",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -675,6 +695,26 @@
                 "deprecationMessage": "",
                 "type": "Preview",
                 "defaultValue": "{\n  parameters: {\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
             },
             {
                 "name": "Primary",
@@ -705,26 +745,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {},\n}"
-            },
-            {
-                "name": "Primary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Primary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
             },
             {
                 "name": "sampleData",
@@ -787,6 +807,16 @@
                 "defaultValue": "{\n  args: {\n    mode: 'text',\n    text: 'Hover for more information',\n    type: 'text',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as inline text',\n      },\n    },\n  },\n}"
             },
             {
+                "name": "WithDisabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "WithFixedColumns",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -817,6 +847,16 @@
                 "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
             },
             {
+                "name": "WithReset",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "WithSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -829,39 +869,6 @@
         ],
         "functions": [],
         "typealiases": [
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<BlurOnClickStoryComponent>",
-                "file": "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<ClickOutsideStoryComponent>",
-                "file": "projects/wn-zorro/src/stories/directives/click-outside.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<ScrollToStoryComponent>",
-                "file": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
             {
                 "name": "Story",
                 "ctype": "miscellaneous",
@@ -912,6 +919,39 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<CopyTextComponent>",
                 "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<BlurOnClickStoryComponent>",
+                "file": "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ClickOutsideStoryComponent>",
+                "file": "projects/wn-zorro/src/stories/directives/click-outside.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ScrollToStoryComponent>",
+                "file": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1186,6 +1226,16 @@
             ],
             "projects/wn-zorro/src/stories/form/form-group.stories.ts": [
                 {
+                    "name": "controlDisabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormController",
+                    "defaultValue": "{\n  disableds: [\n    {\n      field: 'gender',\n      rules: [\n        { value: 'male', columns: ['mail_item'] },\n        { value: 'female', columns: ['female_item'] },\n      ],\n    },\n  ],\n}"
+                },
+                {
                     "name": "controlHide",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -1193,7 +1243,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "FormController",
-                    "defaultValue": "{\n  hides: [\n    {\n      field: 'username',\n      rules: [\n        { value: 'sjz111111', columns: ['age'] },\n        { value: 'sjz222222', columns: ['email'] },\n        { value: 'sjz333333', columns: ['age', 'email'] },\n      ],\n    },\n  ],\n}"
+                    "defaultValue": "{\n  hides: [\n    {\n      field: 'gender',\n      rules: [\n        { value: 'male', columns: ['mail_item'] },\n        { value: 'female', columns: ['female_item'] },\n      ],\n    },\n  ],\n}"
+                },
+                {
+                    "name": "controlReset",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormController",
+                    "defaultValue": "{\n  resets: [\n    {\n      field: 'username',\n      columns: ['email'],\n    },\n  ],\n}"
                 },
                 {
                     "name": "defaultItems",
@@ -1203,7 +1263,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "FormItem[]",
-                    "defaultValue": "[\n  {\n    name: 'username',\n    type: 'input',\n    params: {\n      nzAddOnBefore: 'Name',\n      nzAddOnAfter: 'ss',\n    },\n    label: {\n      label: 'Username',\n      tooltip: 'Your login name',\n      help: 'Must be unique',\n    },\n    placeholder: 'Enter your username',\n    required: true,\n    validates: ['required', 'minLength'],\n    validatesArgs: {\n      minLength: [8],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Username is required',\n      successTip: 'Looks good!',\n    },\n  },\n  {\n    name: 'email',\n    type: 'input',\n    params: {\n      nzAddOnBefore: '',\n      nzAddOnAfter: '',\n    },\n    label: {\n      label: 'Email',\n      tooltip: 'Your email address',\n      help: 'We will send verification email',\n    },\n    placeholder: 'Enter your email',\n    required: true,\n    validates: ['regexp'],\n    validatesArgs: {\n      regexp: [/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Invalid email format',\n      successTip: 'Valid email',\n    },\n  },\n  {\n    name: 'age',\n    type: 'number',\n    params: {\n      nzAddOnBefore: 'Age',\n      nzAddOnAfter: 'Y',\n    },\n    placeholder: 'Enter your age',\n    required: true,\n    validates: ['min'],\n    validatesArgs: {\n      min: [8],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Age is required',\n      successTip: 'age is good!',\n    },\n  },\n]"
+                    "defaultValue": "[\n  {\n    name: 'username',\n    type: 'input',\n    params: {\n      nzAddOnBefore: 'User',\n    },\n    label: {\n      label: 'Username',\n      tooltip: 'Your login name',\n      help: 'Must be unique',\n    },\n    placeholder: 'Enter your username',\n    required: true,\n    validates: ['required', 'minLength'],\n    validatesArgs: {\n      minLength: [4],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Username is required and must be at least 4 characters',\n      successTip: 'Username is valid',\n    },\n  },\n  {\n    name: 'age',\n    type: 'number',\n    params: {\n      nzAddOnAfter: 'years',\n    },\n    label: {\n      label: 'Age',\n      tooltip: 'Your actual age',\n    },\n    placeholder: 'Enter your age',\n    required: true,\n    validates: ['required', 'min', 'max'],\n    validatesArgs: {\n      min: [0],\n      max: [120],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Age must be between 0 and 120',\n    },\n  },\n  {\n    name: 'gender',\n    type: 'radio',\n    required: true,\n    params: {\n      options: ['male', 'female'],\n    },\n  },\n  {\n    name: 'male_item',\n    type: 'input',\n  },\n  {\n    name: 'female_item',\n    type: 'input',\n  },\n]"
                 },
                 {
                     "name": "Interactive",
@@ -1226,6 +1286,16 @@
                     "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzFormModule, NzInputModule, NzRadioModule, NzSwitchModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
                 },
                 {
+                    "name": "WithDisabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                },
+                {
                     "name": "WithHide",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -1234,6 +1304,16 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "WithReset",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
                 }
             ],
             "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
@@ -1308,6 +1388,28 @@
                     "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
                 }
             ],
+            "projects/wn-zorro/src/stories/template/header-template.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<HeaderTemplateComponent>",
+                    "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
+                }
+            ],
             "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts": [
                 {
                     "name": "meta",
@@ -1374,28 +1476,6 @@
                     "defaultValue": "{\n  args: {},\n}"
                 }
             ],
-            "projects/wn-zorro/src/stories/template/header-template.stories.ts": [
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<HeaderTemplateComponent>",
-                    "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
-                }
-            ],
             "projects/wn-zorro/.storybook/preview.ts": [
                 {
                     "name": "preview",
@@ -1412,45 +1492,6 @@
         "groupedFunctions": {},
         "groupedEnumerations": {},
         "groupedTypeAliases": {
-            "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<BlurOnClickStoryComponent>",
-                    "file": "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
-            "projects/wn-zorro/src/stories/directives/click-outside.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<ClickOutsideStoryComponent>",
-                    "file": "projects/wn-zorro/src/stories/directives/click-outside.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
-            "projects/wn-zorro/src/stories/directives/scrollto.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<ScrollToStoryComponent>",
-                    "file": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
             "projects/wn-zorro/src/stories/form/form-group.stories.ts": [
                 {
                     "name": "Story",
@@ -1510,6 +1551,45 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<CopyTextComponent>",
                     "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<BlurOnClickStoryComponent>",
+                    "file": "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/directives/click-outside.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ClickOutsideStoryComponent>",
+                    "file": "projects/wn-zorro/src/stories/directives/click-outside.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/directives/scrollto.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ScrollToStoryComponent>",
+                    "file": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1655,7 +1735,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "controlDisabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "controlHide",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "controlReset",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1695,7 +1795,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "WithDisabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "WithHide",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithReset",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

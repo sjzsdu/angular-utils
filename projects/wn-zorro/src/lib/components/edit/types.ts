@@ -7,9 +7,10 @@ import { Subject } from 'rxjs';
 import { NzAutosizeDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzCascaderComponent } from 'ng-zorro-antd/cascader';
-import { NzRadioGroupComponent } from 'ng-zorro-antd/radio';
+import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 import { ExtractInputTypes } from '../../types';
 
+export interface IFormRowStatus {}
 export type IFormRow = Record<string, any>;
 
 type IInputGroup = Pick<NzInputGroupComponent, 'nzAddOnBefore' | 'nzAddOnAfter'>;
@@ -23,8 +24,11 @@ export interface ISubForm {
 }
 export type ComponentParamsMap = {
   input: IInputGroup;
-  textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
   number: IInputGroup & ExtractInputTypes<NzInputNumberComponent>;
+  radio: { options: string[] | OptItem[]; radioButton?: boolean } & Partial<
+    Pick<NzRadioGroupComponent, 'nzSize' | 'nzButtonStyle'> & Pick<NzRadioComponent, 'nzDisabled'>
+  >;
+  textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
   checkbox: { tooltip: string; label: string };
   cascade: Pick<NzCascaderComponent, 'nzOptions'> & IInputGroup;
   select: {
@@ -58,6 +62,7 @@ export type ComponentParamsMap = {
 export interface OptItem {
   label: string;
   value: string;
+  disabled?: boolean;
 }
 export type OptioinItem = string | OptItem;
 
@@ -91,7 +96,7 @@ export type FormItem = {
   [T in keyof ComponentParamsMap]: {
     name: string;
     type: T;
-    params: ComponentParamsMap[T];
+    params?: ComponentParamsMap[T];
     label?: ILabel;
     control?: IControl;
     placeholder?: string;
@@ -125,12 +130,19 @@ export interface FormHide {
   field: string;
   rules: ControlRules[];
 }
-
+/**
+ * Represents the control logic for disabling form items
+ * Allows disabling specific form items when the value of a specified field meets certain rules
+ */
 export interface FormDisabled {
   field: string;
   rules: ControlRules[];
 }
 
+/**
+ * Represents the control logic for resetting form items
+ * Allows resetting specific form items when the value of a specified field changes
+ */
 export interface FormResets {
   field: string;
   columns: string[];
