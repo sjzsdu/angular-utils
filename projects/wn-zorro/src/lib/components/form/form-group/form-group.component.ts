@@ -19,10 +19,21 @@ import { takeUntil } from 'rxjs';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'wn-form-group',
-  imports: [ReactiveFormsModule, NzFormModule, PipesModule, NzInputModule, NzInputNumberModule, NzRadioModule],
+  imports: [
+    ReactiveFormsModule,
+    NzFormModule,
+    PipesModule,
+    NzInputModule,
+    NzInputNumberModule,
+    NzRadioModule,
+    NzCheckboxModule,
+    NzSelectModule,
+  ],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',
   providers: [NzDestroyService],

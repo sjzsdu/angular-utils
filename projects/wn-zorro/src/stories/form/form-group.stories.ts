@@ -8,6 +8,7 @@ import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { deepCloneJSON } from '../../../../wn-helper/src/lib/json';
 
 const meta: Meta<FormGroupComponent> = {
   title: 'Form/FormGroup',
@@ -66,6 +67,52 @@ const defaultItems: FormItem[] = [
       errorTip: 'Username is required and must be at least 4 characters',
       successTip: 'Username is valid',
     },
+  },
+  {
+    name: 'subscribe',
+    type: 'checkbox',
+    label: {
+      label: 'Subscribe to newsletter',
+    },
+    required: false,
+  },
+  {
+    name: 'interests',
+    type: 'checkboxGroup',
+    label: {
+      label: 'Interests',
+      tooltip: 'Select your areas of interest',
+    },
+    params: {
+      options: [
+        { label: 'Technology', value: 'tech' },
+        { label: 'Sports', value: 'sports' },
+        { label: 'Music', value: 'music' },
+        { label: 'Travel', value: 'travel' },
+      ],
+    },
+    required: true,
+  },
+  {
+    name: 'country',
+    type: 'select',
+    label: {
+      label: 'Country',
+      tooltip: 'Select your country',
+    },
+    params: {
+      options: [
+        { label: 'United States', value: 'us' },
+        { label: 'Canada', value: 'ca' },
+        { label: 'United Kingdom', value: 'uk' },
+        { label: 'Australia', value: 'au' },
+      ],
+      showSearch: true,
+      mode: 'default',
+      size: 'default',
+    },
+    placeholder: 'Select a country',
+    required: true,
   },
   {
     name: 'gender',
@@ -133,7 +180,7 @@ const defaultItems: FormItem[] = [
 
 export const Interactive: Story = {
   args: {
-    items: defaultItems,
+    items: deepCloneJSON(defaultItems),
     layout: 'horizontal',
     nzLabelAlign: 'right',
     nzNoColon: false,
@@ -192,7 +239,7 @@ const controlHide: FormController = {
 
 export const WithHide: Story = {
   args: {
-    items: defaultItems,
+    items: deepCloneJSON(defaultItems),
     control: controlHide,
   },
   render: (args) => ({
@@ -222,7 +269,7 @@ const controlDisabled: FormController = {
 
 export const WithDisabled: Story = {
   args: {
-    items: defaultItems,
+    items: deepCloneJSON(defaultItems),
     control: controlDisabled,
   },
   render: (args) => ({
@@ -249,7 +296,7 @@ const controlReset: FormController = {
 
 export const WithReset: Story = {
   args: {
-    items: defaultItems,
+    items: deepCloneJSON(defaultItems),
     control: controlReset,
   },
   render: (args) => ({

@@ -1,8 +1,8 @@
 import { EventEmitter, Injector, TemplateRef, Type } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormControl, NgModel } from '@angular/forms';
+import { AsyncValidatorFn, FormControl, NgModel } from '@angular/forms';
 import { ValidatorFn } from '@angular/forms';
 import { NzFormLayoutType } from 'ng-zorro-antd/form';
-import { NzSelectModeType } from 'ng-zorro-antd/select';
+import { NzSelectModeType, NzSelectSizeType } from 'ng-zorro-antd/select';
 import { Subject } from 'rxjs';
 import { NzAutosizeDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
@@ -28,17 +28,23 @@ export type ComponentParamsMap = {
   radio: { options: string[] | OptItem[]; radioButton?: boolean } & Partial<
     Pick<NzRadioGroupComponent, 'nzSize' | 'nzButtonStyle'> & Pick<NzRadioComponent, 'nzDisabled'>
   >;
-  textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
-  checkbox: { tooltip: string; label: string };
-  cascade: Pick<NzCascaderComponent, 'nzOptions'> & IInputGroup;
+  checkbox: {};
+  checkboxGroup: { options: string[] | OptItem[] };
   select: {
-    nzMode?: NzSelectModeType;
-    nzOptions?: OptioinItem[];
+    showSearch?: boolean;
+    showArrow?: boolean;
+    mode?: NzSelectModeType;
+    options?: OptioinItem[];
+    maxTagCount?: number;
+    size?: NzSelectSizeType;
     addOption?: {
       text: string;
       onClick: () => void;
     };
   };
+
+  textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
+  cascade: Pick<NzCascaderComponent, 'nzOptions'> & IInputGroup;
   radioGroup: Pick<NzRadioGroupComponent, 'nzButtonStyle'> & { buttonRadio?: boolean; nzOptions: OptioinItem[] };
   custom: {
     injector: Injector;
