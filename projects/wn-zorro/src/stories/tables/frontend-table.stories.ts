@@ -6,7 +6,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { faker } from '@faker-js/faker';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FormsModule } from '@angular/forms';
-import { IColumn, IRow } from '../../lib/components/table/type';
+import { IColumn, IRow } from '../../types/table';
 import { FrontendTableComponent } from '../../lib/components/table/frontend-table/frontend-table.component';
 import { PipesModule } from '../../lib/pipes/';
 

@@ -123,6 +123,11 @@ export class FormGroupComponent {
       }
     }
   }
+
+  compareFunc(val: number | string | (number | string)[], value: string): boolean {
+    return Array.isArray(val) ? val.includes(value) : val === value;
+  }
+
   setHides(hides: FormHide[]) {
     for (const hide of hides) {
       const { field, rules } = hide;
@@ -130,7 +135,7 @@ export class FormGroupComponent {
       const control = this.getControl(field);
       if (item && control) {
         item!.isHide = false;
-        const setValue = (val: any) => {
+        const setValue = (val: number | string | (number | string)[]) => {
           const allColumns = rules.flatMap((rule) => rule.columns);
 
           for (const col of allColumns) {
@@ -140,7 +145,7 @@ export class FormGroupComponent {
             }
           }
 
-          const matchedRule = rules.find((rule) => rule.value === val);
+          const matchedRule = rules.find((rule) => this.compareFunc(val, rule.value));
           if (matchedRule) {
             for (const col of matchedRule.columns) {
               const sub = this.getItem(col);
@@ -149,18 +154,13 @@ export class FormGroupComponent {
               }
             }
           }
-
-          console.log('setHides: ', val, allColumns, matchedRule?.columns);
-          console.log('Updated items', this.items());
           this.createForm(this.items());
           this.cdr.detectChanges();
         };
 
         control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
-          console.log('value change', val);
           setValue(val);
         });
-        console.log('Hidden item', control);
         setValue(control.value);
       }
     }
@@ -179,7 +179,7 @@ export class FormGroupComponent {
         const control = this.getControl(field);
         if (item && control) {
           control.enable();
-          const setValue = (val: any) => {
+          const setValue = (val: number | string | (number | string)[]) => {
             const allColumns = rules.flatMap((rule) => rule.columns);
 
             for (const col of allColumns) {
@@ -189,7 +189,7 @@ export class FormGroupComponent {
               }
             }
 
-            const matchedRule = rules.find((rule) => rule.value === val);
+            const matchedRule = rules.find((rule) => this.compareFunc(val, rule.value));
             if (matchedRule) {
               for (const col of matchedRule.columns) {
                 const subControl = this.getControl(col);
@@ -284,6 +284,9 @@ export class FormGroupComponent {
 
   submitForm(): void {
     console.log('onSubmit:', this.formGroup.value);
+    for (const [key, control] of Object.entries(this.formGroup.controls)) {
+      console.log(key, control, (control as AbstractControl).errors);
+    }
   }
 
   isOptItem(item: OptioinItem): item is OptItem {

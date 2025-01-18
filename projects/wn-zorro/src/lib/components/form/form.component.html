@@ -31,14 +31,6 @@
                       [nzTooltipTitle]="item?.label?.tooltip"
                     ></span>
                   }
-                  @if (item?.label?.help) {
-                    <wn-help-center
-                      [anchorPoint]="item?.label?.help"
-                      [pathKey]="item?.label?.helpPath"
-                      text=""
-                      type="link"
-                    />
-                  }
                 </nz-form-label>
               }
               <nz-form-control [nzSpan]="_controlSpan()" nzHasFeedback nzValidatingTip="item.nzValidatingTipe">

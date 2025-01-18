@@ -31,13 +31,16 @@
             [nzSpan]="controlSpan() ?? null"
             [nzHasFeedback]="item?.control?.hasFeedback ?? false"
             [nzSuccessTip]="item?.control?.successTip"
-            [nzErrorTip]="item?.control?.errorTip"
+            [nzErrorTip]="item?.control?.errorTip ?? defaultErrorTip"
             [nzWarningTip]="item?.control?.warningTip"
             [nzValidatingTip]="item?.control?.validatingTip"
             [nzAutoTips]="item?.control?.autoTips ?? {}"
             [nzDisableAutoTips]="item?.control?.disableAutoTips"
             [nzExtra]="item?.control?.extra"
           >
+            <ng-template #defaultErrorTip let-control>
+              {{ control.errors | controlError: item }}
+            </ng-template>
             @switch (item.type) {
               @case ('input') {
                 <nz-input-group

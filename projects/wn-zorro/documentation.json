@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "IData",
-            "id": "interface-IData-f61db9aea3388c39ed4847867a707b308bd04815bfec72a41f2de405f8e46a0971c9fb22fda0cae114782deffadeaf281ecaaa460db25956818f1dac382a0c05",
+            "id": "interface-IData-271b220d478a2814ae16272ef6de25162419650f9528b08a34f1039e663ae1e5a9c32b653c18f8c46e04bfa4f39def9ba33ae6cc83b34ff993c20cf82f989469",
             "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { faker } from '@faker-js/faker';\nimport { NzRadioModule } from 'ng-zorro-antd/radio';\nimport { FormsModule } from '@angular/forms';\nimport { IColumn, IRow } from '../../lib/components/table/type';\nimport { FrontendTableComponent } from '../../lib/components/table/frontend-table/frontend-table.component';\nimport { PipesModule } from '../../lib/pipes/';\n\ninterface IData extends IRow {\n  id: number;\n  name: string;\n  age: number;\n  address: string;\n  expandContent?: string;\n}\n\nconst generateSampleData = (count: number): IData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    id: index + 1,\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n    expandContent: `Details for ${faker.person.fullName()}:\n- Phone: ${faker.phone.number()}\n- Email: ${faker.internet.email()}\n- Company: ${faker.company.name()}\n- Job: ${faker.person.jobTitle()}`,\n  }));\n};\n\nconst meta: Meta<FrontendTableComponent<IData>> = {\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      autodocs: true,\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent<IData>>;\n\nconst sampleData: IData[] = generateSampleData(100);\n\n// Keep source columns unchanged\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\n// add column to the end of the columns array\nconst getUniqueValues = (data: IData[], key: keyof IData, count = 5) => {\n  const values = [\n    ...new Set(\n      data.map((item) => {\n        if (key === 'age') {\n          return Math.floor(item[key] / 10) * 10;\n        }\n        return item[key].toString().split(' ')[0];\n      })\n    ),\n  ];\n  return values.slice(0, count).map((value) => ({ text: value, value }));\n};\n\nconst columnsWithSortFilter = [\n  {\n    ...columns[0],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.name.localeCompare(b.name),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((name) => item.name.includes(name)),\n      listOfFilter: getUniqueValues(sampleData, 'name'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[1],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.age - b.age,\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: number[], item: IData) => list.some((age) => item.age >= age && item.age < age + 10),\n      listOfFilter: getUniqueValues(sampleData, 'age'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[2],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.address.localeCompare(b.address),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((address) => item.address.includes(address)),\n      listOfFilter: getUniqueValues(sampleData, 'address'),\n      filterMultiple: true,\n    },\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Checkable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Pagination: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowPagination: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowPagination]=\"nzShowPagination\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const SizeChanger: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Sorting: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsWithSortFilter,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Filtering: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const AllFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n    nzShowPagination: true,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n        [nzShowPagination]=\"nzShowPagination\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const BasicFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzTitle: 'Table Header',\n    nzFooter: 'Table Footer',\n    nzBordered: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzTitle]=\"nzTitle\"\n        [nzFooter]=\"nzFooter\"\n        [nzBordered]=\"nzBordered\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\ninterface WithSizeProps {\n  nzData: IData[];\n  columns: Array<{\n    name: string;\n    title: string;\n    type: 'text';\n    params: Record<string, any>;\n    sortFilter?: {\n      sortOrder: 'ascend' | 'descend' | null;\n      sortFn: (a: any, b: any) => number;\n      sortDirections: Array<'ascend' | 'descend' | null>;\n      filterFn: (list: any[], item: any) => boolean;\n      listOfFilter: Array<{ text: string; value: any }>;\n      filterMultiple: boolean;\n    };\n  }>;\n  sizeOptions: Array<{ label: string; value: 'small' | 'middle' | 'default' }>;\n  currentSize: 'small' | 'middle' | 'default';\n  toggleSize: () => void;\n  onSizeChange: (size: 'small' | 'middle' | 'default') => void;\n}\n\nexport const WithSize: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      currentSize: 'small',\n      sizeOptions: [\n        { label: 'Small', value: 'small' },\n        { label: 'Middle', value: 'middle' },\n        { label: 'Default', value: 'default' },\n      ],\n      onSizeChange: function (size: 'small' | 'middle' | 'default') {\n        console.log('onSizeChange', size);\n        this['currentSize'] = size;\n      },\n    },\n    template: `\n      <div>\n        <nz-radio-group\n          [(ngModel)]=\"currentSize\"\n          (ngModelChange)=\"onSizeChange($event)\"\n          style=\"margin-bottom: 16px\"\n        >\n          <label nz-radio *ngFor=\"let option of sizeOptions\" [nzValue]=\"option.value\">\n            {{option.label}}\n          </label>\n        </nz-radio-group>\n        <wn-frontend-table\n          [nzData]=\"nzData\"\n          [columns]=\"columns\"\n          [nzSize]=\"currentSize\"\n          [nzBordered]=\"true\"\n        ></wn-frontend-table>\n      </div>\n    `,\n  }),\n};\n\nexport const Expandable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzExpandable: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [expandKey]=\"'expandContent'\"\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzExpandable]=\"nzExpandable\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nconst columnsExtended: IColumn<IData>[] = [\n  ...columns,\n  ...columns.map((col) => ({ ...col, name: col.name + '-1', title: col.title + '-1' })),\n  {\n    name: 'actions',\n    title: 'Actions',\n    type: 'text',\n    params: {},\n    fixRight: true,\n    width: '100px',\n  },\n];\nexport const WithMaxDimensions: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const WithFixedColumns: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { faker } from '@faker-js/faker';\nimport { NzRadioModule } from 'ng-zorro-antd/radio';\nimport { FormsModule } from '@angular/forms';\nimport { IColumn, IRow } from '../../types/table';\nimport { FrontendTableComponent } from '../../lib/components/table/frontend-table/frontend-table.component';\nimport { PipesModule } from '../../lib/pipes/';\n\ninterface IData extends IRow {\n  id: number;\n  name: string;\n  age: number;\n  address: string;\n  expandContent?: string;\n}\n\nconst generateSampleData = (count: number): IData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    id: index + 1,\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n    expandContent: `Details for ${faker.person.fullName()}:\n- Phone: ${faker.phone.number()}\n- Email: ${faker.internet.email()}\n- Company: ${faker.company.name()}\n- Job: ${faker.person.jobTitle()}`,\n  }));\n};\n\nconst meta: Meta<FrontendTableComponent<IData>> = {\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      autodocs: true,\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent<IData>>;\n\nconst sampleData: IData[] = generateSampleData(100);\n\n// Keep source columns unchanged\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\n// add column to the end of the columns array\nconst getUniqueValues = (data: IData[], key: keyof IData, count = 5) => {\n  const values = [\n    ...new Set(\n      data.map((item) => {\n        if (key === 'age') {\n          return Math.floor(item[key] / 10) * 10;\n        }\n        return item[key].toString().split(' ')[0];\n      })\n    ),\n  ];\n  return values.slice(0, count).map((value) => ({ text: value, value }));\n};\n\nconst columnsWithSortFilter = [\n  {\n    ...columns[0],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.name.localeCompare(b.name),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((name) => item.name.includes(name)),\n      listOfFilter: getUniqueValues(sampleData, 'name'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[1],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.age - b.age,\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: number[], item: IData) => list.some((age) => item.age >= age && item.age < age + 10),\n      listOfFilter: getUniqueValues(sampleData, 'age'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[2],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.address.localeCompare(b.address),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((address) => item.address.includes(address)),\n      listOfFilter: getUniqueValues(sampleData, 'address'),\n      filterMultiple: true,\n    },\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Checkable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Pagination: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowPagination: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowPagination]=\"nzShowPagination\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const SizeChanger: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Sorting: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsWithSortFilter,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Filtering: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const AllFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n    nzShowPagination: true,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n        [nzShowPagination]=\"nzShowPagination\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const BasicFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzTitle: 'Table Header',\n    nzFooter: 'Table Footer',\n    nzBordered: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzTitle]=\"nzTitle\"\n        [nzFooter]=\"nzFooter\"\n        [nzBordered]=\"nzBordered\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\ninterface WithSizeProps {\n  nzData: IData[];\n  columns: Array<{\n    name: string;\n    title: string;\n    type: 'text';\n    params: Record<string, any>;\n    sortFilter?: {\n      sortOrder: 'ascend' | 'descend' | null;\n      sortFn: (a: any, b: any) => number;\n      sortDirections: Array<'ascend' | 'descend' | null>;\n      filterFn: (list: any[], item: any) => boolean;\n      listOfFilter: Array<{ text: string; value: any }>;\n      filterMultiple: boolean;\n    };\n  }>;\n  sizeOptions: Array<{ label: string; value: 'small' | 'middle' | 'default' }>;\n  currentSize: 'small' | 'middle' | 'default';\n  toggleSize: () => void;\n  onSizeChange: (size: 'small' | 'middle' | 'default') => void;\n}\n\nexport const WithSize: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      currentSize: 'small',\n      sizeOptions: [\n        { label: 'Small', value: 'small' },\n        { label: 'Middle', value: 'middle' },\n        { label: 'Default', value: 'default' },\n      ],\n      onSizeChange: function (size: 'small' | 'middle' | 'default') {\n        console.log('onSizeChange', size);\n        this['currentSize'] = size;\n      },\n    },\n    template: `\n      <div>\n        <nz-radio-group\n          [(ngModel)]=\"currentSize\"\n          (ngModelChange)=\"onSizeChange($event)\"\n          style=\"margin-bottom: 16px\"\n        >\n          <label nz-radio *ngFor=\"let option of sizeOptions\" [nzValue]=\"option.value\">\n            {{option.label}}\n          </label>\n        </nz-radio-group>\n        <wn-frontend-table\n          [nzData]=\"nzData\"\n          [columns]=\"columns\"\n          [nzSize]=\"currentSize\"\n          [nzBordered]=\"true\"\n        ></wn-frontend-table>\n      </div>\n    `,\n  }),\n};\n\nexport const Expandable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzExpandable: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [expandKey]=\"'expandContent'\"\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzExpandable]=\"nzExpandable\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nconst columnsExtended: IColumn<IData>[] = [\n  ...columns,\n  ...columns.map((col) => ({ ...col, name: col.name + '-1', title: col.title + '-1' })),\n  {\n    name: 'actions',\n    title: 'Actions',\n    type: 'text',\n    params: {},\n    fixRight: true,\n    width: '100px',\n  },\n];\nexport const WithMaxDimensions: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const WithFixedColumns: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
             "properties": [
                 {
                     "name": "address",
@@ -70,12 +70,12 @@
         },
         {
             "name": "WithSizeProps",
-            "id": "interface-WithSizeProps-f61db9aea3388c39ed4847867a707b308bd04815bfec72a41f2de405f8e46a0971c9fb22fda0cae114782deffadeaf281ecaaa460db25956818f1dac382a0c05",
+            "id": "interface-WithSizeProps-271b220d478a2814ae16272ef6de25162419650f9528b08a34f1039e663ae1e5a9c32b653c18f8c46e04bfa4f39def9ba33ae6cc83b34ff993c20cf82f989469",
             "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { faker } from '@faker-js/faker';\nimport { NzRadioModule } from 'ng-zorro-antd/radio';\nimport { FormsModule } from '@angular/forms';\nimport { IColumn, IRow } from '../../lib/components/table/type';\nimport { FrontendTableComponent } from '../../lib/components/table/frontend-table/frontend-table.component';\nimport { PipesModule } from '../../lib/pipes/';\n\ninterface IData extends IRow {\n  id: number;\n  name: string;\n  age: number;\n  address: string;\n  expandContent?: string;\n}\n\nconst generateSampleData = (count: number): IData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    id: index + 1,\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n    expandContent: `Details for ${faker.person.fullName()}:\n- Phone: ${faker.phone.number()}\n- Email: ${faker.internet.email()}\n- Company: ${faker.company.name()}\n- Job: ${faker.person.jobTitle()}`,\n  }));\n};\n\nconst meta: Meta<FrontendTableComponent<IData>> = {\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      autodocs: true,\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent<IData>>;\n\nconst sampleData: IData[] = generateSampleData(100);\n\n// Keep source columns unchanged\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\n// add column to the end of the columns array\nconst getUniqueValues = (data: IData[], key: keyof IData, count = 5) => {\n  const values = [\n    ...new Set(\n      data.map((item) => {\n        if (key === 'age') {\n          return Math.floor(item[key] / 10) * 10;\n        }\n        return item[key].toString().split(' ')[0];\n      })\n    ),\n  ];\n  return values.slice(0, count).map((value) => ({ text: value, value }));\n};\n\nconst columnsWithSortFilter = [\n  {\n    ...columns[0],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.name.localeCompare(b.name),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((name) => item.name.includes(name)),\n      listOfFilter: getUniqueValues(sampleData, 'name'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[1],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.age - b.age,\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: number[], item: IData) => list.some((age) => item.age >= age && item.age < age + 10),\n      listOfFilter: getUniqueValues(sampleData, 'age'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[2],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.address.localeCompare(b.address),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((address) => item.address.includes(address)),\n      listOfFilter: getUniqueValues(sampleData, 'address'),\n      filterMultiple: true,\n    },\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Checkable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Pagination: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowPagination: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowPagination]=\"nzShowPagination\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const SizeChanger: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Sorting: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsWithSortFilter,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Filtering: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const AllFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n    nzShowPagination: true,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n        [nzShowPagination]=\"nzShowPagination\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const BasicFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzTitle: 'Table Header',\n    nzFooter: 'Table Footer',\n    nzBordered: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzTitle]=\"nzTitle\"\n        [nzFooter]=\"nzFooter\"\n        [nzBordered]=\"nzBordered\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\ninterface WithSizeProps {\n  nzData: IData[];\n  columns: Array<{\n    name: string;\n    title: string;\n    type: 'text';\n    params: Record<string, any>;\n    sortFilter?: {\n      sortOrder: 'ascend' | 'descend' | null;\n      sortFn: (a: any, b: any) => number;\n      sortDirections: Array<'ascend' | 'descend' | null>;\n      filterFn: (list: any[], item: any) => boolean;\n      listOfFilter: Array<{ text: string; value: any }>;\n      filterMultiple: boolean;\n    };\n  }>;\n  sizeOptions: Array<{ label: string; value: 'small' | 'middle' | 'default' }>;\n  currentSize: 'small' | 'middle' | 'default';\n  toggleSize: () => void;\n  onSizeChange: (size: 'small' | 'middle' | 'default') => void;\n}\n\nexport const WithSize: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      currentSize: 'small',\n      sizeOptions: [\n        { label: 'Small', value: 'small' },\n        { label: 'Middle', value: 'middle' },\n        { label: 'Default', value: 'default' },\n      ],\n      onSizeChange: function (size: 'small' | 'middle' | 'default') {\n        console.log('onSizeChange', size);\n        this['currentSize'] = size;\n      },\n    },\n    template: `\n      <div>\n        <nz-radio-group\n          [(ngModel)]=\"currentSize\"\n          (ngModelChange)=\"onSizeChange($event)\"\n          style=\"margin-bottom: 16px\"\n        >\n          <label nz-radio *ngFor=\"let option of sizeOptions\" [nzValue]=\"option.value\">\n            {{option.label}}\n          </label>\n        </nz-radio-group>\n        <wn-frontend-table\n          [nzData]=\"nzData\"\n          [columns]=\"columns\"\n          [nzSize]=\"currentSize\"\n          [nzBordered]=\"true\"\n        ></wn-frontend-table>\n      </div>\n    `,\n  }),\n};\n\nexport const Expandable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzExpandable: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [expandKey]=\"'expandContent'\"\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzExpandable]=\"nzExpandable\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nconst columnsExtended: IColumn<IData>[] = [\n  ...columns,\n  ...columns.map((col) => ({ ...col, name: col.name + '-1', title: col.title + '-1' })),\n  {\n    name: 'actions',\n    title: 'Actions',\n    type: 'text',\n    params: {},\n    fixRight: true,\n    width: '100px',\n  },\n];\nexport const WithMaxDimensions: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const WithFixedColumns: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NzTableModule } from 'ng-zorro-antd/table';\nimport { faker } from '@faker-js/faker';\nimport { NzRadioModule } from 'ng-zorro-antd/radio';\nimport { FormsModule } from '@angular/forms';\nimport { IColumn, IRow } from '../../types/table';\nimport { FrontendTableComponent } from '../../lib/components/table/frontend-table/frontend-table.component';\nimport { PipesModule } from '../../lib/pipes/';\n\ninterface IData extends IRow {\n  id: number;\n  name: string;\n  age: number;\n  address: string;\n  expandContent?: string;\n}\n\nconst generateSampleData = (count: number): IData[] => {\n  return Array.from({ length: count }, (_, index) => ({\n    id: index + 1,\n    name: faker.person.fullName(),\n    age: faker.number.int({ min: 18, max: 80 }),\n    address: faker.location.streetAddress(),\n    expandContent: `Details for ${faker.person.fullName()}:\n- Phone: ${faker.phone.number()}\n- Email: ${faker.internet.email()}\n- Company: ${faker.company.name()}\n- Job: ${faker.person.jobTitle()}`,\n  }));\n};\n\nconst meta: Meta<FrontendTableComponent<IData>> = {\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      autodocs: true,\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FrontendTableComponent<IData>>;\n\nconst sampleData: IData[] = generateSampleData(100);\n\n// Keep source columns unchanged\nconst columns = [\n  {\n    name: 'name',\n    title: 'Name',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'age',\n    title: 'Age',\n    type: 'text' as const,\n    params: {},\n  },\n  {\n    name: 'address',\n    title: 'Address',\n    type: 'text' as const,\n    params: {},\n  },\n];\n\n// add column to the end of the columns array\nconst getUniqueValues = (data: IData[], key: keyof IData, count = 5) => {\n  const values = [\n    ...new Set(\n      data.map((item) => {\n        if (key === 'age') {\n          return Math.floor(item[key] / 10) * 10;\n        }\n        return item[key].toString().split(' ')[0];\n      })\n    ),\n  ];\n  return values.slice(0, count).map((value) => ({ text: value, value }));\n};\n\nconst columnsWithSortFilter = [\n  {\n    ...columns[0],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.name.localeCompare(b.name),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((name) => item.name.includes(name)),\n      listOfFilter: getUniqueValues(sampleData, 'name'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[1],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.age - b.age,\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: number[], item: IData) => list.some((age) => item.age >= age && item.age < age + 10),\n      listOfFilter: getUniqueValues(sampleData, 'age'),\n      filterMultiple: true,\n    },\n  },\n  {\n    ...columns[2],\n    sortFilter: {\n      sortOrder: null,\n      sortFn: (a: IData, b: IData) => a.address.localeCompare(b.address),\n      sortDirections: ['ascend', 'descend', null],\n      filterFn: (list: string[], item: IData) => list.some((address) => item.address.includes(address)),\n      listOfFilter: getUniqueValues(sampleData, 'address'),\n      filterMultiple: true,\n    },\n  },\n];\n\nexport const Primary: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Checkable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Pagination: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowPagination: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowPagination]=\"nzShowPagination\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const SizeChanger: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Sorting: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsWithSortFilter,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const Filtering: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const AllFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    showChecked: true,\n    nzShowPagination: true,\n    nzShowSizeChanger: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [showChecked]=\"showChecked\"\n        [nzShowPagination]=\"nzShowPagination\"\n        [nzShowSizeChanger]=\"nzShowSizeChanger\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const BasicFeatures: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzTitle: 'Table Header',\n    nzFooter: 'Table Footer',\n    nzBordered: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzTitle]=\"nzTitle\"\n        [nzFooter]=\"nzFooter\"\n        [nzBordered]=\"nzBordered\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\ninterface WithSizeProps {\n  nzData: IData[];\n  columns: Array<{\n    name: string;\n    title: string;\n    type: 'text';\n    params: Record<string, any>;\n    sortFilter?: {\n      sortOrder: 'ascend' | 'descend' | null;\n      sortFn: (a: any, b: any) => number;\n      sortDirections: Array<'ascend' | 'descend' | null>;\n      filterFn: (list: any[], item: any) => boolean;\n      listOfFilter: Array<{ text: string; value: any }>;\n      filterMultiple: boolean;\n    };\n  }>;\n  sizeOptions: Array<{ label: string; value: 'small' | 'middle' | 'default' }>;\n  currentSize: 'small' | 'middle' | 'default';\n  toggleSize: () => void;\n  onSizeChange: (size: 'small' | 'middle' | 'default') => void;\n}\n\nexport const WithSize: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      currentSize: 'small',\n      sizeOptions: [\n        { label: 'Small', value: 'small' },\n        { label: 'Middle', value: 'middle' },\n        { label: 'Default', value: 'default' },\n      ],\n      onSizeChange: function (size: 'small' | 'middle' | 'default') {\n        console.log('onSizeChange', size);\n        this['currentSize'] = size;\n      },\n    },\n    template: `\n      <div>\n        <nz-radio-group\n          [(ngModel)]=\"currentSize\"\n          (ngModelChange)=\"onSizeChange($event)\"\n          style=\"margin-bottom: 16px\"\n        >\n          <label nz-radio *ngFor=\"let option of sizeOptions\" [nzValue]=\"option.value\">\n            {{option.label}}\n          </label>\n        </nz-radio-group>\n        <wn-frontend-table\n          [nzData]=\"nzData\"\n          [columns]=\"columns\"\n          [nzSize]=\"currentSize\"\n          [nzBordered]=\"true\"\n        ></wn-frontend-table>\n      </div>\n    `,\n  }),\n};\n\nexport const Expandable: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzExpandable: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [expandKey]=\"'expandContent'\"\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzExpandable]=\"nzExpandable\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nconst columnsExtended: IColumn<IData>[] = [\n  ...columns,\n  ...columns.map((col) => ({ ...col, name: col.name + '-1', title: col.title + '-1' })),\n  {\n    name: 'actions',\n    title: 'Actions',\n    type: 'text',\n    params: {},\n    fixRight: true,\n    width: '100px',\n  },\n];\nexport const WithMaxDimensions: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n\nexport const WithFixedColumns: Story = {\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n};\n",
             "properties": [
                 {
                     "name": "columns",
@@ -377,16 +377,6 @@
                 "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n    nzTitle: 'Table Header',\n    nzFooter: 'Table Footer',\n    nzBordered: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [nzTitle]=\"nzTitle\"\n        [nzFooter]=\"nzFooter\"\n        [nzBordered]=\"nzBordered\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
             },
             {
-                "name": "ButtonMode",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Click for help',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as a clickable button',\n      },\n    },\n  },\n}"
-            },
-            {
                 "name": "Checkable",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -457,16 +447,6 @@
                 "defaultValue": "{\n  resets: [\n    {\n      field: 'username',\n      columns: ['email'],\n    },\n  ],\n}"
             },
             {
-                "name": "CustomText",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Custom help text',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center with custom text',\n      },\n    },\n  },\n}"
-            },
-            {
                 "name": "CustomTooltips",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -475,16 +455,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    value: 'Text with custom message',\n    copiedTip: 'Text copied to clipboard!',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'CopyText component with custom tooltip messages',\n      },\n    },\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Default",
@@ -564,17 +534,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: defaultItems,\n    layout: 'horizontal',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"nzLayout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"nzLayout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Interactive",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\n  ...Template,\n  args: {\n    mode: 'button',\n    text: 'Interactive example',\n    type: 'primary',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
+                "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    layout: 'horizontal',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"nzLayout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"nzLayout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
             },
             {
                 "name": "Interactive",
@@ -655,16 +615,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<HeaderTemplateComponent>",
                 "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<HelpCenterComponent>",
-                "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    mode: {\n      control: 'select',\n      options: [undefined, 'button', 'text'],\n      description: 'Display mode of the help center',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'undefined' },\n      },\n    },\n    text: {\n      control: 'text',\n      description: 'Help text content',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Help' },\n      },\n    },\n    type: {\n      control: 'select',\n      options: ['primary', 'text', 'link'],\n      description: 'Button type style',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'primary' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe HelpCenter component provides contextual help information in different display modes.\n\n### Features:\n- Multiple display modes: button, text, or default\n- Customizable icon and tooltip\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -780,31 +730,11 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-help-center\n        [mode]=\"mode\"\n        [text]=\"text\"\n        [type]=\"type\"\n      ></wn-help-center>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "TextMode",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    mode: 'text',\n    text: 'Hover for more information',\n    type: 'text',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as inline text',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "WithDisabled",
@@ -814,7 +744,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
             },
             {
                 "name": "WithFixedColumns",
@@ -834,7 +764,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
             },
             {
                 "name": "WithMaxDimensions",
@@ -854,7 +784,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
             },
             {
                 "name": "WithSize",
@@ -930,17 +860,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<HeaderTemplateComponent>",
                 "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<HelpCenterComponent>",
-                "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1152,78 +1071,6 @@
                     "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columns,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      currentSize: 'small',\n      sizeOptions: [\n        { label: 'Small', value: 'small' },\n        { label: 'Middle', value: 'middle' },\n        { label: 'Default', value: 'default' },\n      ],\n      onSizeChange: function (size: 'small' | 'middle' | 'default') {\n        console.log('onSizeChange', size);\n        this['currentSize'] = size;\n      },\n    },\n    template: `\n      <div>\n        <nz-radio-group\n          [(ngModel)]=\"currentSize\"\n          (ngModelChange)=\"onSizeChange($event)\"\n          style=\"margin-bottom: 16px\"\n        >\n          <label nz-radio *ngFor=\"let option of sizeOptions\" [nzValue]=\"option.value\">\n            {{option.label}}\n          </label>\n        </nz-radio-group>\n        <wn-frontend-table\n          [nzData]=\"nzData\"\n          [columns]=\"columns\"\n          [nzSize]=\"currentSize\"\n          [nzBordered]=\"true\"\n        ></wn-frontend-table>\n      </div>\n    `,\n  }),\n}"
                 }
             ],
-            "projects/wn-zorro/src/stories/template/helper-center.stories.ts": [
-                {
-                    "name": "ButtonMode",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Click for help',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as a clickable button',\n      },\n    },\n  },\n}"
-                },
-                {
-                    "name": "CustomText",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    mode: 'button',\n    text: 'Custom help text',\n    type: 'primary',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center with custom text',\n      },\n    },\n  },\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {},\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default help center with minimal configuration',\n      },\n    },\n  },\n}"
-                },
-                {
-                    "name": "Interactive",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{\n  ...Template,\n  args: {\n    mode: 'button',\n    text: 'Interactive example',\n    type: 'primary',\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        story: 'Interactive example with all controls',\n      },\n    },\n  },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<HelpCenterComponent>",
-                    "defaultValue": "{\n  title: 'Components/HelpCenter',\n  component: HelpCenterComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    mode: {\n      control: 'select',\n      options: [undefined, 'button', 'text'],\n      description: 'Display mode of the help center',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'undefined' },\n      },\n    },\n    text: {\n      control: 'text',\n      description: 'Help text content',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Help' },\n      },\n    },\n    type: {\n      control: 'select',\n      options: ['primary', 'text', 'link'],\n      description: 'Button type style',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'primary' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe HelpCenter component provides contextual help information in different display modes.\n\n### Features:\n- Multiple display modes: button, text, or default\n- Customizable icon and tooltip\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-help-center\n        [mode]=\"mode\"\n        [text]=\"text\"\n        [type]=\"type\"\n      ></wn-help-center>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "TextMode",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    mode: 'text',\n    text: 'Hover for more information',\n    type: 'text',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Help center displayed as inline text',\n      },\n    },\n  },\n}"
-                }
-            ],
             "projects/wn-zorro/src/stories/form/form-group.stories.ts": [
                 {
                     "name": "controlDisabled",
@@ -1273,7 +1120,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: defaultItems,\n    layout: 'horizontal',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"nzLayout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"nzLayout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    layout: 'horizontal',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"nzLayout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"nzLayout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "meta",
@@ -1293,7 +1140,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "WithHide",
@@ -1303,7 +1150,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "WithReset",
@@ -1313,7 +1160,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: defaultItems,\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
                 }
             ],
             "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
@@ -1564,19 +1411,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<HeaderTemplateComponent>",
                     "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
-            "projects/wn-zorro/src/stories/template/helper-center.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<HelpCenterComponent>",
-                    "file": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -2070,86 +1904,6 @@
             },
             {
                 "filePath": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
-                "type": "type alias",
-                "linktype": "miscellaneous",
-                "linksubtype": "typealias",
-                "name": "Story",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "ButtonMode",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CustomText",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Interactive",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "meta",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "TextMode",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/template/helper-center.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
