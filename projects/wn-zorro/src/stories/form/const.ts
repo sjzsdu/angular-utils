@@ -1,37 +1,37 @@
 import { FormItem } from '../../types';
 
 export const userFormItems: FormItem[] = [
-  {
-    name: 'username',
-    type: 'groupForm',
-    params: {
-      items: [
-        {
-          name: 'firstName',
-          type: 'input',
-          label: { hideLabel: true },
-          params: { nzAddOnBefore: 'First Name' },
-          validates: ['minLength'],
-          validatesArgs: {
-            minLength: [2],
-          },
-          required: true,
-        },
-        {
-          name: 'lastName',
-          type: 'input',
-          label: { hideLabel: true },
-          params: { nzAddOnBefore: 'Last Name' },
-          required: true,
-          validates: ['minLength'],
-          validatesArgs: {
-            minLength: [2],
-          },
-        },
-      ],
-      layout: 'horizontal',
-    },
-  },
+  // {
+  //   name: 'username',
+  //   type: 'groupForm',
+  //   params: {
+  //     items: [
+  //       {
+  //         name: 'firstName',
+  //         type: 'input',
+  //         label: { hideLabel: true },
+  //         params: { nzAddOnBefore: 'First Name' },
+  //         validates: ['minLength'],
+  //         validatesArgs: {
+  //           minLength: [2],
+  //         },
+  //         required: true,
+  //       },
+  //       {
+  //         name: 'lastName',
+  //         type: 'input',
+  //         label: { hideLabel: true },
+  //         params: { nzAddOnBefore: 'Last Name' },
+  //         required: true,
+  //         validates: ['minLength'],
+  //         validatesArgs: {
+  //           minLength: [2],
+  //         },
+  //       },
+  //     ],
+  //     layout: 'horizontal',
+  //   },
+  // },
   {
     name: 'subscribe',
     type: 'checkbox',
@@ -70,6 +70,14 @@ export const userFormItems: FormItem[] = [
     },
   },
   {
+    name: 'is_vip',
+    type: 'switch',
+    params: {
+      checkedChildren: 'Yes',
+      unCheckedChildren: 'No',
+    },
+  },
+  {
     name: 'gender',
     type: 'radio',
     required: true,
@@ -97,12 +105,12 @@ export const userFormItems: FormItem[] = [
     name: 'age',
     type: 'number',
     params: {
-      nzAddOnAfter: 'years',
+      addonsAfter: 'years',
     },
     validates: ['min', 'max'],
     validatesArgs: {
-      min: [0],
-      max: [120],
+      min: [5],
+      max: [100],
     },
   },
 ];

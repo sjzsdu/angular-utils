@@ -57,19 +57,56 @@
                 </nz-input-group>
               }
               @case ('number') {
-                <nz-input-group
-                  [nzAddOnBefore]="item?.params?.nzAddOnBefore"
-                  [nzAddOnAfter]="item?.params?.nzAddOnAfter"
+                <nz-input-number
+                  [formControlName]="item.name"
+                  [nzPlaceHolder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
+                  [nzMin]="item?.params?.nzMin"
+                  [nzMax]="item?.params?.nzMax"
+                  [nzPrecision]="item?.params?.nzPrecision ?? 1"
+                  [nzStep]="item?.params?.nzStep"
+                  [nzControls]="item?.params?.nzControls"
+                  [nzBordered]="item?.params?.nzBordered ?? true"
+                  [nzDisabled]="item.disabled ?? false"
                 >
-                  <nz-input-number
-                    style="width: 100%"
-                    [formControlName]="item.name"
-                    [nzMin]="item?.params?.nzMin"
-                    [nzMax]="item?.params?.nzMax"
-                    [nzPrecision]="item?.params?.nzPrecision ?? 1"
-                    [nzStep]="item?.params?.nzStep"
-                  />
-                </nz-input-group>
+                  @if (item.params?.addonsBeforeOptions) {
+                    <nz-select
+                      nzInputAddonBefore
+                      [ngModel]="item.params?.addonsBefore"
+                      [style.width.px]="item.params?.addonsBeforeWidth ?? 60"
+                    >
+                      @for (
+                        option of item.params?.addonsBeforeOptions || [];
+                        track isOptItem(option) ? option.value : option
+                      ) {
+                        <nz-option
+                          [nzLabel]="isOptItem(option) ? option.label : option"
+                          [nzValue]="isOptItem(option) ? option.value : option"
+                        />
+                      }
+                    </nz-select>
+                  } @else if (item.params?.addonsBefore) {
+                    <span nzInputAddonBefore>{{ item.params?.addonsBefore }}</span>
+                  }
+                  @if (item.params?.addonsAfterOptions) {
+                    <nz-select
+                      nzInputAddonAfter
+                      [ngModel]="item.params?.addonsAfter"
+                      [style.width.px]="item.params?.addonsAfterWidth ?? 60"
+                    >
+                      @for (
+                        option of item.params?.addonsAfterOptions || [];
+                        track isOptItem(option) ? option.value : option
+                      ) {
+                        <nz-option
+                          [nzLabel]="isOptItem(option) ? option.label : option"
+                          [nzValue]="isOptItem(option) ? option.value : option"
+                        />
+                      }
+                    </nz-select>
+                  } @else if (item.params?.addonsAfter) {
+                    <span nzInputAddonAfter>{{ item.params?.addonsAfter }}</span>
+                  }
+                </nz-input-number>
               }
               @case ('radio') {
                 <nz-radio-group
@@ -137,6 +174,16 @@
                   }
                 </nz-select>
               }
+              @case ('switch') {
+                <nz-switch
+                  [formControlName]="item.name"
+                  [nzDisabled]="item.disabled ?? false"
+                  [nzCheckedChildren]="item.params?.checkedChildren ?? ''"
+                  [nzUnCheckedChildren]="item.params?.unCheckedChildren ?? ''"
+                  [nzSize]="item.params?.size ?? 'default'"
+                ></nz-switch>
+              }
+
               @case ('groupForm') {
                 <wn-form-group
                   [formControlName]="item.name"

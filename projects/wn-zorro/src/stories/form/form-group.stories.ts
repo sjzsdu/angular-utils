@@ -139,8 +139,8 @@ const controlDisabled: FormController = {
     {
       field: 'gender',
       rules: [
-        { value: 'male', columns: ['female_item'] },
-        { value: 'female', columns: ['male_item'] },
+        { value: 'male', columns: ['male_item'] },
+        { value: 'female', columns: ['female_item'] },
       ],
     },
   ],

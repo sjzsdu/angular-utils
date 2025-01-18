@@ -16,6 +16,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -44,10 +45,12 @@ import { TemplateModule } from '../../template';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { BaseAccessorComponent } from '../../edit';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'wn-form-group',
   imports: [
+    FormsModule,
     ReactiveFormsModule,
     NzFormModule,
     PipesModule,
@@ -59,6 +62,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
     TemplateModule,
     NzToolTipModule,
     NzLayoutModule,
+    NzSwitchModule,
   ],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',

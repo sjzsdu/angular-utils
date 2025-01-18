@@ -9,6 +9,7 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzCascaderComponent } from 'ng-zorro-antd/cascader';
 import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 import { ExtractInputTypes } from './common';
+import { NzSizeDSType } from 'ng-zorro-antd/core/types';
 
 export interface IFormRowStatus {}
 export type IFormRow = Record<string, any> & IFormRowStatus;
@@ -32,9 +33,18 @@ export interface FormGroupConfig {
   controlSpan?: number;
 }
 
+export type templateOrStringSimple = string | TemplateRef<void>;
+
 export type ComponentParamsMap = {
   input: IInputGroup;
-  number: IInputGroup & ExtractInputTypes<NzInputNumberComponent>;
+  number: ExtractInputTypes<NzInputNumberComponent> & {
+    addonsBeforeOptions?: OptioinItem[];
+    addonsBefore?: string;
+    addonsBeforeWidth?: number;
+    addonsAfterOptions?: OptioinItem[];
+    addonsAfter?: string;
+    addonsAfterWidth?: number;
+  };
   radio: { options: string[] | OptItem[]; radioButton?: boolean } & Partial<
     Pick<NzRadioGroupComponent, 'nzSize' | 'nzButtonStyle'> & Pick<NzRadioComponent, 'nzDisabled'>
   >;
@@ -52,11 +62,11 @@ export type ComponentParamsMap = {
       onClick: () => void;
     };
   };
+  switch: { checkedChildren?: templateOrStringSimple; unCheckedChildren?: templateOrStringSimple; size?: NzSizeDSType };
   groupForm: FormGroupConfig;
 
   textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
   cascade: Pick<NzCascaderComponent, 'nzOptions'> & IInputGroup;
-  radioGroup: Pick<NzRadioGroupComponent, 'nzButtonStyle'> & { buttonRadio?: boolean; nzOptions: OptioinItem[] };
   custom: {
     injector: Injector;
     componentInstance: Type<any>;
