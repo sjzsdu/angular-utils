@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, effect, inject, input, model } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, effect, inject, input, model, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NzFormModule, NzLabelAlignType } from 'ng-zorro-antd/form';
 import {
@@ -23,6 +23,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { TemplateModule } from '../../template';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { BaseAccessorComponent } from '../../edit';
 
 @Component({
   selector: 'wn-form-group',
@@ -42,8 +43,8 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
   styleUrl: './form-group.component.less',
   providers: [NzDestroyService],
 })
-export class FormGroupComponent {
-  key = input('');
+export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAccessorComponent<T> implements OnInit {
+  name = input('');
   items = input.required<FormItem[]>();
   control = input<FormController>();
   row = model<IFormRow>();
@@ -84,8 +85,9 @@ export class FormGroupComponent {
   formGroup = new FormGroup({});
 
   constructor() {
+    super();
     effect(() => {
-      console.log('construct');
+      console.log('form group construct');
       if (this.items()?.length) {
         this.handleItems(this.items());
       }
@@ -100,6 +102,22 @@ export class FormGroupComponent {
       }
       this.createForm(this.items());
     });
+  }
+
+  ngOnInit(): void {
+    this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+      this.change(val as unknown as T);
+    });
+    if (this.parent) {
+      this.parent.registerChild(this.name(), this.formGroup);
+    }
+  }
+
+  registerChild(name: string, control: FormGroup) {
+    this.formControls.set(name, control);
+    if (!this.formGroup.contains(name)) {
+      this.formGroup.addControl(name, control);
+    }
   }
 
   addControl(name: string, control: AbstractControl) {
@@ -255,7 +273,7 @@ export class FormGroupComponent {
     return this.items()!.find((item) => item.name === name);
   }
 
-  private formControls = new Map<string, FormControl>();
+  private formControls = new Map<string, AbstractControl>();
 
   handleItem(item: FormItem) {
     switch (item.type) {
@@ -278,7 +296,7 @@ export class FormGroupComponent {
     }
   }
 
-  getControl(name: string): FormControl | undefined {
+  getControl(name: string): AbstractControl | undefined {
     return this.formControls.get(name);
   }
 

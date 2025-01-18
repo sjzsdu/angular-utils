@@ -11,7 +11,7 @@ import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 import { ExtractInputTypes } from './common';
 
 export interface IFormRowStatus {}
-export type IFormRow = Record<string, any>;
+export type IFormRow = Record<string, any> & IFormRowStatus;
 
 type IInputGroup = Pick<NzInputGroupComponent, 'nzAddOnBefore' | 'nzAddOnAfter'>;
 
@@ -22,6 +22,16 @@ export interface ISubForm {
   itemCount: number;
   itemSpan: number;
 }
+
+export interface FormGroupConfig {
+  items: FormItem[];
+  control: FormController;
+  row: IFormRow;
+  layout?: NzFormLayoutType;
+  labelSpan?: number;
+  controlSpan?: number;
+}
+
 export type ComponentParamsMap = {
   input: IInputGroup;
   number: IInputGroup & ExtractInputTypes<NzInputNumberComponent>;
@@ -55,10 +65,7 @@ export type ComponentParamsMap = {
     children: FormItem[];
     control: FormController;
   };
-  groupForm: {
-    children: FormItem[];
-    control: FormController;
-  };
+  groupForm: FormGroupConfig;
   arrayForm: {
     children: FormItem[];
     control: FormController;
@@ -180,9 +187,4 @@ export interface ComponentCommand {
 export interface CustomComponentCache {
   commands: Subject<ComponentCommand>;
   emitter: EventEmitter<any>;
-}
-
-export interface FormGroupConfig {
-  items: FormItem[];
-  control: FormController;
 }

@@ -20,6 +20,7 @@ export abstract class BaseAccessorComponent<T> implements ControlValueAccessor {
   }
 
   protected change(value: T): void {
+    this.innerValue.set(value);
     if (this.onChange) {
       this.onChange(value);
     }

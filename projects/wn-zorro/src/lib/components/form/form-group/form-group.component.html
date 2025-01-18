@@ -136,6 +136,17 @@
                   }
                 </nz-select>
               }
+              @case ('groupForm') {
+                <wn-form-group
+                  [formControlName]="item.name"
+                  [name]="item.name"
+                  [items]="item.params?.items ?? []"
+                  [control]="item.params?.control"
+                  [layout]="item.params?.layout ?? this.layout()"
+                  [labelSpan]="item.params?.labelSpan ?? this.labelSpan()"
+                  [controlSpan]="item.params?.controlSpan ?? this.controlSpan()"
+                ></wn-form-group>
+              }
             }
           </nz-form-control>
         </nz-form-item>
