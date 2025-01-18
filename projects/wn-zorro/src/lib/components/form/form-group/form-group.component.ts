@@ -1,5 +1,23 @@
-import { ChangeDetectorRef, Component, computed, effect, inject, input, model, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  effect,
+  forwardRef,
+  inject,
+  input,
+  model,
+  OnInit,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { NzFormModule, NzLabelAlignType } from 'ng-zorro-antd/form';
 import {
   FormController,
@@ -24,6 +42,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { TemplateModule } from '../../template';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { BaseAccessorComponent } from '../../edit';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 @Component({
   selector: 'wn-form-group',
@@ -38,12 +57,23 @@ import { BaseAccessorComponent } from '../../edit';
     NzSelectModule,
     TemplateModule,
     NzToolTipModule,
+    NzLayoutModule,
   ],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',
-  providers: [NzDestroyService],
+  providers: [
+    NzDestroyService,
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FormGroupComponent),
+      multi: true,
+    },
+  ],
 })
-export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAccessorComponent<T> implements OnInit {
+export class FormGroupComponent<T extends IFormRow = IFormRow>
+  extends BaseAccessorComponent<T>
+  implements OnInit, AfterViewInit
+{
   name = input('');
   items = input.required<FormItem[]>();
   control = input<FormController>();
@@ -53,6 +83,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
   layout = input<'horizontal' | 'vertical' | 'inline'>('vertical');
   labelSpan = input<number>();
   controlSpan = input<number>();
+  showSubmit = input(false);
 
   // label
   nzNoColon = input(false);
@@ -108,15 +139,29 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
     this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
       this.change(val as unknown as T);
     });
-    if (this.parent) {
+  }
+
+  ngAfterViewInit(): void {
+    console.log('formgroup: ngAfterViewInit', this.parent, this.name(), this.parent);
+    if (this.parent && this.name()) {
       this.parent.registerChild(this.name(), this.formGroup);
+    } else if (!this.name()) {
+      console.warn('FormGroupComponent: name input is required when used as child component');
     }
   }
 
   registerChild(name: string, control: FormGroup) {
+    if (!name || !control || !this.formGroup) {
+      console.warn('FormGroupComponent: invalid child registration parameters');
+      return;
+    }
+
     this.formControls.set(name, control);
     if (!this.formGroup.contains(name)) {
       this.formGroup.addControl(name, control);
+      if (this.formGroup) {
+        control.setParent(this.formGroup);
+      }
     }
   }
 
@@ -135,6 +180,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
   createForm(items: FormItem[]) {
     for (const item of items) {
       if (!item.isHide) {
+        console.log(item.name, this.getControl(item.name));
         this.addControl(item.name, this.getControl(item.name)!);
       } else {
         this.removeControl(item.name);
@@ -203,7 +249,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
             for (const col of allColumns) {
               const subControl = this.getControl(col);
               if (subControl) {
-                subControl.enable();
+                subControl.disable();
               }
             }
 
@@ -245,15 +291,12 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
               subControl.reset();
             }
           }
-          console.log('setResets: ', field, val, columns);
           this.cdr.detectChanges();
         };
 
         control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
-          console.log('value change for reset', val);
           setValue(val);
         });
-        console.log('Reset item', control);
         setValue(control.value);
       }
     }
@@ -276,15 +319,18 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
   private formControls = new Map<string, AbstractControl>();
 
   handleItem(item: FormItem) {
+    const { required, defaults, name } = item;
     switch (item.type) {
       case 'custom':
         break;
       case 'groupForm':
+        const group = new FormGroup({});
+        this.formControls.set(item.name, group);
+        this.addControl(name, group);
         break;
       case 'arrayForm':
         break;
       default:
-        const { required, defaults, name } = item;
         if (required && !item.validates?.includes('required')) {
           item.validates = ['required', ...(item.validates || [])];
         }
@@ -303,7 +349,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
   submitForm(): void {
     console.log('onSubmit:', this.formGroup.value);
     for (const [key, control] of Object.entries(this.formGroup.controls)) {
-      console.log(key, control, (control as AbstractControl).errors);
+      console.log(key, control, (control as AbstractControl)?.errors);
     }
   }
 

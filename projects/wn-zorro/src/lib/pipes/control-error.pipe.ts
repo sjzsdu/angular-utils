@@ -24,7 +24,10 @@ export class ControlErrorPipe implements PipeTransform {
               match
             );
           }
-          return item[variable as keyof FormItem] || match;
+          if (variable in item) {
+            return item[variable as keyof FormItem] || match;
+          }
+          return match;
         });
       }
     }

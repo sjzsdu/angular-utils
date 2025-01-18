@@ -152,10 +152,12 @@
         </nz-form-item>
       }
     }
-    <nz-form-item>
-      <nz-form-control>
-        <button nz-button nzType="primary">Submit</button>
-      </nz-form-control>
-    </nz-form-item>
+    @if (showSubmit()) {
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary">Submit</button>
+        </nz-form-control>
+      </nz-form-item>
+    }
   </form>
 }

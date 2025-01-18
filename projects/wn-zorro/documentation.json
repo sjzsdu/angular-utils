@@ -444,7 +444,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "FormController",
-                "defaultValue": "{\n  resets: [\n    {\n      field: 'username',\n      columns: ['email'],\n    },\n  ],\n}"
+                "defaultValue": "{\n  resets: [\n    {\n      field: 'gender',\n      columns: ['email'],\n    },\n  ],\n}"
             },
             {
                 "name": "CustomTooltips",
@@ -467,14 +467,14 @@
                 "defaultValue": "{\n  args: {\n    value: 'Sample text to copy',\n    title: 'Copy title',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default CopyText component with sample text',\n      },\n    },\n  },\n}"
             },
             {
-                "name": "defaultItems",
+                "name": "DisabledControl",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "FormItem[]",
-                "defaultValue": "[\n  {\n    name: 'username',\n    type: 'input',\n    params: {\n      nzAddOnBefore: 'User',\n    },\n    label: {\n      label: 'Username',\n      tooltip: 'Your login name',\n      help: 'Must be unique',\n    },\n    placeholder: 'Enter your username',\n    required: true,\n    validates: ['required', 'minLength'],\n    validatesArgs: {\n      minLength: [4],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Username is required and must be at least 4 characters',\n      successTip: 'Username is valid',\n    },\n  },\n  {\n    name: 'subscribe',\n    type: 'checkbox',\n    label: {\n      label: 'Subscribe to newsletter',\n    },\n    required: false,\n  },\n  {\n    name: 'interests',\n    type: 'checkboxGroup',\n    label: {\n      label: 'Interests',\n      tooltip: 'Select your areas of interest',\n    },\n    params: {\n      options: [\n        { label: 'Technology', value: 'tech' },\n        { label: 'Sports', value: 'sports' },\n        { label: 'Music', value: 'music' },\n        { label: 'Travel', value: 'travel' },\n      ],\n    },\n    required: true,\n  },\n  {\n    name: 'country',\n    type: 'select',\n    label: {\n      label: 'Country',\n      tooltip: 'Select your country',\n    },\n    params: {\n      options: [\n        { label: 'United States', value: 'us' },\n        { label: 'Canada', value: 'ca' },\n        { label: 'United Kingdom', value: 'uk' },\n        { label: 'Australia', value: 'au' },\n      ],\n      showSearch: true,\n      mode: 'default',\n      size: 'default',\n    },\n    placeholder: 'Select a country',\n    required: true,\n  },\n  {\n    name: 'gender',\n    type: 'radio',\n    required: true,\n    params: {\n      options: ['male', 'female'],\n    },\n  },\n  {\n    name: 'male_item',\n    type: 'input',\n  },\n  {\n    name: 'female_item',\n    type: 'input',\n  },\n  {\n    name: 'email',\n    type: 'input',\n    params: {\n      nzAddOnBefore: '',\n      nzAddOnAfter: '',\n    },\n    label: {\n      label: 'Email',\n      tooltip: 'Your email address',\n      help: 'We will send verification email',\n    },\n    placeholder: 'Enter your email',\n    required: true,\n    validates: ['regexp'],\n    validatesArgs: {\n      regexp: [/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Invalid email format',\n      successTip: 'Valid email',\n    },\n  },\n  {\n    name: 'age',\n    type: 'number',\n    params: {\n      nzAddOnAfter: 'years',\n    },\n    label: {\n      label: 'Age',\n      tooltip: 'Your actual age',\n    },\n    placeholder: 'Enter your age',\n    required: true,\n    validates: ['required', 'min', 'max'],\n    validatesArgs: {\n      min: [0],\n      max: [120],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Age must be between 0 and 120',\n    },\n  },\n]"
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, ['gender', 'male_item', 'female_item']),\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
             },
             {
                 "name": "EmptyText",
@@ -527,6 +527,16 @@
                 "defaultValue": "(data: IData[], key: keyof IData, count = 5) => {\n  const values = [\n    ...new Set(\n      data.map((item) => {\n        if (key === 'age') {\n          return Math.floor(item[key] / 10) * 10;\n        }\n        return item[key].toString().split(' ')[0];\n      })\n    ),\n  ];\n  return values.slice(0, count).map((value) => ({ text: value, value }));\n}"
             },
             {
+                "name": "HideControl",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, ['gender', 'male_item', 'female_item']),\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "Interactive",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -534,7 +544,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    layout: 'horizontal',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"nzLayout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"nzLayout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"layout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"layout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
             },
             {
                 "name": "Interactive",
@@ -590,21 +600,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<FormGroupComponent>",
-                "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzFormModule, NzInputModule, NzRadioModule, NzSwitchModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<FrontendTableComponent<IData>>",
                 "defaultValue": "{\n  title: 'Components/FrontendTable',\n  component: FrontendTableComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [NzTableModule, PipesModule, NzRadioModule, FormsModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n  parameters: {\n    docs: {\n      autodocs: true,\n      description: {\n        component: `\n### FrontendTable Component Documentation\n\n#### Basic Usage\n\\`\\`\\`html\n<wn-frontend-table\n  [nzData]=\"nzData\"\n  [columns]=\"columns\"\n></wn-frontend-table>\n\\`\\`\\`\n\n#### Columns Configuration\n\\`\\`\\`typescript\ninterface IColumn {\n  name: string; // Field name\n  title: string; // Column header text\n  type: 'text' | 'number' | 'date' | 'custom'; // Data type\n  params?: Record<string, any>; // Type parameters\n  sortFilter?: { // Sorting and filtering configuration\n    sortOrder: SortOrder | null;\n    sortFn: (a: any, b: any) => number;\n    sortDirections: SortOrder[];\n    filterFn: (list: any[], item: any) => boolean;\n    listOfFilter: { text: string; value: any }[];\n    filterMultiple: boolean;\n  };\n}\n\\`\\`\\`\n\n#### Supported Features\n- Pagination (\\`nzShowPagination\\`)\n- Page size changer (\\`nzShowSizeChanger\\`)\n- Row selection (\\`showChecked\\`)\n- Sorting (\\`sortFilter\\`)\n- Filtering (\\`sortFilter\\`)\n        `,\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<FormGroupComponent>",
+                "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzFormModule, NzInputModule, NzRadioModule, NzSwitchModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
             },
             {
                 "name": "meta",
@@ -697,6 +707,16 @@
                 "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
             },
             {
+                "name": "ResetControl",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, ['gender', 'email']),\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "sampleData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -737,16 +757,6 @@
                 "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
             },
             {
-                "name": "WithDisabled",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
-            },
-            {
                 "name": "WithFixedColumns",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -757,16 +767,6 @@
                 "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
             },
             {
-                "name": "WithHide",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
-            },
-            {
                 "name": "WithMaxDimensions",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -775,16 +775,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    nzData: sampleData,\n    columns: columnsExtended,\n    maxWidth: '800px',\n    maxHeight: '400px',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-frontend-table\n        [nzData]=\"nzData\"\n        [columns]=\"columns\"\n        [maxWidth]=\"maxWidth\"\n        [maxHeight]=\"maxHeight\"\n        [nzShowPagination]=\"false\"\n      ></wn-frontend-table>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "WithReset",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
             },
             {
                 "name": "WithSize",
@@ -836,8 +826,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<FormGroupComponent>",
-                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "rawtype": "StoryObj<FrontendTableComponent<IData>>",
+                "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -847,8 +837,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<FrontendTableComponent<IData>>",
-                "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
+                "rawtype": "StoryObj<FormGroupComponent>",
+                "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1100,17 +1090,27 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "FormController",
-                    "defaultValue": "{\n  resets: [\n    {\n      field: 'username',\n      columns: ['email'],\n    },\n  ],\n}"
+                    "defaultValue": "{\n  resets: [\n    {\n      field: 'gender',\n      columns: ['email'],\n    },\n  ],\n}"
                 },
                 {
-                    "name": "defaultItems",
+                    "name": "DisabledControl",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "FormItem[]",
-                    "defaultValue": "[\n  {\n    name: 'username',\n    type: 'input',\n    params: {\n      nzAddOnBefore: 'User',\n    },\n    label: {\n      label: 'Username',\n      tooltip: 'Your login name',\n      help: 'Must be unique',\n    },\n    placeholder: 'Enter your username',\n    required: true,\n    validates: ['required', 'minLength'],\n    validatesArgs: {\n      minLength: [4],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Username is required and must be at least 4 characters',\n      successTip: 'Username is valid',\n    },\n  },\n  {\n    name: 'subscribe',\n    type: 'checkbox',\n    label: {\n      label: 'Subscribe to newsletter',\n    },\n    required: false,\n  },\n  {\n    name: 'interests',\n    type: 'checkboxGroup',\n    label: {\n      label: 'Interests',\n      tooltip: 'Select your areas of interest',\n    },\n    params: {\n      options: [\n        { label: 'Technology', value: 'tech' },\n        { label: 'Sports', value: 'sports' },\n        { label: 'Music', value: 'music' },\n        { label: 'Travel', value: 'travel' },\n      ],\n    },\n    required: true,\n  },\n  {\n    name: 'country',\n    type: 'select',\n    label: {\n      label: 'Country',\n      tooltip: 'Select your country',\n    },\n    params: {\n      options: [\n        { label: 'United States', value: 'us' },\n        { label: 'Canada', value: 'ca' },\n        { label: 'United Kingdom', value: 'uk' },\n        { label: 'Australia', value: 'au' },\n      ],\n      showSearch: true,\n      mode: 'default',\n      size: 'default',\n    },\n    placeholder: 'Select a country',\n    required: true,\n  },\n  {\n    name: 'gender',\n    type: 'radio',\n    required: true,\n    params: {\n      options: ['male', 'female'],\n    },\n  },\n  {\n    name: 'male_item',\n    type: 'input',\n  },\n  {\n    name: 'female_item',\n    type: 'input',\n  },\n  {\n    name: 'email',\n    type: 'input',\n    params: {\n      nzAddOnBefore: '',\n      nzAddOnAfter: '',\n    },\n    label: {\n      label: 'Email',\n      tooltip: 'Your email address',\n      help: 'We will send verification email',\n    },\n    placeholder: 'Enter your email',\n    required: true,\n    validates: ['regexp'],\n    validatesArgs: {\n      regexp: [/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Invalid email format',\n      successTip: 'Valid email',\n    },\n  },\n  {\n    name: 'age',\n    type: 'number',\n    params: {\n      nzAddOnAfter: 'years',\n    },\n    label: {\n      label: 'Age',\n      tooltip: 'Your actual age',\n    },\n    placeholder: 'Enter your age',\n    required: true,\n    validates: ['required', 'min', 'max'],\n    validatesArgs: {\n      min: [0],\n      max: [120],\n    },\n    control: {\n      hasFeedback: true,\n      errorTip: 'Age must be between 0 and 120',\n    },\n  },\n]"
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, ['gender', 'male_item', 'female_item']),\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "HideControl",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, ['gender', 'male_item', 'female_item']),\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "Interactive",
@@ -1120,7 +1120,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    layout: 'horizontal',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"nzLayout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"nzLayout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"layout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-form-group\n        [items]=\"items\"\n        [nzLayout]=\"layout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n      ></wn-form-group>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "meta",
@@ -1133,34 +1133,14 @@
                     "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzFormModule, NzInputModule, NzRadioModule, NzSwitchModule],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
                 },
                 {
-                    "name": "WithDisabled",
+                    "name": "ResetControl",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlDisabled,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "WithHide",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlHide,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "WithReset",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: deepCloneJSON(defaultItems),\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, ['gender', 'email']),\n    control: controlReset,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <wn-form-group\n        [items]=\"items\"\n        [control]=\"control\"\n      ></wn-form-group>\n    `,\n  }),\n}"
                 }
             ],
             "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
@@ -1378,19 +1358,6 @@
                     "kind": 183
                 }
             ],
-            "projects/wn-zorro/src/stories/form/form-group.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<FormGroupComponent>",
-                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
             "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts": [
                 {
                     "name": "Story",
@@ -1398,6 +1365,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<FrontendTableComponent<IData>>",
                     "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/form/form-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<FormGroupComponent>",
+                    "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1599,7 +1579,17 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "defaultItems",
+                "name": "DisabledControl",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "HideControl",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1629,27 +1619,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "WithDisabled",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "WithHide",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "WithReset",
+                "name": "ResetControl",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

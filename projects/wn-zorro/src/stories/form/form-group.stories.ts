@@ -8,7 +8,9 @@ import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { deepCloneJSON } from '../../../../wn-helper/src/lib/json';
+import { pickItems } from '../../helper';
+import { userFormItems } from './const';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 const meta: Meta<FormGroupComponent> = {
   title: 'Form/FormGroup',
@@ -32,7 +34,15 @@ const meta: Meta<FormGroupComponent> = {
   },
   decorators: [
     moduleMetadata({
-      imports: [ReactiveFormsModule, FormsModule, NzFormModule, NzInputModule, NzRadioModule, NzSwitchModule],
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        NzFormModule,
+        NzInputModule,
+        NzRadioModule,
+        NzSwitchModule,
+        NzLayoutModule,
+      ],
     }),
     applicationConfig({
       providers: [importProvidersFrom(BrowserAnimationsModule)],
@@ -44,144 +54,10 @@ export default meta;
 
 type Story = StoryObj<FormGroupComponent>;
 
-const defaultItems: FormItem[] = [
-  {
-    name: 'username',
-    type: 'input',
-    params: {
-      nzAddOnBefore: 'User',
-    },
-    label: {
-      label: 'Username',
-      tooltip: 'Your login name',
-      help: 'Must be unique',
-    },
-    placeholder: 'Enter your username',
-    required: true,
-    validates: ['required', 'minLength'],
-    validatesArgs: {
-      minLength: [4],
-    },
-    control: {
-      hasFeedback: true,
-      errorTip: 'Username is required and must be at least 4 characters',
-      successTip: 'Username is valid',
-    },
-  },
-  {
-    name: 'subscribe',
-    type: 'checkbox',
-    label: {
-      label: 'Subscribe to newsletter',
-    },
-    required: false,
-  },
-  {
-    name: 'interests',
-    type: 'checkboxGroup',
-    label: {
-      label: 'Interests',
-      tooltip: 'Select your areas of interest',
-    },
-    params: {
-      options: [
-        { label: 'Technology', value: 'tech' },
-        { label: 'Sports', value: 'sports' },
-        { label: 'Music', value: 'music' },
-        { label: 'Travel', value: 'travel' },
-      ],
-    },
-    required: true,
-  },
-  {
-    name: 'country',
-    type: 'select',
-    label: {
-      label: 'Country',
-      tooltip: 'Select your country',
-    },
-    params: {
-      options: [
-        { label: 'United States', value: 'us' },
-        { label: 'Canada', value: 'ca' },
-        { label: 'United Kingdom', value: 'uk' },
-        { label: 'Australia', value: 'au' },
-      ],
-      showSearch: true,
-      mode: 'default',
-      size: 'default',
-    },
-    placeholder: 'Select a country',
-    required: true,
-  },
-  {
-    name: 'gender',
-    type: 'radio',
-    required: true,
-    params: {
-      options: ['male', 'female'],
-    },
-  },
-  {
-    name: 'male_item',
-    type: 'input',
-  },
-  {
-    name: 'female_item',
-    type: 'input',
-  },
-  {
-    name: 'email',
-    type: 'input',
-    params: {
-      nzAddOnBefore: '',
-      nzAddOnAfter: '',
-    },
-    label: {
-      label: 'Email',
-      tooltip: 'Your email address',
-      help: 'We will send verification email',
-    },
-    placeholder: 'Enter your email',
-    required: true,
-    validates: ['regexp'],
-    validatesArgs: {
-      regexp: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/],
-    },
-    control: {
-      hasFeedback: true,
-      errorTip: 'Invalid email format',
-      successTip: 'Valid email',
-    },
-  },
-  {
-    name: 'age',
-    type: 'number',
-    params: {
-      nzAddOnAfter: 'years',
-    },
-    label: {
-      label: 'Age',
-      tooltip: 'Your actual age',
-    },
-    placeholder: 'Enter your age',
-    required: true,
-    validates: ['required', 'min', 'max'],
-    validatesArgs: {
-      min: [0],
-      max: [120],
-    },
-    control: {
-      hasFeedback: true,
-      errorTip: 'Age must be between 0 and 120',
-    },
-  },
-];
-
 export const Interactive: Story = {
   args: {
-    items: deepCloneJSON(defaultItems),
-    layout: 'horizontal',
+    items: pickItems<FormItem>(userFormItems, []),
+    layout: 'vertical',
     nzLabelAlign: 'right',
     nzNoColon: false,
     nzLabelWrap: false,
@@ -195,7 +71,7 @@ export const Interactive: Story = {
     template: `
       <div style="margin-bottom: 24px;">
         <label>Layout: </label>
-        <nz-radio-group [(ngModel)]="nzLayout">
+        <nz-radio-group [(ngModel)]="layout">
           <label nz-radio nzValue="horizontal">Horizontal</label>
           <label nz-radio nzValue="vertical">Vertical</label>
           <label nz-radio nzValue="inline">Inline</label>
@@ -216,7 +92,7 @@ export const Interactive: Story = {
 
       <wn-form-group
         [items]="items"
-        [nzLayout]="nzLayout"
+        [layout]="layout"
         [nzLabelAlign]="nzLabelAlign"
         [nzNoColon]="nzNoColon"
         [nzLabelWrap]="nzLabelWrap"
@@ -237,9 +113,9 @@ const controlHide: FormController = {
   ],
 };
 
-export const WithHide: Story = {
+export const HideControl: Story = {
   args: {
-    items: deepCloneJSON(defaultItems),
+    items: pickItems<FormItem>(userFormItems, ['gender', 'male_item', 'female_item']),
     control: controlHide,
   },
   render: (args) => ({
@@ -267,9 +143,9 @@ const controlDisabled: FormController = {
   ],
 };
 
-export const WithDisabled: Story = {
+export const DisabledControl: Story = {
   args: {
-    items: deepCloneJSON(defaultItems),
+    items: pickItems<FormItem>(userFormItems, ['gender', 'male_item', 'female_item']),
     control: controlDisabled,
   },
   render: (args) => ({
@@ -288,15 +164,15 @@ export const WithDisabled: Story = {
 const controlReset: FormController = {
   resets: [
     {
-      field: 'username',
+      field: 'gender',
       columns: ['email'],
     },
   ],
 };
 
-export const WithReset: Story = {
+export const ResetControl: Story = {
   args: {
-    items: deepCloneJSON(defaultItems),
+    items: pickItems<FormItem>(userFormItems, ['gender', 'email']),
     control: controlReset,
   },
   render: (args) => ({

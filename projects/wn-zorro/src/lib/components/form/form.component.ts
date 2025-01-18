@@ -34,7 +34,7 @@ import {
   OptItem,
 } from '../../../types/form';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
-import { BaseAccessorComponent } from './base-accessor';
+import { BaseAccessorComponent } from '../edit';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';
 import { NzFormLayoutType } from 'ng-zorro-antd/form';
 import { NzSelectComponent } from 'ng-zorro-antd/select';
@@ -43,7 +43,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceExecute, delayExecute } from 'wn-helper';
 import { getAsyncValidator, getValidator, ValidateReactiveFormData } from './validates';
 import { Subject, takeUntil } from 'rxjs';
-import { FORM_COMMANDS, FORM_DATA, FORM_EMITTER, FORM_PARAMS } from './const';
+import { FORM_COMMANDS, FORM_DATA, FORM_EMITTER, FORM_PARAMS } from '../edit/const';
 
 @Component({
   standalone: false,

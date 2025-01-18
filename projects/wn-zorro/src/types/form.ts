@@ -25,8 +25,8 @@ export interface ISubForm {
 
 export interface FormGroupConfig {
   items: FormItem[];
-  control: FormController;
-  row: IFormRow;
+  control?: FormController;
+  row?: IFormRow;
   layout?: NzFormLayoutType;
   labelSpan?: number;
   controlSpan?: number;
@@ -52,6 +52,7 @@ export type ComponentParamsMap = {
       onClick: () => void;
     };
   };
+  groupForm: FormGroupConfig;
 
   textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
   cascade: Pick<NzCascaderComponent, 'nzOptions'> & IInputGroup;
@@ -65,7 +66,6 @@ export type ComponentParamsMap = {
     children: FormItem[];
     control: FormController;
   };
-  groupForm: FormGroupConfig;
   arrayForm: {
     children: FormItem[];
     control: FormController;
