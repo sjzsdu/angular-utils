@@ -11,6 +11,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { pickItems } from '../../helper';
 import { userFormItems } from './const';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { PipesModule } from '../../public-api';
 
 const meta: Meta<FormGroupComponent> = {
   title: 'Form/FormGroup',
@@ -42,6 +43,7 @@ const meta: Meta<FormGroupComponent> = {
         NzRadioModule,
         NzSwitchModule,
         NzLayoutModule,
+        PipesModule,
       ],
     }),
     applicationConfig({
@@ -96,6 +98,7 @@ export const Interactive: Story = {
         [nzLabelAlign]="nzLabelAlign"
         [nzNoColon]="nzNoColon"
         [nzLabelWrap]="nzLabelWrap"
+        [showSubmit]="true"
       ></wn-form-group>
     `,
   }),

@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
+  ControlValueAccessor,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -72,7 +73,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 })
 export class FormGroupComponent<T extends IFormRow = IFormRow>
   extends BaseAccessorComponent<T>
-  implements OnInit, AfterViewInit
+  implements OnInit, AfterViewInit, ControlValueAccessor
 {
   name = input('');
   items = input.required<FormItem[]>();
@@ -114,6 +115,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
     return this.control()?.resets || [];
   });
   formGroup = new FormGroup({});
+  afterRegister = false;
 
   constructor() {
     super();
@@ -139,33 +141,37 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
     this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
       this.change(val as unknown as T);
     });
+    console.log('formgroup: ngOnInit', this.parent, this.name());
   }
 
   ngAfterViewInit(): void {
-    console.log('formgroup: ngAfterViewInit', this.parent, this.name(), this.parent);
+    console.log('formgroup: ngAfterViewInit', this.parent, this.name());
     if (this.parent && this.name()) {
-      this.parent.registerChild(this.name(), this.formGroup);
+      this.parent!.registerChild(this.name(), this.formGroup);
     } else if (!this.name()) {
       console.warn('FormGroupComponent: name input is required when used as child component');
     }
   }
 
   registerChild(name: string, control: FormGroup) {
-    if (!name || !control || !this.formGroup) {
+    console.log('registerChild', name, control, this.parent);
+    if (!name || !control) {
       console.warn('FormGroupComponent: invalid child registration parameters');
       return;
     }
 
     this.formControls.set(name, control);
-    if (!this.formGroup.contains(name)) {
-      this.formGroup.addControl(name, control);
-      if (this.formGroup) {
-        control.setParent(this.formGroup);
-      }
-    }
+    this.formGroup.setControl(name, control);
+    control.setParent(this.formGroup);
+    console.log('registerChild', this.formGroup, this.formControls);
+    this.afterRegister = true;
+    this.cdr.detectChanges();
   }
 
   addControl(name: string, control: AbstractControl) {
+    if (!control) {
+      return;
+    }
     if (!this.formGroup.contains(name)) {
       this.formGroup.addControl(name, control);
     }
@@ -180,7 +186,6 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
   createForm(items: FormItem[]) {
     for (const item of items) {
       if (!item.isHide) {
-        console.log(item.name, this.getControl(item.name));
         this.addControl(item.name, this.getControl(item.name)!);
       } else {
         this.removeControl(item.name);
@@ -258,7 +263,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
               for (const col of matchedRule.columns) {
                 const subControl = this.getControl(col);
                 if (subControl) {
-                  subControl.disable();
+                  subControl.enable();
                 }
               }
             }
@@ -316,7 +321,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
     return this.items()!.find((item) => item.name === name);
   }
 
-  private formControls = new Map<string, AbstractControl>();
+  formControls = new Map<string, AbstractControl>();
 
   handleItem(item: FormItem) {
     const { required, defaults, name } = item;
@@ -327,6 +332,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
         const group = new FormGroup({});
         this.formControls.set(item.name, group);
         this.addControl(name, group);
+        this.afterRegister = false;
         break;
       case 'arrayForm':
         break;

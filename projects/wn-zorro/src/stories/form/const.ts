@@ -29,6 +29,7 @@ export const userFormItems: FormItem[] = [
           },
         },
       ],
+      layout: 'horizontal',
     },
   },
   {

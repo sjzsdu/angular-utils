@@ -1,6 +1,7 @@
 @if (formGroup) {
   <form
     nz-form
+    [class]="{ 'is-sub-form': !!name() }"
     [nzLayout]="layout()"
     [nzNoColon]="nzNoColon()"
     [nzLabelAlign]="nzLabelAlign()"
