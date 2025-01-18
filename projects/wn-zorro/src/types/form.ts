@@ -8,7 +8,7 @@ import { NzAutosizeDirective, NzInputGroupComponent } from 'ng-zorro-antd/input'
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzCascaderComponent } from 'ng-zorro-antd/cascader';
 import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
-import { ExtractInputTypes } from '../../types';
+import { ExtractInputTypes } from './common';
 
 export interface IFormRowStatus {}
 export type IFormRow = Record<string, any>;
@@ -180,4 +180,9 @@ export interface ComponentCommand {
 export interface CustomComponentCache {
   commands: Subject<ComponentCommand>;
   emitter: EventEmitter<any>;
+}
+
+export interface FormGroupConfig {
+  items: FormItem[];
+  control: FormController;
 }

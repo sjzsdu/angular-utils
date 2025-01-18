@@ -3,7 +3,7 @@ import { FormGroupComponent } from '../../lib/components/form/form-group/form-gr
 import { NzFormModule, NzLabelAlignType } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FormController, FormItem } from '../../lib/components/edit/';
+import { FormController, FormItem } from '../../types/form';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzRadioModule } from 'ng-zorro-antd/radio';

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { AsyncValidateStore, FormItem, ValidateStore } from '../edit/types';
+import { AsyncValidateStore, FormItem, ValidateStore } from '../../../types/form';
 
 function getControl(control: AbstractControl, target: string) {
   const controls = control['_parent']?.controls;

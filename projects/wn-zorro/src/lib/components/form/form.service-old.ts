@@ -6,7 +6,7 @@ import { NzDestroyService } from 'ng-zorro-antd/core/services';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSelectComponent } from 'ng-zorro-antd/select';
 import { FormComponent } from './form.component';
-import { FormItem } from '../edit/types';
+import { FormItem } from '../../../types/form';
 import { isPromise } from 'wn-helper';
 export interface ReactiveModalOptions extends ModalOptions {
   afterClose?: () => void;

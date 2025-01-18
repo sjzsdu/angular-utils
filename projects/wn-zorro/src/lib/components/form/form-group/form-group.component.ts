@@ -10,7 +10,7 @@ import {
   IFormRow,
   OptioinItem,
   OptItem,
-} from '../../edit';
+} from '../../../../types/form';
 import { getAsyncValidator, getValidator } from '../validates';
 import { PipesModule } from '../../../pipes';
 import { NzInputModule } from 'ng-zorro-antd/input';

@@ -1,7 +1,5 @@
 import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
-import { LabelFunc } from '../../pipes';
-import { ExtractInputTypes } from '../../types';
-import { CopyTextComponent } from '../view/copy-text/copy-text.component';
+import { LabelFunc } from '../public-api';
 
 export interface IRowStatus {
   disabled?: boolean;

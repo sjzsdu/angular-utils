@@ -25,7 +25,6 @@ import {
   ComponentCommand,
   ControlRules,
   CustomComponentCache,
-  FormControl,
   FormDisabled,
   FormHide,
   FormItem,
@@ -33,7 +32,7 @@ import {
   FormResets,
   OptioinItem,
   OptItem,
-} from './types';
+} from '../../../types/form';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { BaseAccessorComponent } from './base-accessor';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';

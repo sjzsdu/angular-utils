@@ -1,6 +1,6 @@
 import { Component, computed, input, signal, TemplateRef } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { IColumn, IRow } from '../type';
+import { IColumn, IRow } from '../../../../types/table';
 import { PipesModule } from '../../../pipes';
 import { CopyTextComponent } from '../../view/copy-text/copy-text.component';
 

@@ -3,7 +3,7 @@ import { ControlValueAccessor } from '@angular/forms';
 import { FORM_COMMANDS, FORM_DATA, FORM_EMITTER, FORM_PARAMS } from './const';
 import { Subject } from 'rxjs';
 import { BaseAccessorComponent } from './base-accessor';
-import { ComponentCommand } from './types';
+import { ComponentCommand } from '../../../types/form';
 
 export class CustomComponent<T = any> extends BaseAccessorComponent<T> implements ControlValueAccessor {
   innerParams = signal<Record<string, any>>({});
