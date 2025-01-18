@@ -21,6 +21,8 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TemplateModule } from '../../template';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'wn-form-group',
@@ -33,6 +35,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzRadioModule,
     NzCheckboxModule,
     NzSelectModule,
+    TemplateModule,
+    NzToolTipModule,
   ],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',

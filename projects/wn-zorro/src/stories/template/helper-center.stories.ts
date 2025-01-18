@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { HelpCenterComponent } from '../../lib/components/template/helper-center/help-center.component';
+import { HelpCenterComponent } from '../../lib/components/template/helper-link/help-center.component';
 
 const meta: Meta<HelpCenterComponent> = {
   title: 'Components/HelpCenter',

@@ -1,8 +1,8 @@
 import { TemplateRef } from '@angular/core';
 
 export interface ModalHeader {
-  key?: string;
   title: string;
+  key?: string;
   pathKey?: string;
   anchorPoint?: string;
   noTemp?: boolean;

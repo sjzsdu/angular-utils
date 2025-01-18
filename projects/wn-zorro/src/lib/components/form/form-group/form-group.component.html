@@ -11,9 +11,22 @@
     @for (item of this.items(); track item.name) {
       @if (!item.isHide) {
         <nz-form-item>
-          <nz-form-label [nzSpan]="labelSpan() ?? null" [nzRequired]="item.required">
-            {{ item?.label?.label || (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
-          </nz-form-label>
+          @if (!item?.label?.hideLabel) {
+            <nz-form-label [nzSpan]="labelSpan() ?? null" [nzRequired]="item.required">
+              {{ item?.label?.label || (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
+              @if (item?.label?.tooltip) {
+                <span
+                  nz-icon
+                  nzType="info-circle"
+                  class="label-icon"
+                  nzTheme="outline"
+                  nz-tooltip
+                  [nzTooltipPlacement]="item?.label?.tooltipPlacement ?? 'right'"
+                  [nzTooltipTitle]="item?.label?.tooltip"
+                ></span>
+              }
+            </nz-form-label>
+          }
           <nz-form-control
             [nzSpan]="controlSpan() ?? null"
             [nzHasFeedback]="item?.control?.hasFeedback ?? false"

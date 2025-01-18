@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable, TemplateRef } from '@angular/core';
-import { ModalHeader, ModalHeaderTemplate } from './types';
+import { ModalHeader, ModalHeaderTemplate } from '../../../types/template';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

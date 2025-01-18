@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { HeaderTemplateComponent } from './header-template/header-template.component';
 import { SharedModule } from '../../shared/shared.module';
-import { HelpCenterComponent } from './helper-center/help-center.component';
 
 @NgModule({
-  declarations: [HeaderTemplateComponent, HelpCenterComponent],
+  declarations: [HeaderTemplateComponent],
   imports: [SharedModule],
-  exports: [HeaderTemplateComponent, HelpCenterComponent],
+  exports: [HeaderTemplateComponent],
 })
 export class TemplateModule {}

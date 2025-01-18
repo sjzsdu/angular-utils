@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, QueryList, TemplateRef, ViewChildren } from '@angular/core';
 import { TemplateService } from '../template.service';
-import { ModalHeader } from '../types';
+import { ModalHeader } from '../../../../types/template';
 
 @Component({
   standalone: false,
