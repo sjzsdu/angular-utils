@@ -64,9 +64,14 @@ export type ComponentParamsMap = {
   };
   switch: { checkedChildren?: templateOrStringSimple; unCheckedChildren?: templateOrStringSimple; size?: NzSizeDSType };
   groupForm: FormGroupConfig;
+  cascade: Partial<
+    Pick<
+      NzCascaderComponent,
+      'nzOptions' | 'nzAllowClear' | 'nzBackdrop' | 'nzShowArrow' | 'nzShowInput' | 'nzShowSearch' | 'nzSize'
+    >
+  >;
 
   textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
-  cascade: Pick<NzCascaderComponent, 'nzOptions'> & IInputGroup;
   custom: {
     injector: Injector;
     componentInstance: Type<any>;

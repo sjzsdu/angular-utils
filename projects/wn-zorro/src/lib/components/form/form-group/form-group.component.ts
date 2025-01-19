@@ -34,7 +34,7 @@ import {
 import { getAsyncValidator, getValidator } from '../validates';
 import { PipesModule } from '../../../pipes';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { hasDuplicates } from 'wn-helper';
+import { hasDuplicates } from '@wn-helper';
 import { takeUntil } from 'rxjs';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
@@ -46,6 +46,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { BaseAccessorComponent } from '../../edit';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 
 @Component({
   selector: 'wn-form-group',
@@ -63,6 +64,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     NzToolTipModule,
     NzLayoutModule,
     NzSwitchModule,
+    NzCascaderModule,
   ],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',

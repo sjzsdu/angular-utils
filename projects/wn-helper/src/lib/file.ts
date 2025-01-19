@@ -49,7 +49,7 @@ export function transferFile(file: File, type: ReaderType = 'text') {
  */
 export function strToArrayBuffer(str: string | object): Uint8Array | undefined {
   if (!str) {
-    return;
+    return undefined;
   }
   if (typeof str !== 'string') {
     str = JSON.stringify(str);

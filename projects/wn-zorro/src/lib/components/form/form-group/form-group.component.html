@@ -183,6 +183,19 @@
                   [nzSize]="item.params?.size ?? 'default'"
                 ></nz-switch>
               }
+              @case ('cascade') {
+                <nz-cascader
+                  [formControlName]="item.name"
+                  [nzDisabled]="item.disabled"
+                  [nzOptions]="item.params?.nzOptions"
+                  [nzPlaceHolder]="item.placeholder ?? 'Please Select ' + (item.label?.label || (item.name | label))"
+                  [nzAllowClear]="item.params?.nzAllowClear"
+                  [nzBackdrop]="item.params?.nzBackdrop"
+                  [nzShowInput]="item.params?.nzShowInput"
+                  [nzShowSearch]="item.params?.nzShowSearch"
+                  [nzSize]="item.params?.nzSize"
+                />
+              }
 
               @case ('groupForm') {
                 <wn-form-group

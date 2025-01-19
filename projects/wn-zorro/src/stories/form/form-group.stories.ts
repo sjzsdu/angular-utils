@@ -12,6 +12,7 @@ import { pickItems } from '../../helper';
 import { userFormItems } from './const';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { PipesModule } from '../../public-api';
+import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 
 const meta: Meta<FormGroupComponent> = {
   title: 'Form/FormGroup',
@@ -44,6 +45,7 @@ const meta: Meta<FormGroupComponent> = {
         NzSwitchModule,
         NzLayoutModule,
         PipesModule,
+        NzCascaderModule,
       ],
     }),
     applicationConfig({

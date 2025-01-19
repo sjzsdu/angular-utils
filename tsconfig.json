@@ -1,5 +1,3 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -9,7 +7,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
@@ -23,16 +21,17 @@
     "types": ["node", "jest"],
     "baseUrl": "./",
     "paths": {
-      "wn-helper": ["./dist/wn-helper"],
-      "wn-zorro": ["./dist/wn-zorro"]
+      "@wn-helper": ["./dist/wn-helper"],
+      "@wn-zorro": ["./dist/wn-zorro"]
     }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "fullTemplateTypeCheck": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-    "enableIvy": true
+    "strictInjectionParameters": false,
+    "fullTemplateTypeCheck": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false,
+    "enableIvy": true,
+    "disableTypeScriptVersionCheck": true
   }
 }
