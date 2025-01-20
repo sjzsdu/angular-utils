@@ -272,6 +272,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/event-trader/src/environments/environment.ts",
+                  "with": "projects/event-trader/src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",

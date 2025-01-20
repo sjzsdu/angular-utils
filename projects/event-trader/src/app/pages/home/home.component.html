@@ -1,0 +1,97 @@
+<nz-layout>
+  <nz-header>
+    <div class="header-content">
+      <div class="logo">Event Trader</div>
+      <div class="spacer"></div>
+      <button nz-button nzType="primary" routerLink="/current-trader">Go to Trader</button>
+    </div>
+  </nz-header>
+
+  <nz-content>
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1>股票交易策略系统</h1>
+        <p class="subtitle">本项目旨在提供一个灵活的股票交易策略框架，允许用户通过多种策略对股票进行分析和交易</p>
+      </div>
+    </div>
+
+    <div class="features-section">
+      <h2>项目特点</h2>
+      <div nz-row [nzGutter]="16">
+        <div nz-col [nzSpan]="24" [nzMd]="12" [nzLg]="6">
+          <nz-card>
+            <nz-card-meta nzTitle="多策略支持" [nzDescription]="'内置多种交易策略，包括布林带、KDJ、MACD、移动平均等'">
+              <ng-template #avatar>
+                <span nz-icon nzType="bar-chart" nzTheme="outline"></span>
+              </ng-template>
+            </nz-card-meta>
+          </nz-card>
+        </div>
+        <div nz-col [nzSpan]="24" [nzMd]="12" [nzLg]="6">
+          <nz-card>
+            <nz-card-meta nzTitle="参数优化" [nzDescription]="'支持对策略参数进行优化，帮助用户找到最佳的交易参数'">
+              <ng-template #avatar>
+                <span nz-icon nzType="sliders" nzTheme="outline"></span>
+              </ng-template>
+            </nz-card-meta>
+          </nz-card>
+        </div>
+        <div nz-col [nzSpan]="24" [nzMd]="12" [nzLg]="6">
+          <nz-card>
+            <nz-card-meta
+              nzTitle="模拟账户"
+              [nzDescription]="'提供模拟账户功能，用户可以在不承担风险的情况下测试策略的有效性'"
+            >
+              <ng-template #avatar>
+                <span nz-icon nzType="account-book" nzTheme="outline"></span>
+              </ng-template>
+            </nz-card-meta>
+          </nz-card>
+        </div>
+        <div nz-col [nzSpan]="24" [nzMd]="12" [nzLg]="6">
+          <nz-card>
+            <nz-card-meta
+              nzTitle="数据可视化"
+              [nzDescription]="'使用mplfinance库进行数据可视化，帮助用户更直观地理解市场动态'"
+            >
+              <ng-template #avatar>
+                <span nz-icon nzType="line-chart" nzTheme="outline"></span>
+              </ng-template>
+            </nz-card-meta>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="installation-section">
+      <h2>安装与使用</h2>
+      <nz-collapse>
+        <nz-collapse-panel nzHeader="安装依赖">
+          <pre>pip install event_trader</pre>
+        </nz-collapse-panel>
+        <nz-collapse-panel nzHeader="使用示例">
+          <pre>
+from event_trader.strategies import MA2Strategy, KDJStrategy
+from china_stock_data import StockData
+
+stock = StockData('601688')
+for strategy in [MA2Strategy, KDJStrategy]:
+    st = strategy(stock)
+    st.show(transaction=False, days=30)
+          </pre>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
+
+    <div class="contact-section">
+      <h2>联系我们</h2>
+      <div nz-row>
+        <div nz-col [nzSpan]="24" [nzMd]="12">
+          <p>邮箱: 122828837&#64;qq.com</p>
+          <p>微信:</p>
+          <img src="assets/wx.jpg" alt="微信二维码" width="200" />
+        </div>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>
