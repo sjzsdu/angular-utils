@@ -187,19 +187,31 @@
                 <nz-cascader
                   [formControlName]="item.name"
                   [nzDisabled]="item.disabled"
-                  [nzOptions]="item.params?.nzOptions"
+                  [nzOptions]="item.params?.nzOptions ?? []"
                   [nzPlaceHolder]="item.placeholder ?? 'Please Select ' + (item.label?.label || (item.name | label))"
                   [nzAllowClear]="item.params?.nzAllowClear"
-                  [nzBackdrop]="item.params?.nzBackdrop"
+                  [nzBackdrop]="item.params?.nzBackdrop ?? false"
                   [nzShowInput]="item.params?.nzShowInput"
-                  [nzShowSearch]="item.params?.nzShowSearch"
-                  [nzSize]="item.params?.nzSize"
+                  [nzShowSearch]="item.params?.nzShowSearch ?? false"
+                  [nzSize]="item.params?.nzSize ?? 'default'"
                 />
+              }
+
+              @case ('textarea') {
+                <textarea
+                  nz-input
+                  [formControlName]="item.name"
+                  style="width: 100%"
+                  [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
+                  [nzAutosize]="item?.params?.nzAutosize || { minRows: 2, maxRows: 6 }"
+                >
+                </textarea>
               }
 
               @case ('groupForm') {
                 <wn-form-group
                   [formControlName]="item.name"
+                  [group]="getGroup(item.name)"
                   [name]="item.name"
                   [items]="item.params?.items ?? []"
                   [control]="item.params?.control"

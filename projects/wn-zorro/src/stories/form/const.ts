@@ -44,37 +44,37 @@ const options: NzCascaderOption[] = [
 ];
 
 export const userFormItems: FormItem[] = [
-  // {
-  //   name: 'username',
-  //   type: 'groupForm',
-  //   params: {
-  //     items: [
-  //       {
-  //         name: 'firstName',
-  //         type: 'input',
-  //         label: { hideLabel: true },
-  //         params: { nzAddOnBefore: 'First Name' },
-  //         validates: ['minLength'],
-  //         validatesArgs: {
-  //           minLength: [2],
-  //         },
-  //         required: true,
-  //       },
-  //       {
-  //         name: 'lastName',
-  //         type: 'input',
-  //         label: { hideLabel: true },
-  //         params: { nzAddOnBefore: 'Last Name' },
-  //         required: true,
-  //         validates: ['minLength'],
-  //         validatesArgs: {
-  //           minLength: [2],
-  //         },
-  //       },
-  //     ],
-  //     layout: 'horizontal',
-  //   },
-  // },
+  {
+    name: 'username',
+    type: 'groupForm',
+    params: {
+      items: [
+        {
+          name: 'firstName',
+          type: 'input',
+          label: { hideLabel: true },
+          params: { nzAddOnBefore: 'First Name' },
+          validates: ['minLength'],
+          validatesArgs: {
+            minLength: [2],
+          },
+          required: true,
+        },
+        {
+          name: 'lastName',
+          type: 'input',
+          label: { hideLabel: true },
+          params: { nzAddOnBefore: 'Last Name' },
+          required: true,
+          validates: ['minLength'],
+          validatesArgs: {
+            minLength: [2],
+          },
+        },
+      ],
+      layout: 'horizontal',
+    },
+  },
   {
     name: 'subscribe',
     type: 'checkbox',
@@ -160,6 +160,10 @@ export const userFormItems: FormItem[] = [
     name: 'city',
     type: 'cascade',
     params: { nzOptions: options },
+  },
+  {
+    name: 'remark',
+    type: 'textarea',
   },
 ];
 

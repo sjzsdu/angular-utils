@@ -9,6 +9,7 @@ import {
   input,
   model,
   OnInit,
+  signal,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -77,14 +78,13 @@ import { NzCascaderModule } from 'ng-zorro-antd/cascader';
     },
   ],
 })
-export class FormGroupComponent<T extends IFormRow = IFormRow>
-  extends BaseAccessorComponent<T>
-  implements OnInit, AfterViewInit, ControlValueAccessor
-{
+export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAccessorComponent<T> {
   name = input('');
   items = input.required<FormItem[]>();
   control = input<FormController>();
   row = model<IFormRow>();
+  group = input<FormGroup | null>(null);
+  formGroup?: FormGroup;
 
   // form
   layout = input<'horizontal' | 'vertical' | 'inline'>('vertical');
@@ -120,13 +120,18 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
     }
     return this.control()?.resets || [];
   });
-  formGroup = new FormGroup({});
   afterRegister = false;
 
   constructor() {
     super();
     effect(() => {
-      console.log('form group construct');
+      console.log('form group Oninit');
+      if (!this.group()) {
+        this.formGroup = new FormGroup({});
+      } else {
+        this.formGroup = this.group()!;
+      }
+      this.setFormEvent();
       if (this.items()?.length) {
         this.handleItems(this.items());
       }
@@ -143,49 +148,25 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
     });
   }
 
-  ngOnInit(): void {
-    this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
-      this.change(val as unknown as T);
+  setFormEvent() {
+    this.formGroup!.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+      console.log('form group value change', val);
+      // this.change(val as unknown as T);
     });
-    console.log('formgroup: ngOnInit', this.parent, this.name());
-  }
-
-  ngAfterViewInit(): void {
-    console.log('formgroup: ngAfterViewInit', this.parent, this.name());
-    if (this.parent && this.name()) {
-      this.parent!.registerChild(this.name(), this.formGroup);
-    } else if (!this.name()) {
-      console.warn('FormGroupComponent: name input is required when used as child component');
-    }
-  }
-
-  registerChild(name: string, control: FormGroup) {
-    console.log('registerChild', name, control, this.parent);
-    if (!name || !control) {
-      console.warn('FormGroupComponent: invalid child registration parameters');
-      return;
-    }
-
-    this.formControls.set(name, control);
-    this.formGroup.setControl(name, control);
-    control.setParent(this.formGroup);
-    console.log('registerChild', this.formGroup, this.formControls);
-    this.afterRegister = true;
-    this.cdr.detectChanges();
   }
 
   addControl(name: string, control: AbstractControl) {
     if (!control) {
       return;
     }
-    if (!this.formGroup.contains(name)) {
-      this.formGroup.addControl(name, control);
+    if (!this.formGroup!.contains(name)) {
+      this.formGroup!.addControl(name, control);
     }
   }
 
   removeControl(name: string) {
-    if (this.formGroup.contains(name)) {
-      this.formGroup.removeControl(name);
+    if (this.formGroup!.contains(name)) {
+      this.formGroup!.removeControl(name);
     }
   }
 
@@ -343,6 +324,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
       case 'arrayForm':
         break;
       default:
+        console.log('Handling form item:', item);
         if (required && !item.validates?.includes('required')) {
           item.validates = ['required', ...(item.validates || [])];
         }
@@ -358,9 +340,13 @@ export class FormGroupComponent<T extends IFormRow = IFormRow>
     return this.formControls.get(name);
   }
 
+  getGroup(name: string): FormGroup | null {
+    return this.formControls.get(name) as FormGroup | null;
+  }
+
   submitForm(): void {
-    console.log('onSubmit:', this.formGroup.value);
-    for (const [key, control] of Object.entries(this.formGroup.controls)) {
+    console.log('onSubmit:', this.formGroup!.value);
+    for (const [key, control] of Object.entries(this.formGroup!.controls)) {
       console.log(key, control, (control as AbstractControl)?.errors);
     }
   }

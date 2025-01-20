@@ -70,8 +70,8 @@ export type ComponentParamsMap = {
       'nzOptions' | 'nzAllowClear' | 'nzBackdrop' | 'nzShowArrow' | 'nzShowInput' | 'nzShowSearch' | 'nzSize'
     >
   >;
-
   textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
+
   custom: {
     injector: Injector;
     componentInstance: Type<any>;
