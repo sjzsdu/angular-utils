@@ -102,6 +102,15 @@ export function isNil(value: unknown): value is null | undefined {
 }
 
 /**
+ * Check if value is null or undefined
+ * @param value - The value to check
+ * @returns True if value is null or undefined
+ */
+export function isNilStr(value: unknown): value is null | undefined {
+  return value === null || value === undefined || value === '';
+}
+
+/**
  * Check if value is a primitive type (string, number, boolean, null, undefined)
  * @param value - The value to check
  * @returns True if value is a primitive
@@ -136,5 +145,5 @@ export function isPromise(value: unknown): value is Promise<unknown> {
 }
 
 export function isAsyncFunction(fn: Function): boolean {
-  return isFunction(fn) && fn instanceof async function () {}.constructor;
+  return isFunction(fn) && fn.toString().includes('async');
 }

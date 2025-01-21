@@ -43,6 +43,7 @@ export function countOccurrences<T>(arr: T[]): Map<T, number> {
  * @returns The most frequent element in the array, or undefined if the array is empty.
  */
 export function mostFrequent<T>(arr: T[]): T | undefined {
+  if (arr.length === 0) return undefined;
   const occurrences = countOccurrences(arr);
   return Array.from(occurrences.entries()).reduce((a, b) => (b[1] > a[1] ? b : a))[0];
 }

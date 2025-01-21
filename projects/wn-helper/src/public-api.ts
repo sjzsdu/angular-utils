@@ -10,4 +10,6 @@ export * from './lib/str';
 export * from './lib/json';
 export * from './lib/array';
 export * from './lib/variable';
+export * from './lib/object';
+
 export * from './lib/decorators';

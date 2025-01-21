@@ -27,18 +27,18 @@ export type IColumn<K extends IRow> = {
     title?: string;
     titleFunc?: LabelFunc;
     type: T;
-    params: ColumnMap[T];
+    params?: ColumnMap[T];
     width?: string;
     fixLeft?: string | boolean;
     fixRight?: string | boolean;
     sortFilter?: {
-      sortOrder: NzTableSortOrder | null;
-      sortFn: NzTableSortFn<K> | null;
+      sortOrder?: NzTableSortOrder | null;
+      sortFn?: NzTableSortFn<K> | null;
       sortPriority?: number | boolean;
-      listOfFilter: NzTableFilterList;
-      filterFn: NzTableFilterFn<K> | null;
-      filterMultiple: boolean;
-      sortDirections: NzTableSortOrder[];
+      listOfFilter?: NzTableFilterList;
+      filterFn?: NzTableFilterFn<K> | null;
+      filterMultiple?: boolean;
+      sortDirections?: NzTableSortOrder[];
     };
   };
 }[keyof ColumnMap];

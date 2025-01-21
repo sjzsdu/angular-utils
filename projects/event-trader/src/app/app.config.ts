@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideZoneChangeDetection, APP_INITIALIZER } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 // Note: APP_INITIALIZER is marked as deprecated but remains the only supported way
 // to implement application initialization in current Angular versions.
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    provideAnimations(),
     {
       provide: APP_INITIALIZER,
       useFactory: (initializer: AppInitializerService) => () => initializer.initialize(),

@@ -73,7 +73,7 @@
                 <span>{{ data[col.name] }}</span>
               }
               @case ('copy') {
-                <wn-copy-text [value]="data[col.params.valueKey]"></wn-copy-text>
+                <wn-copy-text [value]="data[col.params?.valueKey ?? '']"></wn-copy-text>
               }
             }
           </td>
