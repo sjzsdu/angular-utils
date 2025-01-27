@@ -27,7 +27,7 @@ import {
  * @param formatStr The format string (default: 'yyyy-MM-dd')
  * @returns Formatted date string
  */
-export function formatDate(date: Date | number | undefined, formatStr: string = 'yyyy-MM-dd'): string {
+export function formatDate(date?: Date | number, formatStr = 'yyyy-MM-dd'): string {
   if (!date) {
     date = new Date();
   }

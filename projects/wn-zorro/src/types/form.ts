@@ -192,6 +192,8 @@ export interface FormModalData {
   control?: FormController;
   isSub?: boolean;
   name?: string;
+  showSubmit?: boolean;
+  nzNoColon?: boolean;
 }
 
 export interface ComponentCommand {

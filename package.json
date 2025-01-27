@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:event-trader": "ng serve event-trader",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test:wn-helper": "ng test wn-helper",

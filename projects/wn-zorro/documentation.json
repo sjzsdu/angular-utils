@@ -262,6 +262,139 @@
             "extends": []
         },
         {
+            "name": "ModalButtonComponent",
+            "id": "component-ModalButtonComponent-8e68f02959d22ee7e8ccf4cd81918d6e538df91f5e61e8086e448bc4889e589765909413d93c269122e2de40f376f5a5966abf7e5aee8c7d9723b1a4db5f5aed",
+            "file": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "storybook-modal-button",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<button nz-button nzType=\"primary\" (click)=\"openModal()\">Open Modal Form</button>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "items",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormItem[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 36
+                },
+                {
+                    "name": "layout",
+                    "defaultValue": "'vertical'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "\"horizontal\" | \"vertical\" | \"inline\"",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 37
+                },
+                {
+                    "name": "nzLabelAlign",
+                    "defaultValue": "'right'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "\"left\" | \"right\"",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 38
+                },
+                {
+                    "name": "nzLabelWrap",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 40
+                },
+                {
+                    "name": "nzNoColon",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 39
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "openModal",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 21,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "NzButtonModule",
+                    "type": "module"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Meta, StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { ModalFormComponent } from '../../lib/components/form/modal-form/modal-form.component';\nimport { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';\nimport { NzButtonModule } from 'ng-zorro-antd/button';\nimport { ReactiveFormsModule, FormsModule } from '@angular/forms';\nimport { FormItem } from '../../types/form';\nimport { Component, importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { pickItems } from '../../helper';\nimport { userFormItems } from './const';\n\n@Component({\n  selector: 'storybook-modal-button',\n  standalone: true,\n  imports: [NzButtonModule],\n  template: `<button nz-button nzType=\"primary\" (click)=\"openModal()\">Open Modal Form</button>`,\n})\nclass ModalButtonComponent {\n  constructor(private modalService: NzModalService) {}\n\n  openModal() {\n    this.modalService.create({\n      nzTitle: 'Modal Form',\n      nzContent: ModalFormComponent,\n      nzData: {\n        items: this.items,\n        layout: this.layout,\n        nzLabelAlign: this.nzLabelAlign,\n        nzNoColon: this.nzNoColon,\n        nzLabelWrap: this.nzLabelWrap,\n        showSubmit: true,\n      },\n    });\n  }\n\n  items: FormItem[] = [];\n  layout: 'horizontal' | 'vertical' | 'inline' = 'vertical';\n  nzLabelAlign: 'left' | 'right' = 'right';\n  nzNoColon = false;\n  nzLabelWrap = false;\n}\n\nconst meta: Meta<ModalFormComponent> = {\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzModalModule, NzButtonModule, ModalButtonComponent],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n};\n\nexport default meta;\n\ntype Story = StoryObj<ModalFormComponent>;\n\nexport const Interactive: Story = {\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template: '<storybook-modal-button></storybook-modal-button>',\n  }),\n};\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "modalService",
+                        "type": "NzModalService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 18,
+                "jsdoctags": [
+                    {
+                        "name": "modalService",
+                        "type": "NzModalService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": []
+        },
+        {
             "name": "ScrollToStoryComponent",
             "id": "component-ScrollToStoryComponent-3ab288f0b2dd1d1c57c53261c3117384ff9e2b47a9085e6e24e28a976a08c167580f552d7f3d2f8098dbe465e308aa3763a7082ca2875f76b93e0f72c63c9b81",
             "file": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
@@ -550,6 +683,16 @@
                 "name": "Interactive",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template: '<storybook-modal-button></storybook-modal-button>',\n  }),\n}"
+            },
+            {
+                "name": "Interactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -605,6 +748,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<FormGroupComponent>",
                 "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzFormModule,\n        NzInputModule,\n        NzRadioModule,\n        NzSwitchModule,\n        NzLayoutModule,\n        PipesModule,\n        NzCascaderModule,\n      ],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ModalFormComponent>",
+                "defaultValue": "{\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzModalModule, NzButtonModule, ModalButtonComponent],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
             },
             {
                 "name": "meta",
@@ -828,6 +981,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<FormGroupComponent>",
                 "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ModalFormComponent>",
+                "file": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1215,6 +1379,28 @@
                     "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <wn-copy-text\n        [value]=\"value\"\n        [copiedTip]=\"copiedTip\"\n      ></wn-copy-text>\n    `,\n  }),\n}"
                 }
             ],
+            "projects/wn-zorro/src/stories/form/modal-form.stories.ts": [
+                {
+                    "name": "Interactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template: '<storybook-modal-button></storybook-modal-button>',\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<ModalFormComponent>",
+                    "defaultValue": "{\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzModalModule, NzButtonModule, ModalButtonComponent],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                }
+            ],
             "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts": [
                 {
                     "name": "meta",
@@ -1365,6 +1551,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<FormGroupComponent>",
                     "file": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/form/modal-form.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ModalFormComponent>",
+                    "file": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1626,6 +1825,45 @@
             },
             {
                 "filePath": "projects/wn-zorro/src/stories/form/form-group.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ModalButtonComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Interactive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

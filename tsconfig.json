@@ -22,7 +22,7 @@
     "baseUrl": "./",
     "paths": {
       "@wn-helper": ["./dist/wn-helper"],
-      "@wn-zorro": ["./dist/wn-zorro"]
+      "@wn-zorro": ["./projects/wn-zorro/src/public-api"]
     }
   },
   "angularCompilerOptions": {
