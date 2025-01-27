@@ -13,6 +13,7 @@ import { userFormItems } from './const';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { PipesModule } from '../../public-api';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 const meta: Meta<FormGroupComponent> = {
   title: 'Form/FormGroup',
@@ -46,6 +47,7 @@ const meta: Meta<FormGroupComponent> = {
         NzLayoutModule,
         PipesModule,
         NzCascaderModule,
+        NzDatePickerModule,
       ],
     }),
     applicationConfig({

@@ -10,6 +10,7 @@ import { NzCascaderComponent } from 'ng-zorro-antd/cascader';
 import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 import { ExtractInputTypes } from './common';
 import { NzSizeDSType } from 'ng-zorro-antd/core/types';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 
 export interface IFormRowStatus {}
 export type IFormRow = Record<string, any> & IFormRowStatus;
@@ -34,6 +35,13 @@ export interface FormGroupConfig {
 }
 
 export type templateOrStringSimple = string | TemplateRef<void>;
+
+export type DateParams = Partial<
+  Pick<
+    NzDatePickerComponent,
+    'nzMode' | 'nzBorderless' | 'nzDisabled' | 'nzFormat' | 'nzPlaceHolder' | 'nzShowTime' | 'nzSize'
+  >
+>;
 
 export type ComponentParamsMap = {
   input: IInputGroup;
@@ -71,6 +79,8 @@ export type ComponentParamsMap = {
     >
   >;
   textarea: IInputGroup & Pick<NzAutosizeDirective, 'nzAutosize'>;
+  date: DateParams;
+  dateRange: DateParams;
 
   custom: {
     injector: Injector;

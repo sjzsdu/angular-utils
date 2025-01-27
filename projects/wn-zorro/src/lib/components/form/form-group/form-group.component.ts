@@ -48,6 +48,7 @@ import { BaseAccessorComponent } from '../../edit';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
   selector: 'wn-form-group',
@@ -66,6 +67,7 @@ import { NzCascaderModule } from 'ng-zorro-antd/cascader';
     NzLayoutModule,
     NzSwitchModule,
     NzCascaderModule,
+    NzDatePickerModule,
   ],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',

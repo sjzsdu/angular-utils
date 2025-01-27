@@ -8,6 +8,7 @@ import { Component, importProvidersFrom, Input } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { pickItems } from '../../helper';
 import { userFormItems } from './const';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
   selector: 'storybook-modal-button',
@@ -46,7 +47,14 @@ const meta: Meta<ModalFormComponent> = {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [ReactiveFormsModule, FormsModule, NzModalModule, NzButtonModule, ModalButtonComponent],
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        NzModalModule,
+        NzButtonModule,
+        ModalButtonComponent,
+        NzDatePickerModule,
+      ],
       providers: [NzModalService],
     }),
     applicationConfig({

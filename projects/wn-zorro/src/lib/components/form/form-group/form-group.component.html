@@ -196,7 +196,6 @@
                   [nzSize]="item.params?.nzSize ?? 'default'"
                 />
               }
-
               @case ('textarea') {
                 <textarea
                   nz-input
@@ -206,6 +205,30 @@
                   [nzAutosize]="item?.params?.nzAutosize || { minRows: 2, maxRows: 6 }"
                 >
                 </textarea>
+              }
+              @case ('date') {
+                <nz-date-picker
+                  [formControlName]="item.name"
+                  [nzDisabled]="item.disabled"
+                  [nzMode]="item.params?.nzMode ?? 'date'"
+                  [nzBorderless]="item.params?.nzBorderless ?? false"
+                  [nzFormat]="item.params?.nzFormat ?? ''"
+                  [nzPlaceHolder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
+                  [nzShowTime]="item.params?.nzShowTime ?? false"
+                  [nzSize]="item.params?.nzSize ?? 'default'"
+                ></nz-date-picker>
+              }
+              @case ('dateRange') {
+                <nz-range-picker
+                  [formControlName]="item.name"
+                  [nzDisabled]="item.disabled"
+                  [nzMode]="item.params?.nzMode ?? 'date'"
+                  [nzBorderless]="item.params?.nzBorderless ?? false"
+                  [nzFormat]="item.params?.nzFormat ?? ''"
+                  [nzPlaceHolder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
+                  [nzShowTime]="item.params?.nzShowTime ?? false"
+                  [nzSize]="item.params?.nzSize ?? 'default'"
+                ></nz-range-picker>
               }
 
               @case ('groupForm') {

@@ -165,6 +165,16 @@ export const userFormItems: FormItem[] = [
     name: 'remark',
     type: 'textarea',
   },
+  {
+    name: 'birthday',
+    type: 'date',
+    params: {},
+  },
+  {
+    name: 'searchday',
+    type: 'dateRange',
+    params: {},
+  },
 ];
 
 export const companyFormItems = [];

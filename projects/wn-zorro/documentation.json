@@ -263,7 +263,7 @@
         },
         {
             "name": "ModalButtonComponent",
-            "id": "component-ModalButtonComponent-8e68f02959d22ee7e8ccf4cd81918d6e538df91f5e61e8086e448bc4889e589765909413d93c269122e2de40f376f5a5966abf7e5aee8c7d9723b1a4db5f5aed",
+            "id": "component-ModalButtonComponent-1926f49cf079c7875e78cb0d3e3ef68ea4811cac5e8c4730eaddc97169ff77e713035883b079dcfb1bd8d659baab8185d39f12f22d0ea2647de7f7c5ff0b512a",
             "file": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -277,65 +277,55 @@
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [
+            "inputsClass": [
                 {
                     "name": "items",
                     "defaultValue": "[]",
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "line": 20,
                     "type": "FormItem[]",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 36
+                    "decorators": []
                 },
                 {
                     "name": "layout",
                     "defaultValue": "'vertical'",
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "line": 21,
                     "type": "\"horizontal\" | \"vertical\" | \"inline\"",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 37
+                    "decorators": []
                 },
                 {
                     "name": "nzLabelAlign",
                     "defaultValue": "'right'",
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "line": 22,
                     "type": "\"left\" | \"right\"",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 38
+                    "decorators": []
                 },
                 {
                     "name": "nzLabelWrap",
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 40
+                    "line": 24,
+                    "type": "boolean",
+                    "decorators": []
                 },
                 {
                     "name": "nzNoColon",
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 39
+                    "line": 23,
+                    "type": "boolean",
+                    "decorators": []
                 }
             ],
+            "outputsClass": [],
+            "propertiesClass": [],
             "methodsClass": [
                 {
                     "name": "openModal",
@@ -343,7 +333,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 21,
+                    "line": 28,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -362,7 +352,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Meta, StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { ModalFormComponent } from '../../lib/components/form/modal-form/modal-form.component';\nimport { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';\nimport { NzButtonModule } from 'ng-zorro-antd/button';\nimport { ReactiveFormsModule, FormsModule } from '@angular/forms';\nimport { FormItem } from '../../types/form';\nimport { Component, importProvidersFrom } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { pickItems } from '../../helper';\nimport { userFormItems } from './const';\n\n@Component({\n  selector: 'storybook-modal-button',\n  standalone: true,\n  imports: [NzButtonModule],\n  template: `<button nz-button nzType=\"primary\" (click)=\"openModal()\">Open Modal Form</button>`,\n})\nclass ModalButtonComponent {\n  constructor(private modalService: NzModalService) {}\n\n  openModal() {\n    this.modalService.create({\n      nzTitle: 'Modal Form',\n      nzContent: ModalFormComponent,\n      nzData: {\n        items: this.items,\n        layout: this.layout,\n        nzLabelAlign: this.nzLabelAlign,\n        nzNoColon: this.nzNoColon,\n        nzLabelWrap: this.nzLabelWrap,\n        showSubmit: true,\n      },\n    });\n  }\n\n  items: FormItem[] = [];\n  layout: 'horizontal' | 'vertical' | 'inline' = 'vertical';\n  nzLabelAlign: 'left' | 'right' = 'right';\n  nzNoColon = false;\n  nzLabelWrap = false;\n}\n\nconst meta: Meta<ModalFormComponent> = {\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzModalModule, NzButtonModule, ModalButtonComponent],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n};\n\nexport default meta;\n\ntype Story = StoryObj<ModalFormComponent>;\n\nexport const Interactive: Story = {\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template: '<storybook-modal-button></storybook-modal-button>',\n  }),\n};\n",
+            "sourceCode": "import { Meta, StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';\nimport { ModalFormComponent } from '../../lib/components/form/modal-form/modal-form.component';\nimport { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';\nimport { NzButtonModule } from 'ng-zorro-antd/button';\nimport { ReactiveFormsModule, FormsModule } from '@angular/forms';\nimport { FormItem } from '../../types/form';\nimport { Component, importProvidersFrom, Input } from '@angular/core';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { pickItems } from '../../helper';\nimport { userFormItems } from './const';\nimport { NzDatePickerModule } from 'ng-zorro-antd/date-picker';\n\n@Component({\n  selector: 'storybook-modal-button',\n  standalone: true,\n  imports: [NzButtonModule],\n  template: `<button nz-button nzType=\"primary\" (click)=\"openModal()\">Open Modal Form</button>`,\n})\nclass ModalButtonComponent {\n  @Input() items: FormItem[] = [];\n  @Input() layout: 'horizontal' | 'vertical' | 'inline' = 'vertical';\n  @Input() nzLabelAlign: 'left' | 'right' = 'right';\n  @Input() nzNoColon = false;\n  @Input() nzLabelWrap = false;\n\n  constructor(private modalService: NzModalService) {}\n\n  openModal() {\n    this.modalService.create({\n      nzTitle: 'Modal Form',\n      nzContent: ModalFormComponent,\n      nzData: {\n        items: this.items,\n        layout: this.layout,\n        nzLabelAlign: this.nzLabelAlign,\n        nzNoColon: this.nzNoColon,\n        nzLabelWrap: this.nzLabelWrap,\n        showSubmit: true,\n      },\n    });\n  }\n}\n\nconst meta: Meta<ModalFormComponent> = {\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzModalModule,\n        NzButtonModule,\n        ModalButtonComponent,\n        NzDatePickerModule,\n      ],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n};\n\nexport default meta;\n\ntype Story = StoryObj<ModalFormComponent>;\n\nexport const Interactive: Story = {\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template:\n      '<storybook-modal-button [items]=\"items\" [layout]=\"layout\" [nzLabelAlign]=\"nzLabelAlign\" [nzNoColon]=\"nzNoColon\" [nzLabelWrap]=\"nzLabelWrap\"></storybook-modal-button>',\n  }),\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -379,7 +369,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 18,
+                "line": 24,
                 "jsdoctags": [
                     {
                         "name": "modalService",
@@ -687,7 +677,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template: '<storybook-modal-button></storybook-modal-button>',\n  }),\n}"
+                "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template:\n      '<storybook-modal-button [items]=\"items\" [layout]=\"layout\" [nzLabelAlign]=\"nzLabelAlign\" [nzNoColon]=\"nzNoColon\" [nzLabelWrap]=\"nzLabelWrap\"></storybook-modal-button>',\n  }),\n}"
             },
             {
                 "name": "Interactive",
@@ -747,7 +737,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<FormGroupComponent>",
-                "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzFormModule,\n        NzInputModule,\n        NzRadioModule,\n        NzSwitchModule,\n        NzLayoutModule,\n        PipesModule,\n        NzCascaderModule,\n      ],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzFormModule,\n        NzInputModule,\n        NzRadioModule,\n        NzSwitchModule,\n        NzLayoutModule,\n        PipesModule,\n        NzCascaderModule,\n        NzDatePickerModule,\n      ],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
             },
             {
                 "name": "meta",
@@ -757,7 +747,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<ModalFormComponent>",
-                "defaultValue": "{\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzModalModule, NzButtonModule, ModalButtonComponent],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                "defaultValue": "{\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzModalModule,\n        NzButtonModule,\n        ModalButtonComponent,\n        NzDatePickerModule,\n      ],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
             },
             {
                 "name": "meta",
@@ -773,21 +763,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<HeaderTemplateComponent>",
-                "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<CopyTextComponent>",
                 "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimationsAsync()],\n    }),\n  ],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<HeaderTemplateComponent>",
+                "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
             },
             {
                 "name": "Pagination",
@@ -1012,8 +1002,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<HeaderTemplateComponent>",
-                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                "rawtype": "StoryObj<CopyTextComponent>",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1023,8 +1013,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<CopyTextComponent>",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "rawtype": "StoryObj<HeaderTemplateComponent>",
+                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1294,7 +1284,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<FormGroupComponent>",
-                    "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzFormModule,\n        NzInputModule,\n        NzRadioModule,\n        NzSwitchModule,\n        NzLayoutModule,\n        PipesModule,\n        NzCascaderModule,\n      ],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                    "defaultValue": "{\n  title: 'Form/FormGroup',\n  component: FormGroupComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzFormModule,\n        NzInputModule,\n        NzRadioModule,\n        NzSwitchModule,\n        NzLayoutModule,\n        PipesModule,\n        NzCascaderModule,\n        NzDatePickerModule,\n      ],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
                 },
                 {
                     "name": "ResetControl",
@@ -1388,7 +1378,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template: '<storybook-modal-button></storybook-modal-button>',\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: args,\n    template:\n      '<storybook-modal-button [items]=\"items\" [layout]=\"layout\" [nzLabelAlign]=\"nzLabelAlign\" [nzNoColon]=\"nzNoColon\" [nzLabelWrap]=\"nzLabelWrap\"></storybook-modal-button>',\n  }),\n}"
                 },
                 {
                     "name": "meta",
@@ -1398,7 +1388,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<ModalFormComponent>",
-                    "defaultValue": "{\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ReactiveFormsModule, FormsModule, NzModalModule, NzButtonModule, ModalButtonComponent],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                    "defaultValue": "{\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzModalModule,\n        NzButtonModule,\n        ModalButtonComponent,\n        NzDatePickerModule,\n      ],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
                 }
             ],
             "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts": [
@@ -1583,19 +1573,6 @@
                     "kind": 183
                 }
             ],
-            "projects/wn-zorro/src/stories/template/header-template.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<HeaderTemplateComponent>",
-                    "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
             "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
                 {
                     "name": "Story",
@@ -1603,6 +1580,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<CopyTextComponent>",
                     "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/template/header-template.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<HeaderTemplateComponent>",
+                    "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
