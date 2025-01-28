@@ -9,251 +9,287 @@
     [formGroup]="formGroup"
     (ngSubmit)="submitForm()"
   >
-    @for (item of this.items(); track item.name) {
-      @if (!item.isHide) {
-        <nz-form-item>
-          @if (!item?.label?.hideLabel) {
-            <nz-form-label [nzSpan]="labelSpan() ?? null" [nzRequired]="item.required">
-              {{ item?.label?.label || (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
-              @if (item?.label?.tooltip) {
-                <span
-                  nz-icon
-                  nzType="info-circle"
-                  class="label-icon"
-                  nzTheme="outline"
-                  nz-tooltip
-                  [nzTooltipPlacement]="item?.label?.tooltipPlacement ?? 'right'"
-                  [nzTooltipTitle]="item?.label?.tooltip"
-                ></span>
-              }
-            </nz-form-label>
-          }
-          <nz-form-control
-            [nzSpan]="controlSpan() ?? null"
-            [nzHasFeedback]="item?.control?.hasFeedback ?? false"
-            [nzSuccessTip]="item?.control?.successTip"
-            [nzErrorTip]="item?.control?.errorTip ?? defaultErrorTip"
-            [nzWarningTip]="item?.control?.warningTip"
-            [nzValidatingTip]="item?.control?.validatingTip"
-            [nzAutoTips]="item?.control?.autoTips ?? {}"
-            [nzDisableAutoTips]="item?.control?.disableAutoTips"
-            [nzExtra]="item?.control?.extra"
+    <div nz-row [nzGutter]="gutter()">
+      @for (item of this.items(); track item.name; let i = $index) {
+        @if ((!item.isHide && (!_showCollapse() || (!isCollapse() && i < collapseCount()))) || isCollapse()) {
+          <div
+            nz-col
+            [nzSpan]="item.span || itemSpan()"
+            [class]="item.name + ' ' + item?.label?.hideLabel ? 'hide-label' : ''"
           >
-            <ng-template #defaultErrorTip let-control>
-              {{ control.errors | controlError: item }}
-            </ng-template>
-            @switch (item.type) {
-              @case ('input') {
-                <nz-input-group
-                  [nzAddOnBefore]="item?.params?.nzAddOnBefore"
-                  [nzAddOnAfter]="item?.params?.nzAddOnAfter"
-                >
-                  <input
-                    type="text"
-                    [formControlName]="item.name"
-                    nz-input
-                    [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
-                  />
-                </nz-input-group>
+            <nz-form-item>
+              @if (!item?.label?.hideLabel) {
+                <nz-form-label [nzSpan]="labelSpan() ?? null" [nzRequired]="item.required">
+                  {{ item?.label?.label || (item.name | label: item?.label?.labelFunc || 'WordUppercase') }}
+                  @if (item?.label?.tooltip) {
+                    <span
+                      nz-icon
+                      nzType="info-circle"
+                      class="label-icon"
+                      nzTheme="outline"
+                      nz-tooltip
+                      [nzTooltipPlacement]="item?.label?.tooltipPlacement ?? 'right'"
+                      [nzTooltipTitle]="item?.label?.tooltip"
+                    ></span>
+                  }
+                </nz-form-label>
               }
-              @case ('number') {
-                <nz-input-number
-                  [formControlName]="item.name"
-                  [nzPlaceHolder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
-                  [nzMin]="item?.params?.nzMin"
-                  [nzMax]="item?.params?.nzMax"
-                  [nzPrecision]="item?.params?.nzPrecision ?? 1"
-                  [nzStep]="item?.params?.nzStep"
-                  [nzControls]="item?.params?.nzControls"
-                  [nzBordered]="item?.params?.nzBordered ?? true"
-                  [nzDisabled]="item.disabled ?? false"
-                >
-                  @if (item.params?.addonsBeforeOptions) {
-                    <nz-select
-                      nzInputAddonBefore
-                      [ngModel]="item.params?.addonsBefore"
-                      [style.width.px]="item.params?.addonsBeforeWidth ?? 60"
+              <nz-form-control
+                [nzSpan]="_controlSpan() ?? null"
+                [nzHasFeedback]="item?.control?.hasFeedback ?? false"
+                [nzSuccessTip]="item?.control?.successTip"
+                [nzErrorTip]="item?.control?.errorTip ?? defaultErrorTip"
+                [nzWarningTip]="item?.control?.warningTip"
+                [nzValidatingTip]="item?.control?.validatingTip"
+                [nzAutoTips]="item?.control?.autoTips ?? {}"
+                [nzDisableAutoTips]="item?.control?.disableAutoTips"
+                [nzExtra]="item?.control?.extra"
+              >
+                <ng-template #defaultErrorTip let-control>
+                  {{ control.errors | controlError: item }}
+                </ng-template>
+                @switch (item.type) {
+                  @case ('input') {
+                    <nz-input-group
+                      [nzAddOnBefore]="item?.params?.nzAddOnBefore"
+                      [nzAddOnAfter]="item?.params?.nzAddOnAfter"
                     >
-                      @for (
-                        option of item.params?.addonsBeforeOptions || [];
-                        track isOptItem(option) ? option.value : option
-                      ) {
+                      <input
+                        type="text"
+                        [formControlName]="item.name"
+                        nz-input
+                        [placeholder]="
+                          item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))
+                        "
+                      />
+                    </nz-input-group>
+                  }
+                  @case ('number') {
+                    <nz-input-number
+                      [formControlName]="item.name"
+                      [nzPlaceHolder]="
+                        item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))
+                      "
+                      [nzMin]="item?.params?.nzMin"
+                      [nzMax]="item?.params?.nzMax"
+                      [nzPrecision]="item?.params?.nzPrecision ?? 1"
+                      [nzStep]="item?.params?.nzStep"
+                      [nzControls]="item?.params?.nzControls"
+                      [nzBordered]="item?.params?.nzBordered ?? true"
+                      [nzDisabled]="item.disabled ?? false"
+                    >
+                      @if (item.params?.addonsBeforeOptions) {
+                        <nz-select
+                          nzInputAddonBefore
+                          [ngModel]="item.params?.addonsBefore"
+                          [style.width.px]="item.params?.addonsBeforeWidth ?? 60"
+                        >
+                          @for (
+                            option of item.params?.addonsBeforeOptions || [];
+                            track isOptItem(option) ? option.value : option
+                          ) {
+                            <nz-option
+                              [nzLabel]="isOptItem(option) ? option.label : option"
+                              [nzValue]="isOptItem(option) ? option.value : option"
+                            />
+                          }
+                        </nz-select>
+                      } @else if (item.params?.addonsBefore) {
+                        <span nzInputAddonBefore>{{ item.params?.addonsBefore }}</span>
+                      }
+                      @if (item.params?.addonsAfterOptions) {
+                        <nz-select
+                          nzInputAddonAfter
+                          [ngModel]="item.params?.addonsAfter"
+                          [style.width.px]="item.params?.addonsAfterWidth ?? 60"
+                        >
+                          @for (
+                            option of item.params?.addonsAfterOptions || [];
+                            track isOptItem(option) ? option.value : option
+                          ) {
+                            <nz-option
+                              [nzLabel]="isOptItem(option) ? option.label : option"
+                              [nzValue]="isOptItem(option) ? option.value : option"
+                            />
+                          }
+                        </nz-select>
+                      } @else if (item.params?.addonsAfter) {
+                        <span nzInputAddonAfter>{{ item.params?.addonsAfter }}</span>
+                      }
+                    </nz-input-number>
+                  }
+                  @case ('radio') {
+                    <nz-radio-group
+                      [formControlName]="item.name"
+                      [nzSize]="item?.params?.nzSize ?? 'default'"
+                      [nzButtonStyle]="item?.params?.nzButtonStyle ?? 'outline'"
+                      [nzDisabled]="item.disabled ?? false"
+                    >
+                      @for (opt of item.params?.options; track opt) {
+                        <label
+                          nz-radio
+                          [nzValue]="isOptItem(opt) ? opt.value : opt"
+                          [nzDisabled]="isOptItem(opt) ? opt.disabled : false"
+                        >
+                          {{
+                            isOptItem(opt) ? opt.label : (opt | label: item?.label?.labelFunc || 'WordUppercase')
+                          }}</label
+                        >
+                      }
+                    </nz-radio-group>
+                  }
+                  @case ('checkbox') {
+                    <label nz-checkbox [formControlName]="item.name" [nzDisabled]="item.disabled ?? false">{{
+                      item.label?.label ?? (item.name | label: item?.label?.labelFunc || 'WordUppercase')
+                    }}</label>
+                  }
+                  @case ('checkboxGroup') {
+                    <nz-checkbox-group [formControlName]="item.name">
+                      @for (opt of item.params?.options; track opt) {
+                        <label
+                          nz-checkbox
+                          [nzValue]="isOptItem(opt) ? opt.value : opt"
+                          [nzDisabled]="isOptItem(opt) ? opt.disabled : false"
+                        >
+                          {{
+                            isOptItem(opt) ? opt.label : (opt | label: item?.label?.labelFunc || 'WordUppercase')
+                          }}</label
+                        >
+                      }
+                    </nz-checkbox-group>
+                  }
+                  @case ('select') {
+                    <nz-select
+                      [formControlName]="item.name"
+                      [nzShowSearch]="item.params?.showSearch ?? false"
+                      [nzShowArrow]="item.params?.showArrow"
+                      [nzDisabled]="item.disabled"
+                      [nzMode]="item.params?.mode || 'default'"
+                      [nzSize]="item.params?.size || 'default'"
+                      [nzMaxTagCount]="item.params?.maxTagCount || 3"
+                      [nzPlaceHolder]="
+                        item.placeholder ?? 'Please Select ' + (item.label?.label || (item.name | label))
+                      "
+                    >
+                      @if (item.params?.addOption) {
+                        <nz-option
+                          [nzLabel]="item.params!.addOption!.text"
+                          [nzValue]="null"
+                          (click)="item.params!.addOption!.onClick()"
+                        >
+                          <ng-container *nzOptionTemplate>
+                            <div class="custom-option">{{ item.params!.addOption!.text }}</div>
+                          </ng-container>
+                        </nz-option>
+                      }
+                      @for (option of item.params?.options || []; track isOptItem(option) ? option.value : option) {
                         <nz-option
                           [nzLabel]="isOptItem(option) ? option.label : option"
                           [nzValue]="isOptItem(option) ? option.value : option"
                         />
                       }
                     </nz-select>
-                  } @else if (item.params?.addonsBefore) {
-                    <span nzInputAddonBefore>{{ item.params?.addonsBefore }}</span>
                   }
-                  @if (item.params?.addonsAfterOptions) {
-                    <nz-select
-                      nzInputAddonAfter
-                      [ngModel]="item.params?.addonsAfter"
-                      [style.width.px]="item.params?.addonsAfterWidth ?? 60"
-                    >
-                      @for (
-                        option of item.params?.addonsAfterOptions || [];
-                        track isOptItem(option) ? option.value : option
-                      ) {
-                        <nz-option
-                          [nzLabel]="isOptItem(option) ? option.label : option"
-                          [nzValue]="isOptItem(option) ? option.value : option"
-                        />
-                      }
-                    </nz-select>
-                  } @else if (item.params?.addonsAfter) {
-                    <span nzInputAddonAfter>{{ item.params?.addonsAfter }}</span>
+                  @case ('switch') {
+                    <nz-switch
+                      [formControlName]="item.name"
+                      [nzDisabled]="item.disabled ?? false"
+                      [nzCheckedChildren]="item.params?.checkedChildren ?? ''"
+                      [nzUnCheckedChildren]="item.params?.unCheckedChildren ?? ''"
+                      [nzSize]="item.params?.size ?? 'default'"
+                    ></nz-switch>
                   }
-                </nz-input-number>
-              }
-              @case ('radio') {
-                <nz-radio-group
-                  [formControlName]="item.name"
-                  [nzSize]="item?.params?.nzSize ?? 'default'"
-                  [nzButtonStyle]="item?.params?.nzButtonStyle ?? 'outline'"
-                  [nzDisabled]="item.disabled ?? false"
-                >
-                  @for (opt of item.params?.options; track opt) {
-                    <label
-                      nz-radio
-                      [nzValue]="isOptItem(opt) ? opt.value : opt"
-                      [nzDisabled]="isOptItem(opt) ? opt.disabled : false"
-                    >
-                      {{ isOptItem(opt) ? opt.label : (opt | label: item?.label?.labelFunc || 'WordUppercase') }}</label
-                    >
-                  }
-                </nz-radio-group>
-              }
-              @case ('checkbox') {
-                <label nz-checkbox [formControlName]="item.name" [nzDisabled]="item.disabled ?? false">{{
-                  item.label?.label ?? (item.name | label: item?.label?.labelFunc || 'WordUppercase')
-                }}</label>
-              }
-              @case ('checkboxGroup') {
-                <nz-checkbox-group [formControlName]="item.name">
-                  @for (opt of item.params?.options; track opt) {
-                    <label
-                      nz-checkbox
-                      [nzValue]="isOptItem(opt) ? opt.value : opt"
-                      [nzDisabled]="isOptItem(opt) ? opt.disabled : false"
-                    >
-                      {{ isOptItem(opt) ? opt.label : (opt | label: item?.label?.labelFunc || 'WordUppercase') }}</label
-                    >
-                  }
-                </nz-checkbox-group>
-              }
-              @case ('select') {
-                <nz-select
-                  [formControlName]="item.name"
-                  [nzShowSearch]="item.params?.showSearch ?? false"
-                  [nzShowArrow]="item.params?.showArrow"
-                  [nzDisabled]="item.disabled"
-                  [nzMode]="item.params?.mode || 'default'"
-                  [nzSize]="item.params?.size || 'default'"
-                  [nzMaxTagCount]="item.params?.maxTagCount || 3"
-                  [nzPlaceHolder]="item.placeholder ?? 'Please Select ' + (item.label?.label || (item.name | label))"
-                >
-                  @if (item.params?.addOption) {
-                    <nz-option
-                      [nzLabel]="item.params!.addOption!.text"
-                      [nzValue]="null"
-                      (click)="item.params!.addOption!.onClick()"
-                    >
-                      <ng-container *nzOptionTemplate>
-                        <div class="custom-option">{{ item.params!.addOption!.text }}</div>
-                      </ng-container>
-                    </nz-option>
-                  }
-                  @for (option of item.params?.options || []; track isOptItem(option) ? option.value : option) {
-                    <nz-option
-                      [nzLabel]="isOptItem(option) ? option.label : option"
-                      [nzValue]="isOptItem(option) ? option.value : option"
+                  @case ('cascade') {
+                    <nz-cascader
+                      [formControlName]="item.name"
+                      [nzDisabled]="item.disabled"
+                      [nzOptions]="item.params?.nzOptions ?? []"
+                      [nzPlaceHolder]="
+                        item.placeholder ?? 'Please Select ' + (item.label?.label || (item.name | label))
+                      "
+                      [nzAllowClear]="item.params?.nzAllowClear"
+                      [nzBackdrop]="item.params?.nzBackdrop ?? false"
+                      [nzShowInput]="item.params?.nzShowInput"
+                      [nzShowSearch]="item.params?.nzShowSearch ?? false"
+                      [nzSize]="item.params?.nzSize ?? 'default'"
                     />
                   }
-                </nz-select>
-              }
-              @case ('switch') {
-                <nz-switch
-                  [formControlName]="item.name"
-                  [nzDisabled]="item.disabled ?? false"
-                  [nzCheckedChildren]="item.params?.checkedChildren ?? ''"
-                  [nzUnCheckedChildren]="item.params?.unCheckedChildren ?? ''"
-                  [nzSize]="item.params?.size ?? 'default'"
-                ></nz-switch>
-              }
-              @case ('cascade') {
-                <nz-cascader
-                  [formControlName]="item.name"
-                  [nzDisabled]="item.disabled"
-                  [nzOptions]="item.params?.nzOptions ?? []"
-                  [nzPlaceHolder]="item.placeholder ?? 'Please Select ' + (item.label?.label || (item.name | label))"
-                  [nzAllowClear]="item.params?.nzAllowClear"
-                  [nzBackdrop]="item.params?.nzBackdrop ?? false"
-                  [nzShowInput]="item.params?.nzShowInput"
-                  [nzShowSearch]="item.params?.nzShowSearch ?? false"
-                  [nzSize]="item.params?.nzSize ?? 'default'"
-                />
-              }
-              @case ('textarea') {
-                <textarea
-                  nz-input
-                  [formControlName]="item.name"
-                  style="width: 100%"
-                  [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
-                  [nzAutosize]="item?.params?.nzAutosize || { minRows: 2, maxRows: 6 }"
-                >
-                </textarea>
-              }
-              @case ('date') {
-                <nz-date-picker
-                  [formControlName]="item.name"
-                  [nzDisabled]="item.disabled"
-                  [nzMode]="item.params?.nzMode ?? 'date'"
-                  [nzBorderless]="item.params?.nzBorderless ?? false"
-                  [nzFormat]="item.params?.nzFormat ?? ''"
-                  [nzPlaceHolder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
-                  [nzShowTime]="item.params?.nzShowTime ?? false"
-                  [nzSize]="item.params?.nzSize ?? 'default'"
-                ></nz-date-picker>
-              }
-              @case ('dateRange') {
-                <nz-range-picker
-                  [formControlName]="item.name"
-                  [nzDisabled]="item.disabled"
-                  [nzMode]="item.params?.nzMode ?? 'date'"
-                  [nzBorderless]="item.params?.nzBorderless ?? false"
-                  [nzFormat]="item.params?.nzFormat ?? ''"
-                  [nzPlaceHolder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
-                  [nzShowTime]="item.params?.nzShowTime ?? false"
-                  [nzSize]="item.params?.nzSize ?? 'default'"
-                ></nz-range-picker>
-              }
+                  @case ('textarea') {
+                    <textarea
+                      nz-input
+                      [formControlName]="item.name"
+                      style="width: 100%"
+                      [placeholder]="item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))"
+                      [nzAutosize]="item?.params?.nzAutosize || { minRows: 2, maxRows: 6 }"
+                    >
+                    </textarea>
+                  }
+                  @case ('date') {
+                    <nz-date-picker
+                      [formControlName]="item.name"
+                      [nzDisabled]="item.disabled"
+                      [nzMode]="item.params?.nzMode ?? 'date'"
+                      [nzBorderless]="item.params?.nzBorderless ?? false"
+                      [nzFormat]="item.params?.nzFormat ?? ''"
+                      [nzPlaceHolder]="
+                        item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))
+                      "
+                      [nzShowTime]="item.params?.nzShowTime ?? false"
+                      [nzSize]="item.params?.nzSize ?? 'default'"
+                    ></nz-date-picker>
+                  }
+                  @case ('dateRange') {
+                    <nz-range-picker
+                      [formControlName]="item.name"
+                      [nzDisabled]="item.disabled"
+                      [nzMode]="item.params?.nzMode ?? 'date'"
+                      [nzBorderless]="item.params?.nzBorderless ?? false"
+                      [nzFormat]="item.params?.nzFormat ?? ''"
+                      [nzPlaceHolder]="
+                        item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))
+                      "
+                      [nzShowTime]="item.params?.nzShowTime ?? false"
+                      [nzSize]="item.params?.nzSize ?? 'default'"
+                    ></nz-range-picker>
+                  }
 
-              @case ('groupForm') {
-                <wn-form-group
-                  [formControlName]="item.name"
-                  [group]="getGroup(item.name)"
-                  [name]="item.name"
-                  [items]="item.params?.items ?? []"
-                  [control]="item.params?.control"
-                  [layout]="item.params?.layout ?? this.layout()"
-                  [labelSpan]="item.params?.labelSpan ?? this.labelSpan()"
-                  [controlSpan]="item.params?.controlSpan ?? this.controlSpan()"
-                ></wn-form-group>
-              }
-            }
-          </nz-form-control>
-        </nz-form-item>
+                  @case ('groupForm') {
+                    <wn-form-group
+                      [formControlName]="item.name"
+                      [group]="getGroup(item.name)"
+                      [name]="item.name"
+                      [items]="item.params?.items ?? []"
+                      [control]="item.params?.control"
+                      [layout]="item.params?.layout ?? this.layout()"
+                      [labelSpan]="item.params?.labelSpan ?? this.labelSpan()"
+                      [controlSpan]="item.params?.controlSpan ?? this.controlSpan()"
+                    ></wn-form-group>
+                  }
+                }
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        }
       }
-    }
-    @if (showSubmit()) {
-      <nz-form-item>
-        <nz-form-control>
-          <button nz-button nzType="primary">Submit</button>
-        </nz-form-control>
-      </nz-form-item>
-    }
+      @if (_showCollapse()) {
+        <div nz-col>
+          <button nz-button [nzType]="'primary'" (click)="search()">Search</button>
+          <button nz-button (click)="resetForm()">Clear</button>
+          <a class="collapse" (click)="toggleCollapse()">
+            Collapse
+            <nz-icon [nzType]="isCollapse() ? 'down' : 'up'" />
+          </a>
+        </div>
+      }
+      @if (showSubmit()) {
+        <div nz-col>
+          <nz-form-item>
+            <nz-form-control>
+              <button nz-button nzType="primary">Submit</button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      }
+    </div>
   </form>
 }

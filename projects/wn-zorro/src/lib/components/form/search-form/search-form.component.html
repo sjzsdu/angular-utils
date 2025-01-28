@@ -1,1 +1,11 @@
-<p>search-form works!</p>
+<wn-form-group
+  [name]="name()"
+  [items]="items()"
+  [control]="control()"
+  [row]="row"
+  [layout]="'horizontal'"
+  [itemSpan]="itemSpan()"
+  [labelSpan]="labelSpan()"
+  [showCollapse]="true"
+  (ngModalChange)="onFormChange($event)"
+></wn-form-group>

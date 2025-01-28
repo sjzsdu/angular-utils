@@ -683,6 +683,16 @@
                 "name": "Interactive",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"layout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-search-form\n        [items]=\"items\"\n        [layout]=\"layout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n        [showSubmit]=\"true\"\n      ></wn-search-form>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Interactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -753,6 +763,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<SearchFormComponent>",
+                "defaultValue": "{\n  title: 'Form/SearchForm',\n  component: SearchFormComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzFormModule,\n        NzInputModule,\n        NzRadioModule,\n        NzSwitchModule,\n        NzLayoutModule,\n        PipesModule,\n        NzCascaderModule,\n        NzDatePickerModule,\n      ],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -763,21 +783,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<CopyTextComponent>",
-                "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimationsAsync()],\n    }),\n  ],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<HeaderTemplateComponent>",
                 "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<CopyTextComponent>",
+                "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimationsAsync()],\n    }),\n  ],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Pagination",
@@ -991,6 +1011,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<SearchFormComponent>",
+                "file": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<FrontendTableComponent<IData>>",
                 "file": "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts",
                 "deprecated": false,
@@ -1002,8 +1033,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<CopyTextComponent>",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "rawtype": "StoryObj<HeaderTemplateComponent>",
+                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1013,8 +1044,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<HeaderTemplateComponent>",
-                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                "rawtype": "StoryObj<CopyTextComponent>",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1391,6 +1422,28 @@
                     "defaultValue": "{\n  title: 'Form/ModalForm',\n  component: ModalFormComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzModalModule,\n        NzButtonModule,\n        ModalButtonComponent,\n        NzDatePickerModule,\n      ],\n      providers: [NzModalService],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
                 }
             ],
+            "projects/wn-zorro/src/stories/form/search-form.stories.ts": [
+                {
+                    "name": "Interactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: pickItems<FormItem>(userFormItems, []),\n    layout: 'vertical',\n    nzLabelAlign: 'right',\n    nzNoColon: false,\n    nzLabelWrap: false,\n  },\n  render: (args) => ({\n    props: {\n      ...args,\n      onLayoutChange: (layout: 'horizontal' | 'vertical' | 'inline') => (args.layout = layout),\n      onAlignChange: (align: NzLabelAlignType) => (args.nzLabelAlign = align),\n    },\n    template: `\n      <div style=\"margin-bottom: 24px;\">\n        <label>Layout: </label>\n        <nz-radio-group [(ngModel)]=\"layout\">\n          <label nz-radio nzValue=\"horizontal\">Horizontal</label>\n          <label nz-radio nzValue=\"vertical\">Vertical</label>\n          <label nz-radio nzValue=\"inline\">Inline</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">Label Align: </label>\n        <nz-radio-group [(ngModel)]=\"nzLabelAlign\">\n          <label nz-radio nzValue=\"left\">Left</label>\n          <label nz-radio nzValue=\"right\">Right</label>\n        </nz-radio-group>\n\n        <label style=\"margin-left: 24px;\">No Colon: </label>\n        <nz-switch [(ngModel)]=\"nzNoColon\"></nz-switch>\n\n        <label style=\"margin-left: 24px;\">Label Wrap: </label>\n        <nz-switch [(ngModel)]=\"nzLabelWrap\"></nz-switch>\n      </div>\n\n      <wn-search-form\n        [items]=\"items\"\n        [layout]=\"layout\"\n        [nzLabelAlign]=\"nzLabelAlign\"\n        [nzNoColon]=\"nzNoColon\"\n        [nzLabelWrap]=\"nzLabelWrap\"\n        [showSubmit]=\"true\"\n      ></wn-search-form>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<SearchFormComponent>",
+                    "defaultValue": "{\n  title: 'Form/SearchForm',\n  component: SearchFormComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical', 'inline'],\n      description: 'Form layout mode',\n    },\n    nzLabelAlign: {\n      control: 'select',\n      options: ['left', 'right'],\n      description: 'Label text align',\n    },\n    nzNoColon: {\n      control: 'boolean',\n      description: 'Whether to show colon after label',\n    },\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [\n        ReactiveFormsModule,\n        FormsModule,\n        NzFormModule,\n        NzInputModule,\n        NzRadioModule,\n        NzSwitchModule,\n        NzLayoutModule,\n        PipesModule,\n        NzCascaderModule,\n        NzDatePickerModule,\n      ],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule)],\n    }),\n  ],\n}"
+                }
+            ],
             "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts": [
                 {
                     "name": "meta",
@@ -1560,6 +1613,19 @@
                     "kind": 183
                 }
             ],
+            "projects/wn-zorro/src/stories/form/search-form.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<SearchFormComponent>",
+                    "file": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
             "projects/wn-zorro/src/stories/tables/frontend-table.stories.ts": [
                 {
                     "name": "Story",
@@ -1573,19 +1639,6 @@
                     "kind": 183
                 }
             ],
-            "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<CopyTextComponent>",
-                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
             "projects/wn-zorro/src/stories/template/header-template.stories.ts": [
                 {
                     "name": "Story",
@@ -1593,6 +1646,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<HeaderTemplateComponent>",
                     "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<CopyTextComponent>",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1854,6 +1920,36 @@
             },
             {
                 "filePath": "projects/wn-zorro/src/stories/form/modal-form.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Interactive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/wn-zorro/src/stories/form/search-form.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

@@ -5,3 +5,5 @@
 
 export * from './form-group';
 export * from './search-form/search-form.component';
+export * from './modal-form/modal-form.component';
+export * from './search-form/search-form.component';

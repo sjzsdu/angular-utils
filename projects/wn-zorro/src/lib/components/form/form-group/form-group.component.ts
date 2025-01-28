@@ -49,6 +49,8 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'wn-form-group',
@@ -68,6 +70,8 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     NzSwitchModule,
     NzCascaderModule,
     NzDatePickerModule,
+    NzButtonModule,
+    NzIconModule,
   ],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.less',
@@ -93,6 +97,24 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
   labelSpan = input<number>();
   controlSpan = input<number>();
   showSubmit = input(false);
+  gutter = input(20);
+  itemSpan = input(24);
+  showCollapse = input(false);
+  collapseCount = input(3);
+
+  _showCollapse = computed(() => {
+    if (this.showCollapse()) {
+      return this.showCollapse();
+    }
+    return this.items()?.length >= this.collapseCount();
+  });
+
+  _controlSpan = computed(() => {
+    if (!this.labelSpan()) {
+      return null;
+    }
+    return this.controlSpan() || 24 - this.labelSpan()!;
+  });
 
   // label
   nzNoColon = input(false);
@@ -355,5 +377,18 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
 
   isOptItem(item: OptioinItem): item is OptItem {
     return typeof item !== 'string';
+  }
+
+  isCollapse = signal(false);
+  toggleCollapse() {
+    this.isCollapse.set(!this.isCollapse());
+  }
+
+  resetForm() {
+    this.formGroup?.reset();
+  }
+
+  search() {
+    console.log('search');
   }
 }

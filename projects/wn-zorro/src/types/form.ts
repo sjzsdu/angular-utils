@@ -145,7 +145,6 @@ export type FormItem = {
     asyncValidates?: string[];
     asyncValidatesArgs?: Record<string, any[]>;
 
-    itemSpan?: number;
     isHide?: boolean;
     span?: number;
     required?: boolean;
