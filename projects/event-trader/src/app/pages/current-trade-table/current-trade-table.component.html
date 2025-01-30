@@ -1,3 +1,12 @@
+<!-- <nz-date-picker (ngModelChange)="onChange($event)"></nz-date-picker> -->
+
+<wn-search-form
+  [itemSpan]="6"
+  [labelSpan]="8"
+  [items]="items"
+  [showSubmit]="true"
+  (ngModelChange)="onChange($event)"
+></wn-search-form>
 <wn-frontend-table
   [columns]="columns"
   [nzData]="data"

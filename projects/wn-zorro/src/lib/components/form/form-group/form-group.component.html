@@ -275,10 +275,12 @@
         <div nz-col>
           <button nz-button [nzType]="'primary'" (click)="search()">Search</button>
           <button nz-button (click)="resetForm()">Clear</button>
-          <a class="collapse" (click)="toggleCollapse()">
-            Collapse
-            <nz-icon [nzType]="isCollapse() ? 'down' : 'up'" />
-          </a>
+          @if (items().length >= this.collapseCount()) {
+            <a class="collapse" (click)="toggleCollapse()">
+              Collapse
+              <nz-icon [nzType]="isCollapse() ? 'down' : 'up'" />
+            </a>
+          }
         </div>
       }
       @if (showSubmit()) {

@@ -1,13 +1,15 @@
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { FrontendTableComponent, IColumn } from '@wn-zorro';
+import { FormItem, FrontendTableComponent, IColumn, SearchFormComponent } from '@wn-zorro';
 import { formatDate } from '@wn-helper';
 import { StrategySelectConfig, StrategySelectData, StrategySelectParam } from '../../types/strategy-select';
 import { FetcherService } from '../../services/fetcher.service';
-
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { getISOWeek } from 'date-fns';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-current-trade-table',
   standalone: true,
-  imports: [FrontendTableComponent],
+  imports: [FrontendTableComponent, SearchFormComponent, NzDatePickerModule, FormsModule],
   templateUrl: './current-trade-table.component.html',
   styleUrl: './current-trade-table.component.less',
 })
@@ -25,6 +27,16 @@ export class CurrentTradeTableComponent implements OnInit {
     skip: 0,
     limit: 1000,
   };
+  items: FormItem[] = [
+    {
+      name: 'date',
+      type: 'dateRange',
+    },
+    {
+      name: 'symbol',
+      type: 'input',
+    },
+  ];
 
   constructor(private fetcher: FetcherService) {
     effect(() => {
@@ -34,6 +46,11 @@ export class CurrentTradeTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.init();
+  }
+
+  date = null;
+  getWeek(result: Date): void {
+    console.log('week: ', getISOWeek(result));
   }
 
   async init() {
@@ -130,5 +147,9 @@ export class CurrentTradeTableComponent implements OnInit {
         width: '150px',
       },
     ];
+  }
+
+  onChange(row: any) {
+    console.log('asdfadf', row);
   }
 }

@@ -14,6 +14,7 @@
     "build:all": "npm run build:wn-helper && npm run build:wn-zorro",
     "build:wn-helper": "ng build wn-helper",
     "build:wn-zorro": "ng build wn-zorro",
+    "build:event-trader": "ng build event-trader",
     "format": "prettier --write \"projects/**/*.ts\" \"projects/**/*.html\"",
     "lint": "ng lint"
   },
