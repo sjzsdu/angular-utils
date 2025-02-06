@@ -5,9 +5,9 @@ import { FormControlStatus } from '@angular/forms';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSelectComponent } from 'ng-zorro-antd/select';
-import { FormComponent } from './form.component';
 import { FormItem } from '../../../types/form';
 import { isPromise } from '@wn-helper';
+import { FormGroupComponent } from '@wn-zorro';
 export interface ReactiveModalOptions extends ModalOptions {
   afterClose?: () => void;
   afterOpen?: () => void;
@@ -19,7 +19,7 @@ function defaultOptions(): ReactiveModalOptions {
     nzCancelText: null,
     nzOkDisabled: false,
     nzClassName: 'wn-form',
-    nzContent: FormComponent,
+    nzContent: FormGroupComponent,
     nzWidth: 400,
     nzMaskClosable: false,
   };
@@ -90,7 +90,7 @@ export class FormService {
       modalOptions.nzOnCancel = () => {
         reject();
       };
-      modalRef = this.modal.create<FormComponent>(modalOptions);
+      modalRef = this.modal.create<FormGroupComponent>(modalOptions);
       if (dynamicError) {
         modalRef.afterOpen.pipe(takeUntil(_destroy$)).subscribe(() => {
           modalRef.updateConfig({

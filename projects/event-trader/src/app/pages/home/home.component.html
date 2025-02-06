@@ -3,7 +3,10 @@
     <div class="header-content">
       <div class="logo">Event Trader</div>
       <div class="spacer"></div>
-      <button nz-button nzType="primary" routerLink="/current-trader">Go to Trader</button>
+      <nz-space>
+        <button *nzSpaceItem nz-button nzType="primary" routerLink="/current-trades">Go to Trader</button>
+        <button *nzSpaceItem nz-button nzType="primary" routerLink="/current-symbols">Go to Symbols</button>
+      </nz-space>
     </div>
   </nz-header>
 

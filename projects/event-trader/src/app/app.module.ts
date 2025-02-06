@@ -10,6 +10,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [],
@@ -23,6 +24,7 @@ import { AppComponent } from './app.component';
     NzCollapseModule,
     NzIconModule,
     AppComponent,
+    RouterModule,
   ],
   providers: [],
   bootstrap: [],

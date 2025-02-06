@@ -7,6 +7,8 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +22,8 @@ import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
     NzGridModule,
     NzCollapseModule,
     NzIconModule,
+    NzSpaceModule,
+    RouterModule,
     NzDatePickerModule,
     NzCascaderModule,
   ],
