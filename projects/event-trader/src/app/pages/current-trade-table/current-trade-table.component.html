@@ -5,7 +5,8 @@
   [labelSpan]="8"
   [items]="items"
   [showSubmit]="true"
-  (ngModelChange)="onChange($event)"
+  [control]="controller"
+  (search)="onChange($event)"
 ></wn-search-form>
 <wn-frontend-table
   [columns]="columns"

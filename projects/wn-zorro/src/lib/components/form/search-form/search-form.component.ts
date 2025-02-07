@@ -1,4 +1,4 @@
-import { Component, input, model, signal } from '@angular/core';
+import { Component, input, model, output, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormController, FormGroupComponent, FormItem, IFormRow } from '@wn-zorro';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -20,6 +20,8 @@ export class SearchFormComponent {
   group = input<FormGroup | null>(null);
   formGroup?: FormGroup;
 
+  search = output<Record<string, any>>();
+
   // form
   layout = input<'horizontal' | 'vertical' | 'inline'>('vertical');
   labelSpan = input<number>();
@@ -36,5 +38,6 @@ export class SearchFormComponent {
 
   onFormChange(row: Record<string, any>) {
     console.log('row', row);
+    this.search.emit(row);
   }
 }

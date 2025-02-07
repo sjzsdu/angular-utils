@@ -3,10 +3,12 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { IColumn, IRow } from '../../../../types/table';
 import { PipesModule } from '../../../pipes';
 import { CopyTextComponent } from '../../view/copy-text/copy-text.component';
+import { ActionsComponent } from '../../view/actions/actions.component';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 @Component({
   selector: 'wn-frontend-table',
-  imports: [NzTableModule, PipesModule, CopyTextComponent],
+  imports: [NzTableModule, PipesModule, CopyTextComponent, ActionsComponent, NgxJsonViewerModule],
   templateUrl: './frontend-table.component.html',
 })
 export class FrontendTableComponent<T extends IRow> {

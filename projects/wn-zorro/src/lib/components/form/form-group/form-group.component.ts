@@ -9,6 +9,7 @@ import {
   input,
   model,
   OnInit,
+  output,
   signal,
 } from '@angular/core';
 import {
@@ -100,13 +101,12 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
   gutter = input(20);
   itemSpan = input(24);
   showCollapse = input(false);
-  collapseCount = input(3);
+  showSearch = input(false);
+  collapseCount = input(8);
+  submited = output<T>();
 
   _showCollapse = computed(() => {
-    if (this.showCollapse()) {
-      return this.showCollapse();
-    }
-    return this.items()?.length >= this.collapseCount();
+    return this.showCollapse() && this.items()?.length > this.collapseCount();
   });
 
   _controlSpan = computed(() => {
@@ -175,7 +175,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
   setFormEvent() {
     this.formGroup!.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((val) => {
       console.log('form group value change', val);
-      // this.change(val as unknown as T);
+      this.change(val as unknown as T);
     });
   }
 
@@ -370,9 +370,7 @@ export class FormGroupComponent<T extends IFormRow = IFormRow> extends BaseAcces
 
   submitForm(): void {
     console.log('onSubmit:', this.formGroup!.value);
-    for (const [key, control] of Object.entries(this.formGroup!.controls)) {
-      console.log(key, control, (control as AbstractControl)?.errors);
-    }
+    this.submited.emit(this.formGroup?.value as T);
   }
 
   isOptItem(item: OptioinItem): item is OptItem {

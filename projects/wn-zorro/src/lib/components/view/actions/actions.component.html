@@ -1,0 +1,33 @@
+<nz-space>
+  @for (act of actions(); track act) {
+    <a nz-button *nzSpaceItem class="btn" (click)="onAction(act)">
+      @if (act.icon) {
+        <nz-icon [nzType]="act.icon" />
+      }
+      @if (act.text) {
+        <span class="text">{{ act.text }}</span>
+      }
+    </a>
+  }
+  @if (hasMore()) {
+    <a nz-dropdown [nzDropdownMenu]="menu" *nzSpaceItem>
+      <nz-icon nzType="more" />
+    </a>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        @for (act of moreActions(); track act) {
+          <li nz-menu-item>
+            <a nz-button class="btn" (click)="onAction(act)">
+              @if (act.icon) {
+                <nz-icon [nzType]="act.icon" />
+              }
+              @if (act.text) {
+                <span class="text">{{ act.text }}</span>
+              }
+            </a>
+          </li>
+        }
+      </ul>
+    </nz-dropdown-menu>
+  }
+</nz-space>

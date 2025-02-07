@@ -31,6 +31,7 @@ export interface StrategySelectData {
   update_count: number;
   strategy_info: IStrategyInfo;
   remark: string | null;
+  [key: string]: any;
 }
 
 export interface SymbolSelectParam {

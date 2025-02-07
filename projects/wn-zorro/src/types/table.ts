@@ -1,5 +1,7 @@
 import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { LabelFunc } from '../public-api';
+import { ExtractInputTypes } from 'dist/wn-zorro';
+import { ActionsComponent } from '../lib/components/view/actions/actions.component';
 
 export interface IRowStatus {
   disabled?: boolean;
@@ -19,6 +21,8 @@ export type IData = Array<IRow>;
 export type ColumnMap = {
   text: {};
   copy: { valueKey: string };
+  actions: ExtractInputTypes<ActionsComponent>;
+  json: {};
 };
 
 export type IColumn<K extends IRow> = {

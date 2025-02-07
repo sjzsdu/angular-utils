@@ -75,6 +75,16 @@
               @case ('copy') {
                 <wn-copy-text [value]="data[col.params?.valueKey ?? '']"></wn-copy-text>
               }
+              @case ('json') {
+                <ngx-json-viewer [json]="data[col.name]" [expanded]="false"></ngx-json-viewer>
+              }
+              @case ('actions') {
+                <wn-actions
+                  [actions]="col.params?.actions ?? []"
+                  [moreActions]="col.params?.moreActions ?? []"
+                  [params]="[data]"
+                ></wn-actions>
+              }
             }
           </td>
         }

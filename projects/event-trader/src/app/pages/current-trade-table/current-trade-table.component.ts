@@ -1,11 +1,12 @@
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { FormItem, FrontendTableComponent, IColumn, SearchFormComponent } from '@wn-zorro';
-import { formatDate } from '@wn-helper';
+import { FormController, FormItem, FrontendTableComponent, IColumn, SearchFormComponent } from '@wn-zorro';
+import { formatDate, formatNumber } from '@wn-helper';
 import { StrategySelectConfig, StrategySelectData, StrategySelectParam } from '../../types/strategy-select';
 import { FetcherService } from '../../services/fetcher.service';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { getISOWeek } from 'date-fns';
+import { format, getISOWeek } from 'date-fns';
 import { FormsModule } from '@angular/forms';
+import { DATE_FORMAT } from '../../constant';
 @Component({
   selector: 'app-current-trade-table',
   standalone: true,
@@ -27,25 +28,69 @@ export class CurrentTradeTableComponent implements OnInit {
     skip: 0,
     limit: 1000,
   };
-  items: FormItem[] = [
-    {
-      name: 'date',
-      type: 'dateRange',
-    },
-    {
-      name: 'symbol',
-      type: 'input',
-    },
-  ];
+  items: FormItem[] = [];
+  controller?: FormController;
 
   constructor(private fetcher: FetcherService) {
     effect(() => {
       this.initColumn();
+      this.initItems();
     });
   }
 
-  ngOnInit(): void {
-    this.init();
+  initItems() {
+    this.items = [
+      {
+        name: 'symbol',
+        type: 'input',
+      },
+      {
+        name: 'current_date',
+        type: 'switch',
+        defaults: true,
+      },
+      {
+        name: 'date_range',
+        type: 'dateRange',
+        params: {},
+      },
+      {
+        name: 'action',
+        type: 'select',
+        params: {
+          options: this.filterConfig().available_actions,
+        },
+      },
+      {
+        name: 'strategy',
+        type: 'select',
+        params: {
+          options: this.filterConfig().available_strategies,
+        },
+      },
+    ];
+    this.controller = {
+      hides: [
+        {
+          field: 'current_date',
+          rules: [
+            {
+              value: true,
+              columns: ['symbol', 'action', 'strategy'],
+            },
+            {
+              value: false,
+              columns: ['date_range', 'symbol', 'action', 'strategy'],
+            },
+          ],
+        },
+      ],
+    };
+  }
+
+  async ngOnInit() {
+    await this.setConfig();
+    await this.init();
   }
 
   date = null;
@@ -54,9 +99,18 @@ export class CurrentTradeTableComponent implements OnInit {
   }
 
   async init() {
-    this.data = await this.fetcher.loadStrategySelects(this.filters);
+    const data = await this.fetcher.loadStrategySelects(this.filters);
+    this.data = data.map((row) => {
+      const { strategy_info, ...others } = row;
+      row['parameters'] = strategy_info['parameters'];
+      row['description'] = strategy_info['description'].trim();
+      row['profit'] = formatNumber(strategy_info['profit']);
+      return row;
+    });
+  }
+
+  async setConfig() {
     const config = await this.fetcher.getStrategySelectsConfig();
-    console.log('hullalal', config, this.data);
     this.filterConfig.set(config);
   }
 
@@ -132,24 +186,34 @@ export class CurrentTradeTableComponent implements OnInit {
         width: '100px',
       },
       {
-        name: 'strategy_info',
+        name: 'description',
         title: '策略信息',
         type: 'text',
-        params: {
-          render: (record: StrategySelectData) => `${record.strategy_info.name} (${record.strategy_info.status})`,
-        },
-        width: '150px',
       },
       {
-        name: 'remark',
-        title: '备注',
+        name: 'parameters',
+        title: '策略参数',
+        type: 'json',
+      },
+      {
+        name: 'profit',
+        title: '近一年预期盈利',
         type: 'text',
-        width: '150px',
       },
     ];
   }
 
   onChange(row: any) {
     console.log('asdfadf', row);
+    const { current_date, date_range, ...others } = row;
+    if (current_date) {
+      this.filters.start_date = formatDate();
+      this.filters.end_date = formatDate();
+    } else if (date_range) {
+      this.filters.start_date = format(date_range[0], DATE_FORMAT);
+      this.filters.end_date = format(date_range[0], DATE_FORMAT);
+    }
+    Object.assign(this.filters, others);
+    this.init();
   }
 }

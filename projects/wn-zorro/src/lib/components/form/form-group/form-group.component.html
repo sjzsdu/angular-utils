@@ -232,7 +232,7 @@
                       [nzBorderless]="item.params?.nzBorderless ?? false"
                       [nzFormat]="item.params?.nzFormat ?? ''"
                       [nzPlaceHolder]="
-                        item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))
+                        item.params?.nzPlaceHolder ?? 'Please Input ' + (item?.label?.label || (item.name | label))
                       "
                       [nzShowTime]="item.params?.nzShowTime ?? false"
                       [nzSize]="item.params?.nzSize ?? 'default'"
@@ -244,10 +244,8 @@
                       [nzDisabled]="item.disabled"
                       [nzMode]="item.params?.nzMode ?? 'date'"
                       [nzBorderless]="item.params?.nzBorderless ?? false"
-                      [nzFormat]="item.params?.nzFormat ?? ''"
-                      [nzPlaceHolder]="
-                        item.placeholder ?? 'Please Input ' + (item?.label?.label || (item.name | label))
-                      "
+                      [nzFormat]="item.params?.nzFormat ?? 'yyyy-MM-dd'"
+                      [nzPlaceHolder]="item.params?.nzPlaceHolder ?? ['start date', 'end date']"
                       [nzShowTime]="item.params?.nzShowTime ?? false"
                       [nzSize]="item.params?.nzSize ?? 'default'"
                     ></nz-range-picker>
@@ -271,16 +269,22 @@
           </div>
         }
       }
-      @if (_showCollapse()) {
+      @if (showCollapse() || showSearch()) {
         <div nz-col>
-          <button nz-button [nzType]="'primary'" (click)="search()">Search</button>
-          <button nz-button (click)="resetForm()">Clear</button>
-          @if (items().length >= this.collapseCount()) {
-            <a class="collapse" (click)="toggleCollapse()">
-              Collapse
-              <nz-icon [nzType]="isCollapse() ? 'down' : 'up'" />
-            </a>
-          }
+          <nz-form-item>
+            <nz-form-control>
+              @if (showSearch()) {
+                <button nz-button [nzType]="'primary'" (click)="search()">Search</button>
+                <button nz-button (click)="resetForm()">Clear</button>
+              }
+              @if (_showCollapse()) {
+                <a class="collapse" (click)="toggleCollapse()">
+                  Collapse
+                  <nz-icon [nzType]="isCollapse() ? 'down' : 'up'" />
+                </a>
+              }
+            </nz-form-control>
+          </nz-form-item>
         </div>
       }
       @if (showSubmit()) {

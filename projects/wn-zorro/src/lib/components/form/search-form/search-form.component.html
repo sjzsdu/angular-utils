@@ -7,5 +7,6 @@
   [itemSpan]="itemSpan()"
   [labelSpan]="labelSpan()"
   [showCollapse]="true"
-  (ngModalChange)="onFormChange($event)"
+  [showSearch]="true"
+  (submited)="onFormChange($event)"
 ></wn-form-group>
