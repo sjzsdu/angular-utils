@@ -204,7 +204,6 @@ export class CurrentTradeTableComponent implements OnInit {
   }
 
   onChange(row: any) {
-    console.log('asdfadf', row);
     const { current_date, date_range, ...others } = row;
     if (current_date) {
       this.filters.start_date = formatDate();

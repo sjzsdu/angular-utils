@@ -1,18 +1,19 @@
 <!-- <nz-date-picker (ngModelChange)="onChange($event)"></nz-date-picker> -->
-
-<wn-search-form
-  [itemSpan]="6"
-  [labelSpan]="8"
-  [items]="items"
-  [showSubmit]="true"
-  [control]="controller"
-  (search)="onChange($event)"
-></wn-search-form>
-<wn-frontend-table
-  [columns]="columns"
-  [nzData]="data"
-  [nzShowPagination]="true"
-  [showChecked]="false"
-  [nzShowSizeChanger]="true"
-  [nzExpandable]="false"
-></wn-frontend-table>
+<div class="trade-table">
+  <wn-search-form
+    [itemSpan]="6"
+    [labelSpan]="8"
+    [items]="items"
+    [showSubmit]="true"
+    [control]="controller"
+    (search)="onChange($event)"
+  ></wn-search-form>
+  <wn-frontend-table
+    [columns]="columns"
+    [nzData]="data"
+    [nzShowPagination]="true"
+    [showChecked]="false"
+    [nzShowSizeChanger]="true"
+    [nzExpandable]="false"
+  ></wn-frontend-table>
+</div>

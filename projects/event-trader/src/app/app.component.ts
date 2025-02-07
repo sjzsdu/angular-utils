@@ -5,11 +5,22 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NzLayoutModule, NzButtonModule, NzCardModule, NzGridModule, NzCollapseModule, NzIconModule],
+  imports: [
+    RouterOutlet,
+    NzLayoutModule,
+    NzButtonModule,
+    NzCardModule,
+    NzGridModule,
+    NzCollapseModule,
+    NzIconModule,
+    NzSpaceModule,
+    RouterModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.less',
 })

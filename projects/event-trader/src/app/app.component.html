@@ -1,3 +1,15 @@
 <nz-layout>
-  <router-outlet></router-outlet>
+  <nz-header>
+    <div class="header-content">
+      <div class="logo">Event Trader</div>
+      <div class="spacer"></div>
+      <nz-space>
+        <button *nzSpaceItem nz-button nzType="primary" routerLink="/current-trades">Current Trader</button>
+        <button *nzSpaceItem nz-button nzType="primary" routerLink="/current-symbols">Current Symbols</button>
+      </nz-space>
+    </div>
+  </nz-header>
+  <nz-content>
+    <router-outlet></router-outlet>
+  </nz-content>
 </nz-layout>

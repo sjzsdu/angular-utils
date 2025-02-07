@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { SelectOutline } from '@ant-design/icons-angular/icons';
 import { ActionItem } from 'projects/wn-zorro/src/types/view';
+import { format } from 'date-fns';
+import { DATE_FORMAT } from '../../constant';
 
 @Component({
   selector: 'app-current-symbol-table',
@@ -27,7 +29,6 @@ export class CurrentSymbolTableComponent implements OnInit {
   symbolFilters: SymbolSelectParam = {
     start_date: formatDate(),
     end_date: formatDate(),
-    action: '',
     current_date: true,
   };
 
@@ -85,13 +86,6 @@ export class CurrentSymbolTableComponent implements OnInit {
         name: 'date_range',
         type: 'dateRange',
         params: {},
-      },
-      {
-        name: 'action',
-        type: 'select',
-        params: {
-          options: this.filterConfig().available_actions,
-        },
       },
     ];
     this.controller = {
@@ -195,6 +189,15 @@ export class CurrentSymbolTableComponent implements OnInit {
 
   onChange(row: any) {
     // 这里可以添加行变化时的逻辑
-    console.log('Row changed:', row);
+    const { current_date, date_range, ...others } = row;
+    if (current_date) {
+      this.symbolFilters.start_date = formatDate();
+      this.symbolFilters.end_date = formatDate();
+    } else if (date_range) {
+      this.symbolFilters.start_date = format(date_range[0], DATE_FORMAT);
+      this.symbolFilters.end_date = format(date_range[0], DATE_FORMAT);
+    }
+    Object.assign(this.symbolFilters, others);
+    this.init();
   }
 }
