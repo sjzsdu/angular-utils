@@ -1,6 +1,5 @@
 import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
-import { LabelFunc } from '../public-api';
-import { ExtractInputTypes } from 'dist/wn-zorro';
+import { ExtractInputTypes, LabelFunc } from '../public-api';
 import { ActionsComponent } from '../lib/components/view/actions/actions.component';
 
 export interface IRowStatus {
