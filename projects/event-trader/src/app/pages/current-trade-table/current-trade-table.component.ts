@@ -210,7 +210,7 @@ export class CurrentTradeTableComponent implements OnInit {
       this.filters.end_date = formatDate();
     } else if (date_range) {
       this.filters.start_date = format(date_range[0], DATE_FORMAT);
-      this.filters.end_date = format(date_range[0], DATE_FORMAT);
+      this.filters.end_date = format(date_range[1], DATE_FORMAT);
     }
     Object.assign(this.filters, others);
     this.init();

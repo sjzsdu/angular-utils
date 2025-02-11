@@ -1,6 +1,6 @@
 {
   "name": "angular-utils",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +11,7 @@
     "test:wn-zorro": "ng test wn-zorro",
     "storybook": "ng run wn-zorro:storybook",
     "build-storybook": "ng run wn-zorro:build-storybook",
-    "build:all": "npm run build:wn-helper && npm run build:wn-zorro",
+    "build:all": "npm run build:wn-helper && npm run build:wn-zorro && npm run build:event-trader",
     "build:wn-helper": "ng build wn-helper",
     "build:wn-zorro": "ng build wn-zorro",
     "build:event-trader": "ng build event-trader",

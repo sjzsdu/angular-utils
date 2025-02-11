@@ -195,7 +195,7 @@ export class CurrentSymbolTableComponent implements OnInit {
       this.symbolFilters.end_date = formatDate();
     } else if (date_range) {
       this.symbolFilters.start_date = format(date_range[0], DATE_FORMAT);
-      this.symbolFilters.end_date = format(date_range[0], DATE_FORMAT);
+      this.symbolFilters.end_date = format(date_range[1], DATE_FORMAT);
     }
     Object.assign(this.symbolFilters, others);
     this.init();
