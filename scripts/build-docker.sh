@@ -4,7 +4,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # 设置变量
-IMAGE_NAME="sjzsdu/event-trader-web"
+IMAGE_NAME="sjzsdu/event_trader_web"
 VERSION=$(jq -r .version "$SCRIPT_DIR/../package.json")
 
 # 切换到项目根目录
