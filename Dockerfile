@@ -1,5 +1,5 @@
-# 使用 Node.js 20 作为基础镜像
-FROM node:20 as build
+# 使用 Node.js 20 作为基础镜像，指定 x86_64 架构
+FROM --platform=linux/amd64 node:20 as build
 
 # 安装 pnpm
 RUN npm install -g pnpm
@@ -24,12 +24,6 @@ FROM nginx:alpine
 
 # 复制构建产物到 Nginx 服务目录
 COPY --from=build /app/dist/event-trader/browser /usr/share/nginx/html
-
-# 复制自定义 Nginx 配置文件
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# 暴露新的端口（例如 8080）
-EXPOSE 8080
 
 # 启动 Nginx
 CMD ["nginx", "-g", "daemon off;"]
