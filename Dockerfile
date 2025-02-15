@@ -28,7 +28,7 @@ COPY --from=build /app/dist/event-trader/browser /usr/share/nginx/html
 # COPY nginx.conf /etc/nginx/nginx.conf
 
 # 暴露端口
-EXPOSE 80
+EXPOSE 8081
 
 # 启动 Nginx，以守护进程模式关闭
 CMD ["nginx", "-g", "daemon off;"]
