@@ -25,7 +25,7 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/dist/event-trader/browser /usr/share/nginx/html
 
 # 如果需要自定义 Nginx 配置，可以取消以下注释并提供 `nginx.conf`
-# COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # 暴露端口
 EXPOSE 8081
