@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://trader-api.wnbgj.com',
+  apiUrl: 'http://trader-api.wnbgj.com',
 };
