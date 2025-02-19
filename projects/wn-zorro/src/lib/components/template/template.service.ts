@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable, TemplateRef } from '@angular/core';
 import { ModalHeader, ModalHeaderTemplate } from '../../../types/template';
 import { BehaviorSubject } from 'rxjs';
@@ -9,6 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 export class TemplateService {
   header$ = new BehaviorSubject<ModalHeaderTemplate | undefined>(undefined);
   headerVar$ = new BehaviorSubject<ModalHeader | undefined>(undefined);
+
+  private templateCache = new Map<string, TemplateRef<any> | string>();
 
   headerTitle() {
     const template = this.header$.getValue();
@@ -29,18 +30,14 @@ export class TemplateService {
       reject: (reason?: any) => void;
     }
   >();
-  private isTemplateReady = false;
 
   async headerTitlePromise(header: ModalHeader): Promise<TemplateRef<any> | string> {
     const key = this.headerVarKey(header);
     header.key = key;
 
-    // If template is already ready, process immediately
-    if (this.isTemplateReady) {
-      const currentTemplate = this.header$.getValue();
-      if (currentTemplate?.key === key) {
-        return currentTemplate.template;
-      }
+    // return from cache if exist
+    if (this.templateCache.has(key)) {
+      return this.templateCache.get(key)!;
     }
 
     // Store the request
@@ -58,7 +55,7 @@ export class TemplateService {
         next: (res) => {
           if (res?.key === key) {
             clearTimeout(timeout);
-            this.isTemplateReady = true;
+            this.templateCache.set(key, res.template);
             this.pendingRequests.delete(key);
             resolve(res.template);
             sub.unsubscribe();
@@ -72,18 +69,5 @@ export class TemplateService {
         },
       });
     });
-  }
-
-  setTemplateReady() {
-    this.isTemplateReady = true;
-    // Process any pending requests
-    const currentTemplate = this.header$.getValue();
-    if (currentTemplate) {
-      const pending = this.pendingRequests.get(currentTemplate.key);
-      if (pending) {
-        pending.resolve(currentTemplate.template);
-        this.pendingRequests.delete(currentTemplate.key);
-      }
-    }
   }
 }
