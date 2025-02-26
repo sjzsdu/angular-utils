@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appBlurOnClick]',
+  selector: '[wnBlurOnClick]',
   standalone: true,
   exportAs: 'exitAllEvent',
 })

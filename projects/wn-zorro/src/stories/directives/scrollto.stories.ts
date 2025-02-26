@@ -17,7 +17,7 @@ import { Component, ViewChild } from '@angular/core';
 
           <div id="target1" style="background: blue; padding: 20px; margin: 20px 0;">Target 1</div>
 
-          <div style="height: 300px;" appScrollTo #scrollToDirective="appScrollTo"></div>
+          <div style="height: 300px;" wnScrollTo #scrollToDirective="wnScrollTo"></div>
 
           <div id="target2" style="background: green; padding: 20px; margin: 20px 0;">Target 2</div>
           <div style="height: 800px;"></div>

@@ -152,7 +152,7 @@
     "components": [
         {
             "name": "BlurOnClickStoryComponent",
-            "id": "component-BlurOnClickStoryComponent-5ee9a61e49fce1199de15a59c63e99bd099aba63ae860a043526f0187f5473e9498348424a8eebf082092e25f9ad9e74d077eb45b97cf23385683bb939a3e450",
+            "id": "component-BlurOnClickStoryComponent-282232da952f659578355b0a84aadfb7c02eb4593f16b504a95f736b709a1874255b3615ae30539c57ef925c4bbff950b5e22ce90b7ab6fcd0842067fea1718a",
             "file": "projects/wn-zorro/src/stories/directives/blur-on-click.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -162,7 +162,7 @@
             "selector": "story-blur-on-click",
             "styleUrls": [],
             "styles": [],
-            "template": "<div style=\"padding: 20px;\">\n  <button appBlurOnClick style=\"padding: 10px 20px;\">Click to Blur</button>\n</div>\n",
+            "template": "<div style=\"padding: 20px;\">\n  <button wnBlurOnClick style=\"padding: 10px 20px;\">Click to Blur</button>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -179,7 +179,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { BlurOnClickDirective } from '../../lib/directives/blur-on-click.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-blur-on-click',\n  template: `\n    <div style=\"padding: 20px;\">\n      <button appBlurOnClick style=\"padding: 10px 20px;\">Click to Blur</button>\n    </div>\n  `,\n})\nclass BlurOnClickStoryComponent {}\n\nconst meta: Meta<BlurOnClickStoryComponent> = {\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<BlurOnClickStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { BlurOnClickDirective } from '../../lib/directives/blur-on-click.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-blur-on-click',\n  template: `\n    <div style=\"padding: 20px;\">\n      <button wnBlurOnClick style=\"padding: 10px 20px;\">Click to Blur</button>\n    </div>\n  `,\n})\nclass BlurOnClickStoryComponent {}\n\nconst meta: Meta<BlurOnClickStoryComponent> = {\n  title: 'Directives/BlurOnClick',\n  component: BlurOnClickStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<BlurOnClickStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -187,7 +187,7 @@
         },
         {
             "name": "ClickOutsideStoryComponent",
-            "id": "component-ClickOutsideStoryComponent-2692823bd88526f0ad10b4861f277bef6a2aa767d4166185bace7254cb2a23f8cf74a0a71adf48f225d3a9e8a5ee6af438c2bd5a37120ae2378a48bfbd492c32",
+            "id": "component-ClickOutsideStoryComponent-751c3cf683b35d0058a81732a64f419ab1667046328ce117728bb87b16aa953787dabc8240770f25e473a1fb7fc6d6a8774e6af66d38f7090fdd15a10613b32c",
             "file": "projects/wn-zorro/src/stories/directives/click-outside.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -197,7 +197,7 @@
             "selector": "story-click-outside",
             "styleUrls": [],
             "styles": [],
-            "template": "<div style=\"padding: 20px;\">\n  <div appClickOutside (clickOutside)=\"onClickOutside($event)\" style=\"border: 1px solid #ccc; padding: 20px;\">\n    <p>Click inside this box - nothing happens</p>\n    <button class=\"excluded\">Excluded Button</button>\n  </div>\n  <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n</div>\n",
+            "template": "<div style=\"padding: 20px;\">\n  <div wnClickOutside (clickOutside)=\"onClickOutside($event)\" style=\"border: 1px solid #ccc; padding: 20px;\">\n    <p>Click inside this box - nothing happens</p>\n    <button class=\"excluded\">Excluded Button</button>\n  </div>\n  <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -255,7 +255,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ClickOutsideDirective } from '../../lib/directives/click-outside.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-click-outside',\n  template: `\n    <div style=\"padding: 20px;\">\n      <div appClickOutside (clickOutside)=\"onClickOutside($event)\" style=\"border: 1px solid #ccc; padding: 20px;\">\n        <p>Click inside this box - nothing happens</p>\n        <button class=\"excluded\">Excluded Button</button>\n      </div>\n      <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n    </div>\n  `,\n})\nclass ClickOutsideStoryComponent {\n  clickedElement: HTMLElement | null = null;\n\n  onClickOutside(element: HTMLElement) {\n    this.clickedElement = element;\n  }\n}\n\nconst meta: Meta<ClickOutsideStoryComponent> = {\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<ClickOutsideStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ClickOutsideDirective } from '../../lib/directives/click-outside.directive';\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'story-click-outside',\n  template: `\n    <div style=\"padding: 20px;\">\n      <div wnClickOutside (clickOutside)=\"onClickOutside($event)\" style=\"border: 1px solid #ccc; padding: 20px;\">\n        <p>Click inside this box - nothing happens</p>\n        <button class=\"excluded\">Excluded Button</button>\n      </div>\n      <p style=\"margin-top: 20px;\">Clicked outside element: {{ clickedElement?.tagName }}</p>\n    </div>\n  `,\n})\nclass ClickOutsideStoryComponent {\n  clickedElement: HTMLElement | null = null;\n\n  onClickOutside(element: HTMLElement) {\n    this.clickedElement = element;\n  }\n}\n\nconst meta: Meta<ClickOutsideStoryComponent> = {\n  title: 'Directives/ClickOutside',\n  component: ClickOutsideStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<ClickOutsideStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -386,7 +386,7 @@
         },
         {
             "name": "ScrollToStoryComponent",
-            "id": "component-ScrollToStoryComponent-3ab288f0b2dd1d1c57c53261c3117384ff9e2b47a9085e6e24e28a976a08c167580f552d7f3d2f8098dbe465e308aa3763a7082ca2875f76b93e0f72c63c9b81",
+            "id": "component-ScrollToStoryComponent-22dc514cbcde6a88f42fb80f3c398f29509ae2a14737ed2a230c9fe2344173b266973adc97348c95faaa5683b78642c74c1d6b22ae22472716335ead9d2ba9ca",
             "file": "projects/wn-zorro/src/stories/directives/scrollto.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -396,7 +396,7 @@
             "selector": "story-scroll-to",
             "styleUrls": [],
             "styles": [],
-            "template": "<div style=\"height: 100vh; display: flex; flex-direction: column;\">\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\">Scroll to Target 1</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n  <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n    <div style=\"height: 500px;\">\n      <p>Scrollable content area</p>\n\n      <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">Target 1</div>\n\n      <div style=\"height: 300px;\" appScrollTo #scrollToDirective=\"appScrollTo\"></div>\n\n      <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">Target 2</div>\n      <div style=\"height: 800px;\"></div>\n      <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">Target 3</div>\n    </div>\n  </div>\n</div>\n",
+            "template": "<div style=\"height: 100vh; display: flex; flex-direction: column;\">\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\">Scroll to Target 1</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n  <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n  <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n    <div style=\"height: 500px;\">\n      <p>Scrollable content area</p>\n\n      <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">Target 1</div>\n\n      <div style=\"height: 300px;\" wnScrollTo #scrollToDirective=\"wnScrollTo\"></div>\n\n      <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">Target 2</div>\n      <div style=\"height: 800px;\"></div>\n      <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">Target 3</div>\n    </div>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -469,7 +469,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ScrollToDirective } from '../../lib/directives/scrollto.directive';\nimport { Component, ViewChild } from '@angular/core';\n\n@Component({\n  selector: 'story-scroll-to',\n  imports: [ScrollToDirective],\n  template: `\n    <div style=\"height: 100vh; display: flex; flex-direction: column;\">\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\">Scroll to Target 1</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n      <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n        <div style=\"height: 500px;\">\n          <p>Scrollable content area</p>\n\n          <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">Target 1</div>\n\n          <div style=\"height: 300px;\" appScrollTo #scrollToDirective=\"appScrollTo\"></div>\n\n          <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">Target 2</div>\n          <div style=\"height: 800px;\"></div>\n          <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">Target 3</div>\n        </div>\n      </div>\n    </div>\n  `,\n})\nclass ScrollToStoryComponent {\n  @ViewChild('scrollToDirective') scrollToDirective!: ScrollToDirective;\n\n  scrollTo(target?: string) {\n    this.scrollToDirective.scrollToTarget(target);\n  }\n}\n\nconst meta: Meta<ScrollToStoryComponent> = {\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<ScrollToStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
+            "sourceCode": "import { Meta, StoryObj } from '@storybook/angular';\nimport { ScrollToDirective } from '../../lib/directives/scrollto.directive';\nimport { Component, ViewChild } from '@angular/core';\n\n@Component({\n  selector: 'story-scroll-to',\n  imports: [ScrollToDirective],\n  template: `\n    <div style=\"height: 100vh; display: flex; flex-direction: column;\">\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target1')\">Scroll to Target 1</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo('target2')\">Scroll to Target 2</button>\n      <button style=\"margin: 10px;\" (click)=\"scrollTo()\">Scroll to Target 2</button>\n\n      <div style=\"overflow-y: auto; height: 300px; border: 1px solid #ccc; padding: 10px;\">\n        <div style=\"height: 500px;\">\n          <p>Scrollable content area</p>\n\n          <div id=\"target1\" style=\"background: blue; padding: 20px; margin: 20px 0;\">Target 1</div>\n\n          <div style=\"height: 300px;\" wnScrollTo #scrollToDirective=\"wnScrollTo\"></div>\n\n          <div id=\"target2\" style=\"background: green; padding: 20px; margin: 20px 0;\">Target 2</div>\n          <div style=\"height: 800px;\"></div>\n          <div id=\"target3\" style=\"background: red; padding: 20px; margin: 20px 0;\">Target 3</div>\n        </div>\n      </div>\n    </div>\n  `,\n})\nclass ScrollToStoryComponent {\n  @ViewChild('scrollToDirective') scrollToDirective!: ScrollToDirective;\n\n  scrollTo(target?: string) {\n    this.scrollToDirective.scrollToTarget(target);\n  }\n}\n\nconst meta: Meta<ScrollToStoryComponent> = {\n  title: 'Directives/ScrollTo',\n  component: ScrollToStoryComponent,\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<ScrollToStoryComponent>;\n\nexport const Primary: Story = {\n  args: {},\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -783,21 +783,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<CopyTextComponent>",
-                "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimationsAsync()],\n    }),\n  ],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<HeaderTemplateComponent>",
                 "defaultValue": "{\n  title: 'Components/HeaderTemplate',\n  component: HeaderTemplateComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [],\n      providers: [TemplateService],\n      declarations: [HeaderTemplateComponent],\n    }),\n    applicationConfig({\n      providers: [importProvidersFrom(BrowserAnimationsModule), TemplateService],\n    }),\n  ],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<CopyTextComponent>",
+                "defaultValue": "{\n  title: 'Components/CopyText',\n  component: CopyTextComponent,\n  tags: ['autodocs'],\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimationsAsync()],\n    }),\n  ],\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Text to be copied',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    title: {\n      control: 'text',\n      description: 'Text show in ui',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: '' },\n      },\n    },\n    copiedTip: {\n      control: 'text',\n      description: 'Message shown after successful copy',\n      table: {\n        type: { summary: 'string' },\n        defaultValue: { summary: 'Copied' },\n      },\n    },\n  },\n  parameters: {\n    controls: { expanded: true },\n    docs: {\n      description: {\n        component: `\nThe CopyText component provides an easy way to copy text to the clipboard.\n\n### Features:\n- Displays text with a copy button\n- Customizable tooltip messages\n- Responsive design\n        `,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Pagination",
@@ -867,7 +867,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
+                "defaultValue": "{\n  args: {},\n  argTypes: {},\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            templateKey: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.templatePromise({\n            category: TemplateCategory.HEADER,\n            data: newHeader as ModalHeader,\n          });\n        },\n      },\n      template: `\n        <wn-templates-index></wn-templates-index>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
             },
             {
                 "name": "ResetControl",
@@ -1033,8 +1033,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<CopyTextComponent>",
-                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
+                "rawtype": "StoryObj<HeaderTemplateComponent>",
+                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1044,8 +1044,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<HeaderTemplateComponent>",
-                "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                "rawtype": "StoryObj<CopyTextComponent>",
+                "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1529,7 +1529,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    headerVars: [\n      {\n        title: 'Test Header',\n        pathKey: 'test/path',\n        noTemp: false,\n        key: 'test-header',\n      },\n    ],\n  },\n  argTypes: {\n    headerVars: {\n      control: {\n        type: 'object',\n      },\n    },\n  },\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerVars: args.headerVars,\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            title: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.headerTitlePromise(newHeader);\n        },\n      },\n      template: `\n        <wn-header-template></wn-header-template>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
+                    "defaultValue": "{\n  args: {},\n  argTypes: {},\n  render: (args) => {\n    const templateService = new TemplateService();\n\n    return {\n      props: {\n        headerTemplate: null as TemplateRef<any> | string | null,\n        addHeader: async function () {\n          const newHeader = {\n            templateKey: 'New Header',\n            pathKey: 'new/path',\n            noTemp: false,\n            key: 'new-header',\n          };\n          this['headerTemplate'] = await templateService.templatePromise({\n            category: TemplateCategory.HEADER,\n            data: newHeader as ModalHeader,\n          });\n        },\n      },\n      template: `\n        <wn-templates-index></wn-templates-index>\n        <div style=\"margin-top: 20px\">\n          <button nz-button (click)=\"addHeader()\">Add Header</button>\n        </div>\n        <div>Below is a header template</div>\n        @if (headerTemplate) {\n          @if (typeof headerTemplate === 'string') {\n            <div>{{ headerTemplate }}</div>\n          } @else {\n            <ng-container *ngTemplateOutlet=\"headerTemplate\"></ng-container>\n          }\n        }\n      `,\n    };\n  },\n}"
                 }
             ],
             "projects/wn-zorro/.storybook/preview.ts": [
@@ -1639,19 +1639,6 @@
                     "kind": 183
                 }
             ],
-            "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<CopyTextComponent>",
-                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
             "projects/wn-zorro/src/stories/template/header-template.stories.ts": [
                 {
                     "name": "Story",
@@ -1659,6 +1646,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<HeaderTemplateComponent>",
                     "file": "projects/wn-zorro/src/stories/template/header-template.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/wn-zorro/src/stories/views/copy-text.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<CopyTextComponent>",
+                    "file": "projects/wn-zorro/src/stories/views/copy-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

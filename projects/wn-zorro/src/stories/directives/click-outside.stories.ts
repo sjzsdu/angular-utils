@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   selector: 'story-click-outside',
   template: `
     <div style="padding: 20px;">
-      <div appClickOutside (clickOutside)="onClickOutside($event)" style="border: 1px solid #ccc; padding: 20px;">
+      <div wnClickOutside (clickOutside)="onClickOutside($event)" style="border: 1px solid #ccc; padding: 20px;">
         <p>Click inside this box - nothing happens</p>
         <button class="excluded">Excluded Button</button>
       </div>

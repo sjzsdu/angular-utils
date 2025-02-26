@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, Renderer2, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appDraggableModal]',
+  selector: '[wnDraggableModal]',
 })
 export class DraggableModalDirective {
   @Input('container') container?: string | HTMLElement;

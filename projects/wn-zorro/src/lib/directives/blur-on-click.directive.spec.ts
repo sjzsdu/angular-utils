@@ -4,7 +4,7 @@ import { Component, ElementRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 @Component({
-  template: `<div appBlurOnClick>Test</div>`,
+  template: `<div wnBlurOnClick>Test</div>`,
 })
 class TestComponent {}
 

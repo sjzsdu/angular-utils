@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 @Component({
   template: `
-    <div appClickOutside [excludeClass]="excludeClass" (clickOutside)="onClickOutside($event)">
+    <div wnClickOutside [excludeClass]="excludeClass" (clickOutside)="onClickOutside($event)">
       <div class="inner">Inner</div>
       <div class="excluded">Excluded</div>
     </div>
@@ -33,7 +33,7 @@ describe('ClickOutsideDirective', () => {
     });
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
-    directiveElement = fixture.debugElement.query(By.css('[appClickOutside]')).nativeElement;
+    directiveElement = fixture.debugElement.query(By.css('[wnClickOutside]')).nativeElement;
     fixture.detectChanges();
   });
 

@@ -1,9 +1,9 @@
 import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: '[appScrollTo]',
+  selector: '[wnScrollTo]',
   standalone: true,
-  exportAs: 'appScrollTo',
+  exportAs: 'wnScrollTo',
 })
 export class ScrollToDirective {
   constructor(private el: ElementRef) {}

@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   selector: 'story-blur-on-click',
   template: `
     <div style="padding: 20px;">
-      <button appBlurOnClick style="padding: 10px 20px;">Click to Blur</button>
+      <button wnBlurOnClick style="padding: 10px 20px;">Click to Blur</button>
     </div>
   `,
 })
