@@ -1,26 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable, TemplateRef } from '@angular/core';
-import { ModalHeader, ModalHeaderTemplate } from '../../../types/template';
-import { BehaviorSubject } from 'rxjs';
+import { AnyTemplateData, ITemplate, TemplateValues } from 'projects/wn-zorro/src/types/template';
+
+import { BehaviorSubject, Subscription } from 'rxjs';
+
+const TIMEOUT = 3000;
 
 @Injectable({
   providedIn: 'root',
 })
 export class TemplateService {
-  header$ = new BehaviorSubject<ModalHeaderTemplate | undefined>(undefined);
-  headerVar$ = new BehaviorSubject<ModalHeader | undefined>(undefined);
+  template$ = new BehaviorSubject<ITemplate | undefined>(undefined);
+  templateVar$ = new BehaviorSubject<TemplateValues | undefined>(undefined);
 
   private templateCache = new Map<string, TemplateRef<any> | string>();
 
-  headerTitle() {
-    const template = this.header$.getValue();
-    if (template) {
-      return template.template;
-    }
-    return;
-  }
-
-  headerVarKey(header: ModalHeader) {
-    return `${header.title}`;
+  templateKey(data: AnyTemplateData) {
+    return `${data.category}-${data.data.templateKey}`;
   }
 
   private pendingRequests = new Map<
@@ -31,34 +27,32 @@ export class TemplateService {
     }
   >();
 
-  async headerTitlePromise(header: ModalHeader): Promise<TemplateRef<any> | string> {
-    const key = this.headerVarKey(header);
-    header.key = key;
+  templatePromise(data: AnyTemplateData): Promise<TemplateRef<any> | string> {
+    const key = this.templateKey(data);
+    let sub: Subscription;
 
-    // return from cache if exist
     if (this.templateCache.has(key)) {
-      return this.templateCache.get(key)!;
+      return Promise.resolve(this.templateCache.get(key)!);
     }
 
-    // Store the request
     return new Promise((resolve, reject) => {
       this.pendingRequests.set(key, { resolve, reject });
-      this.headerVar$.next(header);
+      this.templateVar$.next({ ...data.data, key } as TemplateValues);
 
       const timeout = setTimeout(() => {
         this.pendingRequests.delete(key);
-        resolve(`Header: ${header.title}`);
-        console.warn(`Template timeout for header: ${header.title}`);
-      }, 1000);
+        resolve(key);
+        console.warn(`Template timeout for ${key}`);
+      }, TIMEOUT);
 
-      const sub = this.header$.subscribe({
+      sub = this.template$.subscribe({
         next: (res) => {
           if (res?.key === key) {
             clearTimeout(timeout);
             this.templateCache.set(key, res.template);
             this.pendingRequests.delete(key);
             resolve(res.template);
-            sub.unsubscribe();
+            sub?.unsubscribe();
           }
         },
         error: (err) => {

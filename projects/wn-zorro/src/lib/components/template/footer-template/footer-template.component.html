@@ -1,0 +1,7 @@
+@for (data of templateVars; track data.key) {
+    <ng-template #footer>
+        <div class="footer-row">
+            {{ data.okText ?? data.templateKey }}
+        </div>
+    </ng-template>
+}

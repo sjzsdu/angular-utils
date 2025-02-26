@@ -1,16 +1,19 @@
-@for (headerVar of headerVars; track headerVar.key) {
+@for (headerVar of templateVars; track headerVar.key) {
   <ng-template #header>
     <div class="modal-title-row">
-      <span class="modal-title">{{ headerVar.title }}</span>
+      @if (!headerVar.noDrag) {
+        <button nz-button nzSize="small" nzType="text" appDraggableModal>
+          <span class="drag-icon" nz-icon nzType="holder" nzTheme="outline"></span>
+        </button>
+      }
+
+      <span class="modal-title">{{ headerVar.title ?? headerVar.templateKey }}</span>
 
       @if (headerVar.pathKey && !headerVar.noTemp) {
-        <div>{{ headerVar.pathKey }}</div>
+        {{ headerVar?.pathKey }}
       }
 
       <div style="flex: 1"></div>
-      <button nz-button nzSize="small" nzType="text" appDraggableModal>
-        <span class="drag-icon" nz-icon nzType="holder"></span>
-      </button>
     </div>
   </ng-template>
 }
